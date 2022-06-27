@@ -15,10 +15,6 @@ from .data_source import getFullJson, getUid, uidChecker
 from .html_render import getFullImage
 from .reliquary_mark import getAllScore
 
-from .data_source import getFullJson, getUid, uidChecker
-from .html_render import getFullImage
-from .reliquary_mark import getAllScore
-
 showScore = on_command("panel", aliases={"评分", "面板"}, priority=13)
 
 
@@ -133,8 +129,3 @@ async def _(bot: Bot, event: MessageEvent, state: T_State):
         if "base64" in resImg else
         MessageSegment.text(resImg)
     )
-    # try:
-    #     # ...
-    # except Exception as e:
-    #     logger.error(f"命令响应出错 {type(e)}：{e}")
-    #     raise FinishedException
