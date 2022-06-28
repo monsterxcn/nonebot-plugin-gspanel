@@ -114,15 +114,10 @@ async def _(bot: Bot, event: MessageEvent, state: T_State):
         x for x in jsonData["avatarInfoList"] if x["name"] == char
     ][0]
     scores = getAllScore(avatarInfo)
-    msg = f"""总分：{scores["score"]}({scores["level"]})
-    =============
-    花：{scores["pos"]["1"]["score"]}({scores["pos"]["1"]["level"]})
-    羽：{scores["pos"]["2"]["score"]}({scores["pos"]["2"]["level"]})
-    沙：{scores["pos"]["3"]["score"]}({scores["pos"]["3"]["level"]})
-    杯：{scores["pos"]["4"]["score"]}({scores["pos"]["4"]["level"]})
-    冠：{scores["pos"]["5"]["score"]}({scores["pos"]["5"]["level"]})
-    ============="""
-    logger.info(msg)
+    logger.info(
+        f'{len(scores["pos"])} 件圣遗物'
+        f'总分：{scores["score"]}({scores["level"]})'
+    )
     resImg = await getFullImage(uid, avatarInfo, scores)
     await showScore.finish(
         MessageSegment.image(resImg)
