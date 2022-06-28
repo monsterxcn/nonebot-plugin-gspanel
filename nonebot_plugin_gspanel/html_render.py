@@ -175,9 +175,9 @@ def getArtisHtml(artisData: dict, scores: dict) -> str:
             )
         )
     subHtml = "".join(subAffix)
-    mainPct = "%" if artisData["pos"] >= 3 else ""
     mainPropRaw = artisData["main"]["prop"]
     mainProp = mainPropRaw.replace("百分比", "").replace("元素伤害", "伤")
+    mainPct = "%" if artisData["pos"] >= 3 and mainProp != "元素精通" else ""
     artiScore = scores["pos"][str(artisData["pos"])]
     itemTpl = f"""
     <div class="item arti">
