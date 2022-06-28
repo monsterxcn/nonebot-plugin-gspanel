@@ -256,12 +256,14 @@ async def getFullImage(uid: str, avatarInfo: dict, scores: dict) -> str:
         card = await page.query_selector("body")
         assert card is not None
         picBytes = await card.screenshot()
+        # 不知道为什么偶尔底部有白边，所以再裁剪一下
         picImage = Image.open(BytesIO(picBytes))
         logger.info(f"截取图片 ({picImage.size[0]}×{picImage.size[1]})")
         picImage = picImage.crop(
             (0, 0, picImage.size[0], picImage.size[1] - 3)
         )
         res = await img2Base64(picImage)
+        await page.close()
     except Exception as e:
         logger.error(f"生成角色圣遗物评分图片失败 {type(e)}：{e}")
         res = "生成角色圣遗物评分总图失败！"
