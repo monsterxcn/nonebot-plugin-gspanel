@@ -110,18 +110,20 @@ def getEquipInfo(equipList: list) -> dict:
                 # "rank": list(equip["weapon"]["affixMap"].values())[0],
                 "level": equip["weapon"]["level"],
                 "promote": equip["weapon"].get("promoteLevel", 0),
-                "affix": [*equip["weapon"]["affixMap"].values()][0] + 1,
+                "affix": [*equip["weapon"].get("affixMap", {"_": 0}).values()][0] + 1,
                 "name": weaponTrans[str(equip["itemId"])],
                 "base": equip["flat"]["weaponStats"][0]["statValue"],
-                "stat": [
+                "stat": {},
+            }
+            if len(equip["flat"]["weaponStats"]) > 1:
+                eInfo["weapon"]["stat"] = [
                     {
                         "name": propTrans[stat["appendPropId"]],
-                        "value": stat["statValue"]
+                        "value": stat["statValue"],
                     }
                     for stat in equip["flat"]["weaponStats"]
                     if propTrans[stat["appendPropId"]] != "武器基础攻击力"
-                ][0],
-            }
+                ][0]
         else:
             artiSetId = equip["flat"]["icon"].split("_")[-2]
             artiPosId = posTrans[equip["flat"]["equipType"]]
