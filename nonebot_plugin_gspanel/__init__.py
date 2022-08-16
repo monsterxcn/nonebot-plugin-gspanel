@@ -38,7 +38,12 @@ def findUid(input: str) -> List[str]:
 
 @showScore.handle()
 async def _(bot: Bot, event: MessageEvent, state: T_State):
-    input = [i for i in event.get_plaintext().split(" ") if i]
+    argsMsg = (
+        str(state["_prefix"]["command_arg"])
+        if "command_arg" in list(state.get("_prefix", {}))
+        else event.get_plaintext()
+    )
+    input = [i for i in argsMsg.strip().split(" ") if i]
     qq, uid, char, force = event.get_user_id(), "", "", False
     for msgSeg in event.message:
         if msgSeg.type == "at":
