@@ -1,4 +1,4 @@
-<h1 align="center">Nonebot Plugin GsPanel</h1></br>
+<h1 align="center">NoneBot Plugin GsPanel</h1></br>
 
 
 <p align="center">🤖 用于展示原神游戏内角色展柜数据的 NoneBot2 插件</p></br>
@@ -18,7 +18,7 @@
 </p></br>
 
 
-| <img src="https://user-images.githubusercontent.com/22407052/187607775-61cfa24c-d736-4994-bd16-d211d807ae50.png" style="height:30%"> | <img src="https://user-images.githubusercontent.com/22407052/187607799-b503f504-770f-4f80-85c6-9db78d5f849a.png" style="height:30%"> | <img src="https://user-images.githubusercontent.com/22407052/187607839-d29e3962-5bf6-4bf5-912d-2516e16b7643.png" style="height:30%"> |
+| ![刻晴](https://user-images.githubusercontent.com/22407052/187607775-61cfa24c-d736-4994-bd16-d211d807ae50.png) | ![琴](https://user-images.githubusercontent.com/22407052/187607799-b503f504-770f-4f80-85c6-9db78d5f849a.png) | ![香菱](https://user-images.githubusercontent.com/22407052/187607839-d29e3962-5bf6-4bf5-912d-2516e16b7643.png) |
 |:--:|:--:|:--:|
 
 
