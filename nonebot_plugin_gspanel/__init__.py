@@ -1,131 +1,90 @@
-from typing import List
-try:
-    from nonebot.adapters.cqhttp import Bot, MessageSegment
-    from nonebot.adapters.cqhttp.event import MessageEvent
-except ImportError:
-    from nonebot.adapters.onebot.v11 import Bot
-    from nonebot.adapters.onebot.v11.message import MessageSegment
-    from nonebot.adapters.onebot.v11.event import MessageEvent
-from nonebot.exception import FinishedException
+from re import findall, sub
+from typing import Tuple
+
+from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.plugin import on_command
 from nonebot.typing import T_State
 
-from .data_source import getFullJson, getUid, uidChecker
-from .html_render import getFullImage
-from .reliquary_mark import getAllScore
+try:
+    from nonebot.adapters.onebot.v11 import Bot
+    from nonebot.adapters.onebot.v11.event import MessageEvent
+    from nonebot.adapters.onebot.v11.message import MessageSegment
+except ImportError:
+    from nonebot.adapters.cqhttp import Bot, MessageSegment  # type: ignore
+    from nonebot.adapters.cqhttp.event import MessageEvent  # type: ignore
 
-showScore = on_command("panel", aliases={"评分", "面板"}, priority=13)
+from .__utils__ import fetchInitRes, uidHelper
+from .data_source import getPanelMsg
 
-
-# 从 get_plaintext() 提取末尾的一串数字作为 UID
-def findUid(input: str) -> List[str]:
-    # [CQ:at,qq=123456789]
-    beforeCQ = input[:input.find("[")] if input.find("[") > 0 else ""
-    afterCQ = input[input.find("]") + 1:] if input.find("]") < len(input) - 1 else ""  # noqa
-    input = beforeCQ.strip() + afterCQ.strip()
-    uid = ""
-    for s in input[::-1]:
-        tmp = s + uid
-        if tmp.isdigit():
-            uid = tmp
-            continue
-        else:
-            break
-    start = input[:-len(uid)] if len(uid) else input
-    return [start.strip(), uid]
+driver = get_driver()
+showPanel = on_command("panel", aliases={"评分", "面板"}, priority=13)
 
 
-@showScore.handle()
-async def _(bot: Bot, event: MessageEvent, state: T_State):
-    argsMsg = (
+async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
+    """
+    输入消息中的 UID 与角色名格式化，应具备处理 ``msg`` 为空、包含中文或数字的能力。
+    - 首个中文字符串捕获为角色名，若不包含则返回 ``all`` 请求角色面板列表数据
+    - 首个数字字符串捕获为 UID，若不包含则返回 ``uidHelper()`` 根据绑定配置查找的 UID
+
+    * ``param msg: str`` 输入消息，由 ``state["_prefix"]["command_arg"]`` 或 ``event.get_plaintext()`` 生成，可能包含 CQ 码
+    * ``param qq: str`` 输入消息触发 QQ
+    * ``param atqq: str = ""`` 输入消息中首个 at 的 QQ
+    - ``return: Tuple[str, str]``  UID、角色名
+    """
+    uid, char = "", ""
+    group = findall(r"[0-9]+|[\u4e00-\u9fa5]+", sub(r"\[CQ:.*\]", "", msg))
+    for s in group:
+        if str(s).isdigit() and not uid:
+            uid = str(s)
+        elif not str(s).isdigit() and not char:
+            char = str(s)
+    uid = uid or await uidHelper(atqq or qq)
+    char = char or "all"
+    return uid, char
+
+
+@driver.on_startup
+async def exStartup() -> None:
+    await fetchInitRes()
+
+
+@showPanel.handle()
+async def giveMePower(bot: Bot, event: MessageEvent, state: T_State):
+    qq = str(event.get_user_id())
+    argsMsg = (  # 获取不包含触发关键词的消息文本
         str(state["_prefix"]["command_arg"])
         if "command_arg" in list(state.get("_prefix", {}))
-        else event.get_plaintext()
+        else str(event.get_plaintext())
     )
-    input = [i for i in argsMsg.strip().split(" ") if i]
-    qq, uid, char, force = event.get_user_id(), "", "", False
-    for msgSeg in event.message:
-        if msgSeg.type == "at":
-            qq = msgSeg.data["qq"]
+    # await showPanel.finish(argsMsg)
+    # 提取消息中的 at 作为操作目标 QQ
+    opqq = ""
+    for seg in event.message:
+        if seg.type == "at" and not opqq:
+            opqq = str(seg.data["qq"])
             break
-    # 识别命令
-    if len(input) == 0:
-        uid = await getUid(qq)
-        if not uid:
-            await showScore.finish(
-                "首次使用请发送「面板 UID」绑定 UID 与 QQ\n"
-                "发送「面板 角色名」查询角色展柜中的角色数据~"
-            )
-    elif len(input) == 1:
-        if "刷新" in input[0]:
-            input[0], force = input[0].replace("刷新", ""), True
-        if input[0].isdigit():
-            uid = input[0]
+    # 输入以「绑定」开头，识别为绑定操作
+    if argsMsg.startswith("绑定"):
+        args = [a.strip() for a in argsMsg[2:].split(" ") if a.strip().isdigit()]
+        if len(args) == 1:
+            uid, opqq = args[0], opqq or qq
+        elif len(args) == 2 and not opqq:
+            uid, opqq = args[0], args[1]
         else:
-            char, uid = findUid(input[0])
-            if len(char) > 5:
-                raise FinishedException
-    elif len(input) == 2:
-        if "刷新" in input:
-            got = [i for i in input if i != "刷新"][0]
-            if got.isdigit():
-                uid = got
-            else:
-                char = got
-        elif input[0].isdigit():
-            char, uid = input[1], input[0]
-        elif input[1].isdigit():
-            char, uid = input[0], input[1]
-        else:
-            await showScore.finish(
-                "命令格式不合法，你可能想输入「面板 角色 刷新」或「面板 角色 UID」？"
-            )
-    elif len(input) == 3:
-        char, uid = input[0], input[1]
-        force = True if "刷新" in input[2] else False
-    else:
-        raise FinishedException
-    # 处理 UID
-    if not uid:
-        uid = await getUid(qq)
-        if not uid:
-            await showScore.finish("面板什么的，派蒙不知道呢 >.<")
-    uid, server = uidChecker(uid)
-    if not server:
-        await showScore.finish("UID 格式不合法！")
-    # 开始请求
-    jsonData = await getFullJson(uid, force)
-    if isinstance(jsonData, str):
-        await showScore.finish(MessageSegment.text(jsonData))
-    avalChar = [a["name"] for a in jsonData["avatarInfoList"]]
-    # 结束未指定角色响应
-    if not char and len(input) < 3:
-        msg = (
-            f"成功{'更新' if force else '获取'}了 {uid} 的"
-            f"{'、'.join(avalChar)}等 {len(avalChar)} 位角色数据\n"
-        )
-        await getUid(qq, uid)
-        await showScore.finish(
-            MessageSegment.text(msg) + MessageSegment.at(qq) +
-            MessageSegment.text("可以发送「面板 角色名」查询详情辣")
-        )
-    # 开始计算指定角色评分
-    if char not in avalChar:
-        await showScore.finish(
-            f"角色「{char}」未在用户 {uid} 的游戏内展柜公开！"
-        )
-    avatarInfo = [
-        x for x in jsonData["avatarInfoList"] if x["name"] == char
-    ][0]
-    scores = getAllScore(avatarInfo)
-    logger.info(
-        f'{len(scores["pos"])} 件圣遗物'
-        f'总分：{scores["score"]}({scores["level"]})'
-    )
-    resImg = await getFullImage(uid, avatarInfo, scores)
-    await showScore.finish(
-        MessageSegment.image(resImg)
-        if "base64" in resImg else
-        MessageSegment.text(resImg)
-    )
+            await showPanel.finish("面板绑定参数格式错误！")
+        if opqq != qq and opqq not in bot.config.superusers:
+            await showPanel.finish(f"没有权限操作 QQ{qq} 的绑定状态！")
+        elif uid[0] not in ["1", "2", "5", "7", "8"] or len(uid) > 9:
+            await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
+        await showPanel.finish(await uidHelper(opqq, uid))
+    # 尝试从输入中理解 UID、角色名
+    uid, char = await formatInput(argsMsg, qq, opqq)
+    logger.info(f"可能需要查找 UID{uid} 的「{char}」角色面板..")
+    if not uid.isdigit() or uid[0] not in ["1", "2", "5", "7", "8"] or len(uid) > 9:
+        await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
+    rt = await getPanelMsg(uid, char)
+    if rt.get("error") or rt.get("msg"):
+        await showPanel.finish(rt.get("error") or rt.get("msg"))
+    if rt.get("pic"):
+        await showPanel.finish(MessageSegment.image(rt["pic"]))
