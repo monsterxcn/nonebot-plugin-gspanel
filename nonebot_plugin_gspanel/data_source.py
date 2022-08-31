@@ -245,7 +245,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
         else charData["SideIconName"].replace("UI_AvatarIcon_Side", "UI_Gacha_AvatarImg")
     )
     charImg = await download(f"https://enka.network/ui/{charImgName}.png", char)
-    tpl = tpl.replace("{{char_img}}", str(charImg.resolve()) if charImg else "")
+    tpl = tpl.replace("{{char_img}}", str(charImg.resolve().as_posix()) if charImg else "")
 
     # 角色信息
     tpl = tpl.replace(
@@ -269,7 +269,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             f"""
             <div class="cons-item">
                 <div class="talent-icon {"off" if cIdx + 1 > consActivated else ""}">
-                    <div class="talent-icon-img" style="background-image:url({str(consImg.resolve()) if consImg else ""})"></div>
+                    <div class="talent-icon-img" style="background-image:url({str(consImg.resolve().as_posix()) if consImg else ""})"></div>
                 </div>
             </div>
             """
@@ -289,7 +289,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             f"<!--skill_{list(SKILL.values())[idx]}-->",
             f"""
             <div class="talent-icon {"talent-plus" if currentLvl > level else ""} {"talent-crown" if level == 10 else ""}">
-                <div class="talent-icon-img" style="background-image:url({str(skillImg.resolve()) if skillImg else ""})"></div>
+                <div class="talent-icon-img" style="background-image:url({str(skillImg.resolve().as_posix()) if skillImg else ""})"></div>
                 <span>{currentLvl}</span>
             </div>
             """,
