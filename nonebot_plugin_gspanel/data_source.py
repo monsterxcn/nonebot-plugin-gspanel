@@ -69,6 +69,7 @@ async def getRawData(
                         if cId == str(x["avatarId"])
                     ][0]
                     for x in cacheData["playerInfo"]["showAvatarInfoList"]
+                    if x["avatarId"] not in [10000005, 10000007]
                 ]
             }
     # 请求最新数据
@@ -107,6 +108,7 @@ async def getRawData(
                             if cId == str(x["avatarId"])
                         ][0]
                         for x in resJson["playerInfo"]["showAvatarInfoList"]
+                        if x["avatarId"] not in [10000005, 10000007]
                     ]
                 }
             elif [x for x in resJson["avatarInfoList"] if str(x["avatarId"]) == charId]:
