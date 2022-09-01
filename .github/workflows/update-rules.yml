@@ -1,0 +1,43 @@
+name: Update rules
+
+on:
+    workflow_dispatch:
+
+jobs:
+  build:
+    name: Update rules
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@master
+      
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      
+      - name: Update rules
+        run: |
+          cd .github
+          wget https://raw.githubusercontent.com/yoimiya-kokomi/miao-plugin/master/resources/meta/reliquaries/artis-mark.js
+          sed -i 's#export const#const#g' artis-mark.js
+          echo 'module.exports = { usefulAttr }' >> artis-mark.js
+          node update-rules.js
+          mv -f calc-rule.json ../data/gspanel/calc-rule.json
+      
+      - name: Upload rules
+        uses: tvrcgo/upload-to-oss@master
+        with:
+          key-id: ${{ secrets.OSS_KEY_ID }}
+          key-secret: ${{ secrets.OSS_KEY_SECRET }}
+          region: oss-cn-shanghai
+          bucket: monsterx
+          assets: data/gspanel/calc-rule.json:/bot/gspanel/calc-rule.json
+      
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: ':wrench: 自动更新角色评分规则'
+          add: 'data/gspanel/calc-rule.json'

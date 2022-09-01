@@ -158,7 +158,6 @@ async def fetchInitRes() -> None:
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-pyro.png",
         "https://cdn.monsterx.cn/bot/gspanel/style.css",
         "https://cdn.monsterx.cn/bot/gspanel/tpl.html",
-        "https://cdn.monsterx.cn/bot/gspanel/calc-rule.json",
     ]
     tasks = []
     for r in initRes:
@@ -172,8 +171,9 @@ async def fetchInitRes() -> None:
         # "https://cdn.monsterx.cn/bot/gapanel/loc.json",  # 仅包含 zh-CN 语言
         "https://cdn.monsterx.cn/bot/gspanel/TextMapCHS.json",
         "https://cdn.monsterx.cn/bot/gspanel/characters.json",
+        "https://cdn.monsterx.cn/bot/gspanel/calc-rule.json",
     ]
-    tmp = {"0": {}, "1": {}}
+    tmp = {"0": {}, "1": {}, "2": {}}
     async with AsyncClient(verify=False) as client:
         for idx, url in enumerate(urls):
             tmp[str(idx)] = (await client.get(url)).json()
