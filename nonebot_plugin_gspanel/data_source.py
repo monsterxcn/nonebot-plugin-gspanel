@@ -94,7 +94,12 @@ async def getRawData(
             )
             resJson = res.json()
             resJson["time"] = int(time())
-            assert list(resJson.keys()) != ["time"]
+            if not resJson.get("playerInfo"):
+                raise HTTPError("返回信息不全")
+            if not resJson["playerInfo"].get("showAvatarInfoList"):
+                return {"error": f"UID{uid} 的角色展柜内还没有角色哦！"}
+            if not resJson.get("avatarInfoList"):
+                return {"error": f"UID{uid} 的角色展柜详细数据已隐藏！"}
             (LOCAL_DIR / "cache" / f"{uid}__data.json").write_text(
                 json.dumps(resJson, ensure_ascii=False, indent=2), encoding="utf-8"
             )
@@ -116,8 +121,8 @@ async def getRawData(
                     x for x in resJson["avatarInfoList"] if str(x["avatarId"]) == charId
                 ][0]
             else:
-                return {"error": "最新数据中未发现该角色！"}
-        except (AssertionError or HTTPError or json.decoder.JSONDecodeError):
+                return {"error": f"UID{uid} 的最新数据中未发现该角色！"}
+        except (HTTPError or json.decoder.JSONDecodeError):
             return {"error": "暂时无法访问面板数据接口.."}
         except Exception as e:
             # 出错时返回 {"error": "错误信息"}
