@@ -213,6 +213,8 @@ async def download(url: str, local: Union[Path, str] = "") -> Union[Path, None]:
             d.mkdir(parents=True, exist_ok=True)
         f = d / url.split("/")[-1]
     else:
+        if not local.parent.exists():
+            local.parent.mkdir(parents=True, exist_ok=True)
         f = local
     # 本地文件存在时便不再下载，JSON 文件除外
     if f.exists() and ".json" not in f.name:

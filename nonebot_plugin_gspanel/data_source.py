@@ -1,7 +1,9 @@
+import asyncio
 import json
 from base64 import b64encode
 
 # from io import BytesIO
+# from PIL import Image
 from time import time
 from typing import Dict, List, Literal, Tuple
 
@@ -24,9 +26,6 @@ from .__utils__ import (
     kStr,
     vStr,
 )
-
-# from PIL import Image
-# from utils.browser import get_browser
 
 
 async def getRawData(
@@ -225,7 +224,9 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     if raw.get("error"):
         return raw
     if char == "all":
-        return {"msg": f"成功获取{'、'.join(raw['list'])}等 {len(raw['list'])} 位角色数据！"}
+        return {
+            "msg": f"成功获取了 UID{uid} 的{'、'.join(raw['list'])}等 {len(raw['list'])} 位角色数据！"
+        }
 
     # 加载模板、翻译等资源
     tpl = (LOCAL_DIR / "tpl.html").read_text(encoding="utf-8")
@@ -237,6 +238,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     # 加载角色词条配置
     base = {"生命值": propData["1"], "攻击力": propData["4"], "防御力": propData["7"]}
     affixWeight, pointMark, maxMark = await getAffixCfg(char, base)
+    dlTasks = []  # 所有待下载任务
 
     # 准备好了吗，要开始了哦！
 
@@ -247,10 +249,15 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     charImgName = (
         charData["Costumes"][str(raw["costumeId"])]["art"]
         if raw.get("costumeId")
-        else charData["SideIconName"].replace("UI_AvatarIcon_Side", "UI_Gacha_AvatarImg")
+        else charData["SideIconName"].replace(
+            "UI_AvatarIcon_Side", "UI_Gacha_AvatarImg"
+        )
     )
-    charImg = await download(f"https://enka.network/ui/{charImgName}.png", char)
-    tpl = tpl.replace("{{char_img}}", str(charImg.resolve().as_posix()) if charImg else "")
+    charImg = LOCAL_DIR / char / f"{charImgName}.png"
+    dlTasks.append(
+        download(f"https://enka.network/ui/{charImgName}.png", local=charImg)
+    )
+    tpl = tpl.replace("{{char_img}}", str(charImg.resolve().as_posix()))
 
     # 角色信息
     tpl = tpl.replace(
@@ -269,12 +276,15 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     consActivated, consHtml = len(raw.get("talentIdList", [])), []
     for cIdx, consImgName in enumerate(charData["Consts"]):
         # 图像下载及模板替换
-        consImg = await download(f"https://enka.network/ui/{consImgName}.png", char)
+        consImg = LOCAL_DIR / char / f"{consImgName}.png"
+        dlTasks.append(
+            download(f"https://enka.network/ui/{consImgName}.png", local=consImg)
+        )
         consHtml.append(
             f"""
             <div class="cons-item">
                 <div class="talent-icon {"off" if cIdx + 1 > consActivated else ""}">
-                    <div class="talent-icon-img" style="background-image:url({str(consImg.resolve().as_posix()) if consImg else ""})"></div>
+                    <div class="talent-icon-img" style="background-image:url({str(consImg.resolve().as_posix())})"></div>
                 </div>
             </div>
             """
@@ -289,12 +299,15 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
         currentLvl = level + extraLevels.get(list(SKILL)[idx], 0)
         # 图像下载及模板替换
         skillImgName = charData["Skills"][str(skillId)]
-        skillImg = await download(f"https://enka.network/ui/{skillImgName}.png", char)
+        skillImg = LOCAL_DIR / char / f"{skillImgName}.png"
+        dlTasks.append(
+            download(f"https://enka.network/ui/{skillImgName}.png", local=skillImg)
+        )
         tpl = tpl.replace(
             f"<!--skill_{list(SKILL.values())[idx]}-->",
             f"""
             <div class="talent-icon {"talent-plus" if currentLvl > level else ""} {"talent-crown" if level == 10 else ""}">
-                <div class="talent-icon-img" style="background-image:url({str(skillImg.resolve().as_posix()) if skillImg else ""})"></div>
+                <div class="talent-icon-img" style="background-image:url({str(skillImg.resolve().as_posix())})"></div>
                 <span>{currentLvl}</span>
             </div>
             """,
@@ -379,13 +392,16 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             affixCnt = list(equip["weapon"].get("affixMap", {".": 0}).values())[0] + 1
             # 图像下载及模板替换
             weaponImgName = equip["flat"]["icon"]
-            weaponImg = await download(
-                f"https://enka.network/ui/{weaponImgName}.png", "weapon"
+            weaponImg = LOCAL_DIR / "weapon" / f"{weaponImgName}.png"
+            dlTasks.append(
+                download(
+                    f"https://enka.network/ui/{weaponImgName}.png", local=weaponImg
+                )
             )
             tpl = tpl.replace(
                 "<!--weapon-->",
                 f"""
-                <img src="{str(weaponImg.resolve()) if weaponImg else ""}" />
+                <img src="{str(weaponImg.resolve())}" />
                 <div class="head">
                     <strong>{loc.get(equip["flat"]["nameTextMapHash"], "缺少翻译")}</strong>
                     <div class="star star-{equip["flat"]["rankLevel"]}"></div>
@@ -482,14 +498,15 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             equipsCnt += 1
             # 图像下载及模板替换
             artiImgName = equip["flat"]["icon"]
-            artiImg = await download(
-                f"https://enka.network/ui/{artiImgName}.png", "artifacts"
+            artiImg = LOCAL_DIR / "artifacts" / f"{artiImgName}.png"
+            dlTasks.append(
+                download(f"https://enka.network/ui/{artiImgName}.png", local=artiImg)
             )
             tpl = tpl.replace(
                 f"<!--arti_{posIdx}-->",
                 f"""
                 <div class="arti-icon">
-                    <img src="{str(artiImg.resolve()) if artiImg else ""}" />
+                    <img src="{str(artiImg.resolve())}" />
                     <span>+{equip["reliquary"]["level"] - 1}</span>
                 </div>
                 <div class="head">
@@ -551,6 +568,10 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     )
     tpl = tpl.replace("{{total_mark_lvl}}", equipsMarkLevel)
     tpl = tpl.replace("{{total_mark}}", str(round(equipsMark, 1)))
+
+    # 下载所有图片
+    await asyncio.gather(*dlTasks)
+    dlTasks.clear()
 
     # 渲染截图
     tmpFile = LOCAL_DIR / f"{uid}-{char}.html"
