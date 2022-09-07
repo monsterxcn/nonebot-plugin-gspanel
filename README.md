@@ -78,9 +78,9 @@ cp -r data/gspanel /path/to/bot/data/
    + 于面板数据区域展示角色最高的伤害加成数据，该属性与角色实际伤害属性不一致时区别显示词条权重规则
    + 对元素属性异常的空之杯进行评分惩罚，扣除该圣遗物总分的 50%（最大扣除比例）
    
- - 插件返回「暂时无法访问面板数据接口..」可能的原因有：Bot 与 [@Enka.Network](https://enka.shinshin.moe/) 的连接不稳定；[@Enka.Network](https://enka.shinshin.moe/) 服务器暂时故障等。
+ - 插件返回「暂时无法访问面板数据接口..」可能的原因有：Bot 与 [Enka.Network](https://enka.shinshin.moe/) 的连接不稳定；[Enka.Network](https://enka.shinshin.moe/) 服务器暂时故障等。
    
- - 插件首次生成某个角色的面板图片时，会尝试从 [@Enka.Network](https://enka.shinshin.moe/) 下载该角色的抽卡大图、命座图片、技能图片、圣遗物及武器图片等素材图片，生成面板图片的时间由 Bot 与 [@Enka.Network](https://enka.shinshin.moe/) 的连接质量决定。素材图片下载至本地后将不再从远程下载，生成面板图片的时间将大幅缩短。
+ - 插件首次生成某个角色的面板图片时，会尝试从 [Enka.Network](https://enka.shinshin.moe/) 下载该角色的抽卡大图、命座图片、技能图片、圣遗物及武器图片等素材图片，生成面板图片的时间由 Bot 与 [Enka.Network](https://enka.shinshin.moe/) 的连接质量决定。素材图片下载至本地后将不再从远程下载，生成面板图片的时间将大幅缩短。
    
  - 一般来说，插件安装完成后无需设置环境变量，只需重启 Bot 即可开始使用。你也可以在 Nonebot2 当前使用的 `.env` 文件中添加下表给出的环境变量，对插件进行更多配置。环境变量修改后需要重启 Bot 才能生效。
    
@@ -88,7 +88,12 @@ cp -r data/gspanel /path/to/bot/data/
    |:-------|:----:|:-----|:----|
    | `gspanel_expire_sec` | 否 | `300` | 面板数据缓存过期秒数 |
    | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
-
+   
+ - 插件图片生成基于 Playwright，若插件自动安装运行 Chromium 所需的额外依赖失败，请参考 [@SK-415/HarukaBot](https://haruka-bot.sk415.icu/faq.html#playwright-%E4%BE%9D%E8%B5%96%E4%B8%8D%E5%85%A8) 给出的以下解决方案：
+   
+   + Ubuntu：`python3 -m playwright install-deps`
+   + CentOS（仅供参考）：`yum install -y atk at-spi2-atk cups-libs libxkbcommon libXcomposite libXdamage libXrandr mesa-libgbm gtk3`
+   + 其他非 Ubuntu 系统：[@microsoft/playwright/issues](https://github.com/microsoft/playwright/issues)
 
 
 ## 命令说明
@@ -122,4 +127,4 @@ cp -r data/gspanel /path/to/bot/data/
 ## 特别鸣谢
 
 
-[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [@Enka.Network](https://enka.network/)
+[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [Enka.Network](https://enka.network/)

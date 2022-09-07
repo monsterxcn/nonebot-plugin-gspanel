@@ -1,5 +1,7 @@
 import asyncio
 import json
+import os
+import sys
 from pathlib import Path
 from typing import Optional, Union
 
@@ -7,6 +9,7 @@ from httpx import AsyncClient
 from nonebot import get_driver
 from nonebot.drivers import Driver
 from nonebot.log import logger
+from playwright.__main__ import main as playwright_main
 from playwright.async_api import Browser, async_playwright
 
 GROW_VALUE = {  # 词条成长值
@@ -109,18 +112,46 @@ def vStr(prop: str, value: Union[int, float]) -> str:
         return str(round(value, 1)) + "%"
 
 
+def installBrowser() -> None:
+    """Playwright Chromium 自动安装及更新"""
+    logger.info(f"检查 Chromium 更新（{os.environ.get('HTTPS_PROXY') or '无代理'}）..")
+    sys.argv, success = ["", "install", "chromium"], False
+    try:
+        os.environ["PLAYWRIGHT_DOWNLOAD_HOST"] = "https://npmmirror.com/mirrors/playwright/"
+        playwright_main()
+    except SystemExit as e:
+        if e.code == 0:
+            success = True
+    if not success:
+        logger.info("从 npmmirror 检查 Chromium 更新失败，尝试原始仓库..")
+        try:
+            os.environ["PLAYWRIGHT_DOWNLOAD_HOST"] = ""
+            playwright_main()
+        except SystemExit as e:
+            if e.code != 0:
+                del os.environ["PLAYWRIGHT_DOWNLOAD_HOST"]
+                raise RuntimeError("Chromium 自动安装及更新失败！")
+    del os.environ["PLAYWRIGHT_DOWNLOAD_HOST"]
+
+
 async def initBrowser(**kwargs) -> Optional[Browser]:
+    """Playwright Browser 对象初始化"""
     global _browser
     browser = await async_playwright().start()
     try:
         _browser = await browser.chromium.launch(**kwargs)
-        return _browser
     except Exception as e:
-        logger.error(f"启动 Chromium 发生错误 {type(e)}：{e}")
-    return None
+        try:
+            await asyncio.get_event_loop().run_in_executor(None, installBrowser)
+            _browser = await browser.chromium.launch(**kwargs)
+        except:  # noqa: E722
+            logger.error(f"启动 Chromium 发生错误，Playwright 系统依赖可能不全\n{type(e)}：{e}")
+            return None
+    return _browser
 
 
 async def getBrowser(**kwargs) -> Optional[Browser]:
+    """Playwright Browser 对象获取"""
     return _browser or await initBrowser(**kwargs)
 
 
