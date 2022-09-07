@@ -318,13 +318,11 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     phyDmg = round(propData["30"] * 100, 1)
     elemDmg = sorted(
         [{"type": DMG[d], "value": round(propData[d] * 100, 1)} for d in DMG],
-        key=lambda x: x["value"],
+        key=lambda x: (x["value"], x["type"] == ELEM[charData["Element"]]),
         reverse=True,
     )[0]
     if phyDmg > elemDmg["value"]:
         dmgType, dmgValue = "物理伤害加成", phyDmg
-    elif elemDmg["value"] == 0:
-        dmgType, dmgValue = f"{ELEM[charData['Element']]}元素伤害加成", 0
     else:
         dmgType, dmgValue = f"{elemDmg['type']}元素伤害加成", elemDmg["value"]
     # 模板替换，奶妈角色额外显示治疗加成，元素伤害异常时评分权重显示提醒
