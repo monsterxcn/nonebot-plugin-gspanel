@@ -117,7 +117,9 @@ def installBrowser() -> None:
     logger.info(f"检查 Chromium 更新（{os.environ.get('HTTPS_PROXY') or '无代理'}）..")
     sys.argv, success = ["", "install", "chromium"], False
     try:
-        os.environ["PLAYWRIGHT_DOWNLOAD_HOST"] = "https://npmmirror.com/mirrors/playwright/"
+        os.environ[
+            "PLAYWRIGHT_DOWNLOAD_HOST"
+        ] = "https://npmmirror.com/mirrors/playwright/"
         playwright_main()
     except SystemExit as e:
         if e.code == 0:
@@ -131,11 +133,20 @@ def installBrowser() -> None:
             if e.code != 0:
                 del os.environ["PLAYWRIGHT_DOWNLOAD_HOST"]
                 raise RuntimeError("Chromium 自动安装及更新失败！")
-    del os.environ["PLAYWRIGHT_DOWNLOAD_HOST"]
+    if os.environ.get("PLAYWRIGHT_DOWNLOAD_HOST"):
+        del os.environ["PLAYWRIGHT_DOWNLOAD_HOST"]
 
 
 async def initBrowser(**kwargs) -> Optional[Browser]:
     """Playwright Browser 对象初始化"""
+    reload = (
+        driver.config.fastapi_reload
+        if hasattr(driver.config, "fastapi_reload")
+        else False
+    )
+    if sys.platform == "win32" and reload:
+        logger.error("Windows 系统必须设置 FASTAPI_RELOAD=false")
+        return None
     global _browser
     browser = await async_playwright().start()
     try:
