@@ -69,11 +69,11 @@ async def giveMePower(bot: Bot, event: MessageEvent, state: T_State):
         args = [a.strip() for a in argsMsg[2:].split(" ") if a.strip().isdigit()]
         if len(args) == 1:
             uid, opqq = args[0], opqq or qq
-        elif len(args) == 2 and not opqq:
-            uid, opqq = args[0], args[1]
+        elif len(args) == 2:
+            uid, opqq = args[0], (opqq or args[1])
         else:
             await showPanel.finish("面板绑定参数格式错误！")
-        if opqq != qq and opqq not in bot.config.superusers:
+        if opqq != qq and qq not in bot.config.superusers:
             await showPanel.finish(f"没有权限操作 QQ{qq} 的绑定状态！")
         elif uid[0] not in ["1", "2", "5", "7", "8"] or len(uid) > 9:
             await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
