@@ -19,15 +19,15 @@ jobs:
       - name: Update files
         run: |
           cd .github
-          wget https://github.com/Dimbreath/GenshinData/raw/master/TextMap/TextMapCHS.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarExcelConfigData.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillExcelConfigData.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarTalentExcelConfigData.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarCostumeExcelConfigData.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/WeaponExcelConfigData.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/ReliquaryExcelConfigData.json
-          wget https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/ReliquarySetExcelConfigData.json
+          wget -q https://github.com/Dimbreath/GenshinData/raw/master/TextMap/TextMapCHS.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarTalentExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarCostumeExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/WeaponExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/ReliquaryExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/ReliquarySetExcelConfigData.json
           python update-char.py
           mv -f characters.json ../data/gspanel/characters.json
           mv -f trans.json ../data/gspanel/trans.json
