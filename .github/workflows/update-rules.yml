@@ -19,7 +19,7 @@ jobs:
       - name: Update rules
         run: |
           cd .github
-          wget https://raw.githubusercontent.com/yoimiya-kokomi/miao-plugin/master/resources/meta/reliquaries/artis-mark.js
+          wget https://raw.githubusercontent.com/yoimiya-kokomi/miao-plugin/master/resources/meta/artifact/artis-mark.js
           sed -i 's#export const#const#g' artis-mark.js
           echo 'module.exports = { usefulAttr }' >> artis-mark.js
           node update-rules.js
