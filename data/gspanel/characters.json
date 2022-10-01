@@ -1,0 +1,2152 @@
+{
+  "10000002": {
+    "Element": "Ice",
+    "Name": "Ayaka",
+    "NameCN": "神里绫华",
+    "NameTextMapHash": 1006042610,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Ayaka",
+    "SideIconName": "UI_AvatarIcon_Side_Ayaka",
+    "Base": {
+      "hpBase": 1000.9860229492188,
+      "attackBase": 26.62660026550293,
+      "defenseBase": 61.0265998840332
+    },
+    "Consts": [
+      "UI_Talent_S_Ayaka_01",
+      "UI_Talent_S_Ayaka_02",
+      "UI_Talent_U_Ayaka_02",
+      "UI_Talent_S_Ayaka_03",
+      "UI_Talent_U_Ayaka_01",
+      "UI_Talent_S_Ayaka_04"
+    ],
+    "SkillOrder": [
+      10024,
+      10018,
+      10019
+    ],
+    "Skills": {
+      "10024": "Skill_A_01",
+      "10018": "Skill_S_Ayaka_01",
+      "10019": "Skill_E_Ayaka"
+    },
+    "ProudMap": {
+      "10024": 231,
+      "10018": 232,
+      "10019": 239
+    }
+  },
+  "10000003": {
+    "Element": "Wind",
+    "Name": "Qin",
+    "NameCN": "琴",
+    "NameTextMapHash": 3221566250,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Qin",
+    "SideIconName": "UI_AvatarIcon_Side_Qin",
+    "Base": {
+      "hpBase": 1143.9840087890625,
+      "attackBase": 18.6200008392334,
+      "defenseBase": 59.83000183105469
+    },
+    "Consts": [
+      "UI_Talent_S_Qin_01",
+      "UI_Talent_S_Qin_02",
+      "UI_Talent_U_Qin_02",
+      "UI_Talent_S_Qin_03",
+      "UI_Talent_U_Qin_01",
+      "UI_Talent_S_Qin_04"
+    ],
+    "SkillOrder": [
+      10031,
+      10033,
+      10034
+    ],
+    "Skills": {
+      "10031": "Skill_A_01",
+      "10033": "Skill_S_Qin_02",
+      "10034": "Skill_E_Qin_01"
+    },
+    "ProudMap": {
+      "10031": 331,
+      "10033": 332,
+      "10034": 339
+    },
+    "Costumes": {
+      "200301": {
+        "sideIconName": "UI_AvatarIcon_Side_QinCostumeSea",
+        "icon": "UI_AvatarIcon_QinCostumeSea",
+        "art": "UI_Costume_QinCostumeSea",
+        "avatarId": 10000003
+      },
+      "200302": {
+        "sideIconName": "UI_AvatarIcon_Side_QinCostumeWic",
+        "icon": "UI_AvatarIcon_QinCostumeWic",
+        "art": "UI_Costume_QinCostumeWic",
+        "avatarId": 10000003
+      }
+    }
+  },
+  "10000006": {
+    "Element": "Electric",
+    "Name": "Lisa",
+    "NameCN": "丽莎",
+    "NameTextMapHash": 3344622722,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Lisa",
+    "SideIconName": "UI_AvatarIcon_Side_Lisa",
+    "Base": {
+      "hpBase": 802.3760986328125,
+      "attackBase": 19.410720825195312,
+      "defenseBase": 48.069000244140625
+    },
+    "Consts": [
+      "UI_Talent_S_Lisa_01",
+      "UI_Talent_S_Lisa_02",
+      "UI_Talent_U_Lisa_02",
+      "UI_Talent_S_Lisa_03",
+      "UI_Talent_U_Lisa_01",
+      "UI_Talent_S_Lisa_04"
+    ],
+    "SkillOrder": [
+      10060,
+      10061,
+      10062
+    ],
+    "Skills": {
+      "10060": "Skill_A_Catalyst_MD",
+      "10061": "Skill_S_Lisa_01",
+      "10062": "Skill_E_Lisa_01"
+    },
+    "ProudMap": {
+      "10060": 431,
+      "10061": 432,
+      "10062": 439
+    }
+  },
+  "10000014": {
+    "Element": "Water",
+    "Name": "Barbara",
+    "NameCN": "芭芭拉",
+    "NameTextMapHash": 3775299170,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Barbara",
+    "SideIconName": "UI_AvatarIcon_Side_Barbara",
+    "Base": {
+      "hpBase": 820.6118774414062,
+      "attackBase": 13.355999946594238,
+      "defenseBase": 56.080501556396484
+    },
+    "Consts": [
+      "UI_Talent_S_Barbara_01",
+      "UI_Talent_S_Barbara_02",
+      "UI_Talent_U_Barbara_02",
+      "UI_Talent_S_Barbara_03",
+      "UI_Talent_U_Barbara_01",
+      "UI_Talent_S_Barbara_04"
+    ],
+    "SkillOrder": [
+      10070,
+      10071,
+      10072
+    ],
+    "Skills": {
+      "10070": "Skill_A_Catalyst_MD",
+      "10071": "Skill_S_Barbara_01",
+      "10072": "Skill_E_Barbara_01"
+    },
+    "ProudMap": {
+      "10070": 1431,
+      "10071": 1432,
+      "10072": 1439
+    },
+    "Costumes": {
+      "201401": {
+        "sideIconName": "UI_AvatarIcon_Side_BarbaraCostumeSummertime",
+        "icon": "UI_AvatarIcon_BarbaraCostumeSummertime",
+        "art": "UI_Costume_BarbaraCostumeSummertime",
+        "avatarId": 10000014
+      }
+    }
+  },
+  "10000015": {
+    "Element": "Ice",
+    "Name": "Kaeya",
+    "NameCN": "凯亚",
+    "NameTextMapHash": 4119663210,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Kaeya",
+    "SideIconName": "UI_AvatarIcon_Side_Kaeya",
+    "Base": {
+      "hpBase": 975.6163940429688,
+      "attackBase": 18.698400497436523,
+      "defenseBase": 66.38099670410156
+    },
+    "Consts": [
+      "UI_Talent_S_Kaeya_01",
+      "UI_Talent_S_Kaeya_02",
+      "UI_Talent_U_Kaeya_01",
+      "UI_Talent_S_Kaeya_03",
+      "UI_Talent_U_Kaeya_02",
+      "UI_Talent_S_Kaeya_04"
+    ],
+    "SkillOrder": [
+      10073,
+      10074,
+      10075
+    ],
+    "Skills": {
+      "10073": "Skill_A_01",
+      "10074": "Skill_S_Kaeya_01",
+      "10075": "Skill_E_Kaeya_01"
+    },
+    "ProudMap": {
+      "10073": 1531,
+      "10074": 1532,
+      "10075": 1539
+    }
+  },
+  "10000016": {
+    "Element": "Fire",
+    "Name": "Diluc",
+    "NameCN": "迪卢克",
+    "NameTextMapHash": 3608180322,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Diluc",
+    "SideIconName": "UI_AvatarIcon_Side_Diluc",
+    "Base": {
+      "hpBase": 1010.5192260742188,
+      "attackBase": 26.06800079345703,
+      "defenseBase": 61.0265998840332
+    },
+    "Consts": [
+      "UI_Talent_S_Diluc_01",
+      "UI_Talent_S_Diluc_02",
+      "UI_Talent_U_Diluc_01",
+      "UI_Talent_S_Diluc_03",
+      "UI_Talent_U_Diluc_02",
+      "UI_Talent_S_Diluc_04"
+    ],
+    "SkillOrder": [
+      10160,
+      10161,
+      10165
+    ],
+    "Skills": {
+      "10160": "Skill_A_04",
+      "10161": "Skill_S_Diluc_01_01",
+      "10165": "Skill_E_Diluc_01"
+    },
+    "ProudMap": {
+      "10160": 1631,
+      "10161": 1632,
+      "10165": 1639
+    },
+    "Costumes": {
+      "201601": {
+        "sideIconName": "UI_AvatarIcon_Side_DilucCostumeFlamme",
+        "icon": "UI_AvatarIcon_DilucCostumeFlamme",
+        "art": "UI_Costume_DilucCostumeFlamme",
+        "avatarId": 10000016
+      }
+    }
+  },
+  "10000020": {
+    "Element": "Electric",
+    "Name": "Razor",
+    "NameCN": "雷泽",
+    "NameTextMapHash": 4160147242,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Razor",
+    "SideIconName": "UI_AvatarIcon_Side_Razor",
+    "Base": {
+      "hpBase": 1002.9700927734375,
+      "attackBase": 19.58880043029785,
+      "defenseBase": 62.9474983215332
+    },
+    "Consts": [
+      "UI_Talent_S_Razor_01",
+      "UI_Talent_S_Razor_02",
+      "UI_Talent_U_Razor_02",
+      "UI_Talent_S_Razor_03",
+      "UI_Talent_U_Razor_01",
+      "UI_Talent_S_Razor_04"
+    ],
+    "SkillOrder": [
+      10201,
+      10202,
+      10203
+    ],
+    "Skills": {
+      "10201": "Skill_A_04",
+      "10202": "Skill_S_Razor_01",
+      "10203": "Skill_E_Razor_01"
+    },
+    "ProudMap": {
+      "10201": 2031,
+      "10202": 2032,
+      "10203": 2039
+    }
+  },
+  "10000021": {
+    "Element": "Fire",
+    "Name": "Ambor",
+    "NameCN": "安柏",
+    "NameTextMapHash": 1966438658,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Ambor",
+    "SideIconName": "UI_AvatarIcon_Side_Ambor",
+    "Base": {
+      "hpBase": 793.2581787109375,
+      "attackBase": 18.698400497436523,
+      "defenseBase": 50.358001708984375
+    },
+    "Consts": [
+      "UI_Talent_S_Ambor_01",
+      "UI_Talent_S_Ambor_02",
+      "UI_Talent_U_Ambor_02",
+      "UI_Talent_S_Ambor_03",
+      "UI_Talent_U_Ambor_01",
+      "UI_Talent_S_Ambor_04"
+    ],
+    "SkillOrder": [
+      10041,
+      10032,
+      10017
+    ],
+    "Skills": {
+      "10041": "Skill_A_02",
+      "10032": "Skill_S_Ambor_01",
+      "10017": "Skill_E_Ambor"
+    },
+    "ProudMap": {
+      "10041": 2131,
+      "10032": 2132,
+      "10017": 2139
+    },
+    "Costumes": {
+      "202101": {
+        "sideIconName": "UI_AvatarIcon_Side_AmborCostumeWic",
+        "icon": "UI_AvatarIcon_AmborCostumeWic",
+        "art": "UI_Costume_AmborCostumeWic",
+        "avatarId": 10000021
+      }
+    }
+  },
+  "10000022": {
+    "Element": "Wind",
+    "Name": "Venti",
+    "NameCN": "温迪",
+    "NameTextMapHash": 2466140362,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Venti",
+    "SideIconName": "UI_AvatarIcon_Side_Venti",
+    "Base": {
+      "hpBase": 819.855224609375,
+      "attackBase": 20.48200035095215,
+      "defenseBase": 52.052101135253906
+    },
+    "Consts": [
+      "UI_Talent_S_Venti_01",
+      "UI_Talent_S_Venti_02",
+      "UI_Talent_U_Venti_02",
+      "UI_Talent_S_Venti_03",
+      "UI_Talent_U_Venti_01",
+      "UI_Talent_S_Venti_04"
+    ],
+    "SkillOrder": [
+      10221,
+      10224,
+      10225
+    ],
+    "Skills": {
+      "10221": "Skill_A_02",
+      "10224": "Skill_S_Venti_01",
+      "10225": "Skill_E_Venti_01"
+    },
+    "ProudMap": {
+      "10221": 2231,
+      "10224": 2232,
+      "10225": 2239
+    }
+  },
+  "10000023": {
+    "Element": "Fire",
+    "Name": "Xiangling",
+    "NameCN": "香菱",
+    "NameTextMapHash": 1130996346,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Xiangling",
+    "SideIconName": "UI_AvatarIcon_Side_Xiangling",
+    "Base": {
+      "hpBase": 911.791015625,
+      "attackBase": 18.876480102539062,
+      "defenseBase": 56.080501556396484
+    },
+    "Consts": [
+      "UI_Talent_S_Xiangling_01",
+      "UI_Talent_S_Xiangling_02",
+      "UI_Talent_U_Xiangling_02",
+      "UI_Talent_S_Xiangling_03",
+      "UI_Talent_U_Xiangling_01",
+      "UI_Talent_S_Xiangling_04"
+    ],
+    "SkillOrder": [
+      10231,
+      10232,
+      10235
+    ],
+    "Skills": {
+      "10231": "Skill_A_03",
+      "10232": "Skill_S_Xiangling_01",
+      "10235": "Skill_E_Xiangling_01"
+    },
+    "ProudMap": {
+      "10231": 2331,
+      "10232": 2332,
+      "10235": 2339
+    }
+  },
+  "10000024": {
+    "Element": "Electric",
+    "Name": "Beidou",
+    "NameCN": "北斗",
+    "NameTextMapHash": 2646367730,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Beidou",
+    "SideIconName": "UI_AvatarIcon_Side_Beidou",
+    "Base": {
+      "hpBase": 1094.149169921875,
+      "attackBase": 18.876480102539062,
+      "defenseBase": 54.36375045776367
+    },
+    "Consts": [
+      "UI_Talent_S_Beidou_02",
+      "UI_Talent_S_Beidou_01",
+      "UI_Talent_U_Beidou_01",
+      "UI_Talent_S_Beidou_03",
+      "UI_Talent_U_Beidou_02",
+      "UI_Talent_S_Beidou_04"
+    ],
+    "SkillOrder": [
+      10241,
+      10242,
+      10245
+    ],
+    "Skills": {
+      "10241": "Skill_A_04",
+      "10242": "Skill_S_Beidou_01",
+      "10245": "Skill_E_Beidou_01"
+    },
+    "ProudMap": {
+      "10241": 2431,
+      "10242": 2432,
+      "10245": 2439
+    }
+  },
+  "10000025": {
+    "Element": "Water",
+    "Name": "Xingqiu",
+    "NameCN": "行秋",
+    "NameTextMapHash": 4197635682,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Xingqiu",
+    "SideIconName": "UI_AvatarIcon_Side_Xingqiu",
+    "Base": {
+      "hpBase": 857.0835571289062,
+      "attackBase": 16.917600631713867,
+      "defenseBase": 63.51974868774414
+    },
+    "Consts": [
+      "UI_Talent_S_Xingqiu_01",
+      "UI_Talent_S_Xingqiu_02",
+      "UI_Talent_U_Xingqiu_01",
+      "UI_Talent_S_Xingqiu_03",
+      "UI_Talent_U_Xingqiu_02",
+      "UI_Talent_S_Xingqiu_04"
+    ],
+    "SkillOrder": [
+      10381,
+      10382,
+      10385
+    ],
+    "Skills": {
+      "10381": "Skill_A_01",
+      "10382": "Skill_S_Xingqiu_01",
+      "10385": "Skill_E_Xingqiu_01"
+    },
+    "ProudMap": {
+      "10381": 2531,
+      "10382": 2532,
+      "10385": 2539
+    }
+  },
+  "10000026": {
+    "Element": "Wind",
+    "Name": "Xiao",
+    "NameCN": "魈",
+    "NameTextMapHash": 1021947690,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Xiao",
+    "SideIconName": "UI_AvatarIcon_Side_Xiao",
+    "Base": {
+      "hpBase": 991.4528198242188,
+      "attackBase": 27.185199737548828,
+      "defenseBase": 62.223201751708984
+    },
+    "Consts": [
+      "UI_Talent_S_Xiao_01",
+      "UI_Talent_S_Xiao_02",
+      "UI_Talent_U_Xiao_01",
+      "UI_Talent_S_Xiao_03",
+      "UI_Talent_U_Xiao_02",
+      "UI_Talent_S_Xiao_04"
+    ],
+    "SkillOrder": [
+      10261,
+      10262,
+      10265
+    ],
+    "Skills": {
+      "10261": "Skill_A_03",
+      "10262": "Skill_S_Xiao_01",
+      "10265": "Skill_E_Xiao_01"
+    },
+    "ProudMap": {
+      "10261": 2631,
+      "10262": 2632,
+      "10265": 2639
+    }
+  },
+  "10000027": {
+    "Element": "Rock",
+    "Name": "Ningguang",
+    "NameCN": "凝光",
+    "NameTextMapHash": 4127888970,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Ningguang",
+    "SideIconName": "UI_AvatarIcon_Side_Ningguang",
+    "Base": {
+      "hpBase": 820.6118774414062,
+      "attackBase": 17.808000564575195,
+      "defenseBase": 48.069000244140625
+    },
+    "Consts": [
+      "UI_Talent_S_Ningguang_01",
+      "UI_Talent_S_Ningguang_05",
+      "UI_Talent_U_Ningguang_02",
+      "UI_Talent_S_Ningguang_03",
+      "UI_Talent_U_Ningguang_01",
+      "UI_Talent_S_Ningguang_04"
+    ],
+    "SkillOrder": [
+      10271,
+      10272,
+      10274
+    ],
+    "Skills": {
+      "10271": "Skill_A_Catalyst_MD",
+      "10272": "Skill_S_Ningguang_01",
+      "10274": "Skill_E_Ningguang_01"
+    },
+    "ProudMap": {
+      "10271": 2731,
+      "10272": 2732,
+      "10274": 2739
+    },
+    "Costumes": {
+      "202701": {
+        "sideIconName": "UI_AvatarIcon_Side_NingguangCostumeFloral",
+        "icon": "UI_AvatarIcon_NingguangCostumeFloral",
+        "art": "UI_Costume_NingguangCostumeFloral",
+        "avatarId": 10000027
+      }
+    }
+  },
+  "10000029": {
+    "Element": "Fire",
+    "Name": "Klee",
+    "NameCN": "可莉",
+    "NameTextMapHash": 3339083250,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Klee",
+    "SideIconName": "UI_AvatarIcon_Side_Klee",
+    "Base": {
+      "hpBase": 800.788818359375,
+      "attackBase": 24.20599937438965,
+      "defenseBase": 47.86399841308594
+    },
+    "Consts": [
+      "UI_Talent_S_Klee_01",
+      "UI_Talent_S_Klee_02",
+      "UI_Talent_U_Klee_01",
+      "UI_Talent_S_Klee_03",
+      "UI_Talent_U_Klee_02",
+      "UI_Talent_S_Klee_04"
+    ],
+    "SkillOrder": [
+      10291,
+      10292,
+      10295
+    ],
+    "Skills": {
+      "10291": "Skill_A_Catalyst_MD",
+      "10292": "Skill_S_Klee_01",
+      "10295": "Skill_E_Klee_01"
+    },
+    "ProudMap": {
+      "10291": 2931,
+      "10292": 2932,
+      "10295": 2939
+    }
+  },
+  "10000030": {
+    "Element": "Rock",
+    "Name": "Zhongli",
+    "NameCN": "钟离",
+    "NameTextMapHash": 3862787418,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Zhongli",
+    "SideIconName": "UI_AvatarIcon_Side_Zhongli",
+    "Base": {
+      "hpBase": 1143.9840087890625,
+      "attackBase": 19.551000595092773,
+      "defenseBase": 57.436798095703125
+    },
+    "Consts": [
+      "UI_Talent_S_Zhongli_01",
+      "UI_Talent_S_Zhongli_02",
+      "UI_Talent_U_Zhongli_01",
+      "UI_Talent_S_Zhongli_03",
+      "UI_Talent_U_Zhongli_02",
+      "UI_Talent_S_Zhongli_04"
+    ],
+    "SkillOrder": [
+      10301,
+      10302,
+      10303
+    ],
+    "Skills": {
+      "10301": "Skill_A_03",
+      "10302": "Skill_S_Zhongli_01",
+      "10303": "Skill_E_Zhongli_01"
+    },
+    "ProudMap": {
+      "10301": 3031,
+      "10302": 3032,
+      "10303": 3039
+    }
+  },
+  "10000031": {
+    "Element": "Electric",
+    "Name": "Fischl",
+    "NameCN": "菲谢尔",
+    "NameTextMapHash": 3277782506,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Fischl",
+    "SideIconName": "UI_AvatarIcon_Side_Fischl",
+    "Base": {
+      "hpBase": 770.46337890625,
+      "attackBase": 20.47920036315918,
+      "defenseBase": 49.78575134277344
+    },
+    "Consts": [
+      "UI_Talent_S_Fischl_01",
+      "UI_Talent_S_Fischl_02",
+      "UI_Talent_U_Fischl_01",
+      "UI_Talent_S_Fischl_03",
+      "UI_Talent_U_Fischl_02",
+      "UI_Talent_S_Fischl_04"
+    ],
+    "SkillOrder": [
+      10311,
+      10312,
+      10313
+    ],
+    "Skills": {
+      "10311": "Skill_A_02",
+      "10312": "Skill_S_Fischl_01",
+      "10313": "Skill_E_Fischl_01"
+    },
+    "ProudMap": {
+      "10311": 3131,
+      "10312": 3132,
+      "10313": 3139
+    },
+    "Costumes": {
+      "203101": {
+        "sideIconName": "UI_AvatarIcon_Side_FischlCostumeHighness",
+        "icon": "UI_AvatarIcon_FischlCostumeHighness",
+        "art": "UI_Costume_FischlCostumeHighness",
+        "avatarId": 10000031
+      }
+    }
+  },
+  "10000032": {
+    "Element": "Fire",
+    "Name": "Bennett",
+    "NameCN": "班尼特",
+    "NameTextMapHash": 968893378,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Bennett",
+    "SideIconName": "UI_AvatarIcon_Side_Bennett",
+    "Base": {
+      "hpBase": 1039.4417724609375,
+      "attackBase": 16.02720069885254,
+      "defenseBase": 64.66425323486328
+    },
+    "Consts": [
+      "UI_Talent_S_Bennett_01",
+      "UI_Talent_S_Bennett_02",
+      "UI_Talent_U_Bennett_01",
+      "UI_Talent_S_Bennett_03",
+      "UI_Talent_U_Bennett_02",
+      "UI_Talent_S_Bennett_04"
+    ],
+    "SkillOrder": [
+      10321,
+      10322,
+      10323
+    ],
+    "Skills": {
+      "10321": "Skill_A_01",
+      "10322": "Skill_S_Bennett_01",
+      "10323": "Skill_E_Bennett_01"
+    },
+    "ProudMap": {
+      "10321": 3231,
+      "10322": 3232,
+      "10323": 3239
+    }
+  },
+  "10000033": {
+    "Element": "Water",
+    "Name": "Tartaglia",
+    "NameCN": "达达利亚",
+    "NameTextMapHash": 3847143266,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Tartaglia",
+    "SideIconName": "UI_AvatarIcon_Side_Tartaglia",
+    "Base": {
+      "hpBase": 1020.0524291992188,
+      "attackBase": 23.461200714111328,
+      "defenseBase": 63.4197998046875
+    },
+    "Consts": [
+      "UI_Talent_S_Tartaglia_01",
+      "UI_Talent_S_Tartaglia_02",
+      "UI_Talent_U_Tartaglia_01",
+      "UI_Talent_S_Tartaglia_05",
+      "UI_Talent_U_Tartaglia_02",
+      "UI_Talent_S_Tartaglia_04"
+    ],
+    "SkillOrder": [
+      10331,
+      10332,
+      10333
+    ],
+    "Skills": {
+      "10331": "Skill_A_02",
+      "10332": "Skill_S_Tartaglia_01",
+      "10333": "Skill_E_Tartaglia_01"
+    },
+    "ProudMap": {
+      "10331": 3331,
+      "10332": 3332,
+      "10333": 3339
+    }
+  },
+  "10000034": {
+    "Element": "Rock",
+    "Name": "Noel",
+    "NameCN": "诺艾尔",
+    "NameTextMapHash": 1921418842,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Noel",
+    "SideIconName": "UI_AvatarIcon_Side_Noel",
+    "Base": {
+      "hpBase": 1012.0880126953125,
+      "attackBase": 16.02720069885254,
+      "defenseBase": 66.9532470703125
+    },
+    "Consts": [
+      "UI_Talent_S_Noel_01",
+      "UI_Talent_S_Noel_02",
+      "UI_Talent_U_Noel_01",
+      "UI_Talent_S_Noel_03",
+      "UI_Talent_U_Noel_02",
+      "UI_Talent_S_Noel_04"
+    ],
+    "SkillOrder": [
+      10341,
+      10342,
+      10343
+    ],
+    "Skills": {
+      "10341": "Skill_A_04",
+      "10342": "Skill_S_Noel_01",
+      "10343": "Skill_E_Noel_01"
+    },
+    "ProudMap": {
+      "10341": 3431,
+      "10342": 3432,
+      "10343": 3439
+    }
+  },
+  "10000035": {
+    "Element": "Ice",
+    "Name": "Qiqi",
+    "NameCN": "七七",
+    "NameTextMapHash": 168956722,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Qiqi",
+    "SideIconName": "UI_AvatarIcon_Side_Qiqi",
+    "Base": {
+      "hpBase": 962.8532104492188,
+      "attackBase": 22.3439998626709,
+      "defenseBase": 71.7959976196289
+    },
+    "Consts": [
+      "UI_Talent_S_Qiqi_01",
+      "UI_Talent_S_Qiqi_02",
+      "UI_Talent_U_Qiqi_01",
+      "UI_Talent_S_Qiqi_03",
+      "UI_Talent_U_Qiqi_02",
+      "UI_Talent_S_Qiqi_04"
+    ],
+    "SkillOrder": [
+      10351,
+      10352,
+      10353
+    ],
+    "Skills": {
+      "10351": "Skill_A_01",
+      "10352": "Skill_S_Qiqi_01",
+      "10353": "Skill_E_Qiqi_01"
+    },
+    "ProudMap": {
+      "10351": 3531,
+      "10352": 3532,
+      "10353": 3539
+    }
+  },
+  "10000036": {
+    "Element": "Ice",
+    "Name": "Chongyun",
+    "NameCN": "重云",
+    "NameTextMapHash": 2876340530,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Chongyun",
+    "SideIconName": "UI_AvatarIcon_Side_Chongyun",
+    "Base": {
+      "hpBase": 920.908935546875,
+      "attackBase": 18.698400497436523,
+      "defenseBase": 54.36375045776367
+    },
+    "Consts": [
+      "UI_Talent_S_Chongyun_01",
+      "UI_Talent_S_Chongyun_02",
+      "UI_Talent_U_Chongyun_01",
+      "UI_Talent_S_Chongyun_03",
+      "UI_Talent_U_Chongyun_02",
+      "UI_Talent_S_Chongyun_04"
+    ],
+    "SkillOrder": [
+      10401,
+      10402,
+      10403
+    ],
+    "Skills": {
+      "10401": "Skill_A_04",
+      "10402": "Skill_S_Chongyun_01",
+      "10403": "Skill_E_Chongyun_01"
+    },
+    "ProudMap": {
+      "10401": 3631,
+      "10402": 3632,
+      "10403": 3639
+    }
+  },
+  "10000037": {
+    "Element": "Ice",
+    "Name": "Ganyu",
+    "NameCN": "甘雨",
+    "NameTextMapHash": 2679781122,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Ganyu",
+    "SideIconName": "UI_AvatarIcon_Side_Ganyu",
+    "Base": {
+      "hpBase": 762.656005859375,
+      "attackBase": 26.06800079345703,
+      "defenseBase": 49.06060028076172
+    },
+    "Consts": [
+      "UI_Talent_S_Ganyu_01",
+      "UI_Talent_S_Ganyu_02",
+      "UI_Talent_U_Ganyu_01",
+      "UI_Talent_S_Ganyu_03",
+      "UI_Talent_U_Ganyu_02",
+      "UI_Talent_S_Ganyu_04"
+    ],
+    "SkillOrder": [
+      10371,
+      10372,
+      10373
+    ],
+    "Skills": {
+      "10371": "Skill_A_02",
+      "10372": "Skill_S_Ganyu_01",
+      "10373": "Skill_E_Ganyu_01"
+    },
+    "ProudMap": {
+      "10371": 3731,
+      "10372": 3732,
+      "10373": 3739
+    }
+  },
+  "10000038": {
+    "Element": "Rock",
+    "Name": "Albedo",
+    "NameCN": "阿贝多",
+    "NameTextMapHash": 4108620722,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Albedo",
+    "SideIconName": "UI_AvatarIcon_Side_Albedo",
+    "Base": {
+      "hpBase": 1029.5855712890625,
+      "attackBase": 19.551000595092773,
+      "defenseBase": 68.2061996459961
+    },
+    "Consts": [
+      "UI_Talent_S_Albedo_01",
+      "UI_Talent_S_Albedo_02",
+      "UI_Talent_U_Albedo_01",
+      "UI_Talent_S_Albedo_03",
+      "UI_Talent_U_Albedo_02",
+      "UI_Talent_S_Albedo_04"
+    ],
+    "SkillOrder": [
+      10386,
+      10387,
+      10388
+    ],
+    "Skills": {
+      "10386": "Skill_A_01",
+      "10387": "Skill_S_Albedo_01",
+      "10388": "Skill_E_Albedo_01"
+    },
+    "ProudMap": {
+      "10386": 3831,
+      "10387": 3832,
+      "10388": 3839
+    }
+  },
+  "10000039": {
+    "Element": "Ice",
+    "Name": "Diona",
+    "NameCN": "迪奥娜",
+    "NameTextMapHash": 1468367538,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Diona",
+    "SideIconName": "UI_AvatarIcon_Side_Diona",
+    "Base": {
+      "hpBase": 802.3760986328125,
+      "attackBase": 17.808000564575195,
+      "defenseBase": 50.358001708984375
+    },
+    "Consts": [
+      "UI_Talent_S_Diona_01",
+      "UI_Talent_S_Diona_02",
+      "UI_Talent_U_Diona_01",
+      "UI_Talent_S_Diona_03",
+      "UI_Talent_U_Diona_02",
+      "UI_Talent_S_Diona_04"
+    ],
+    "SkillOrder": [
+      10391,
+      10392,
+      10395
+    ],
+    "Skills": {
+      "10391": "Skill_A_02",
+      "10392": "Skill_S_Diona_01",
+      "10395": "Skill_E_Diona_01"
+    },
+    "ProudMap": {
+      "10391": 3931,
+      "10392": 3932,
+      "10395": 3939
+    }
+  },
+  "10000041": {
+    "Element": "Water",
+    "Name": "Mona",
+    "NameCN": "莫娜",
+    "NameTextMapHash": 1113306282,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Mona",
+    "SideIconName": "UI_AvatarIcon_Side_Mona",
+    "Base": {
+      "hpBase": 810.322021484375,
+      "attackBase": 22.3439998626709,
+      "defenseBase": 50.855499267578125
+    },
+    "Consts": [
+      "UI_Talent_S_Mona_01",
+      "UI_Talent_S_Mona_02",
+      "UI_Talent_U_Mona_01",
+      "UI_Talent_S_Mona_03",
+      "UI_Talent_U_Mona_02",
+      "UI_Talent_S_Mona_04"
+    ],
+    "SkillOrder": [
+      10411,
+      10412,
+      10415
+    ],
+    "Skills": {
+      "10411": "Skill_A_Catalyst_MD",
+      "10412": "Skill_S_Mona_01",
+      "10415": "Skill_E_Mona_01"
+    },
+    "ProudMap": {
+      "10411": 4131,
+      "10412": 4132,
+      "10415": 4139
+    },
+    "Costumes": {
+      "204101": {
+        "sideIconName": "UI_AvatarIcon_Side_MonaCostumeWic",
+        "icon": "UI_AvatarIcon_MonaCostumeWic",
+        "art": "UI_Costume_MonaCostumeWic",
+        "avatarId": 10000041
+      }
+    }
+  },
+  "10000042": {
+    "Element": "Electric",
+    "Name": "Keqing",
+    "NameCN": "刻晴",
+    "NameTextMapHash": 1864015138,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Keqing",
+    "SideIconName": "UI_AvatarIcon_Side_Keqing",
+    "Base": {
+      "hpBase": 1020.0524291992188,
+      "attackBase": 25.136999130249023,
+      "defenseBase": 62.223201751708984
+    },
+    "Consts": [
+      "UI_Talent_S_Keqing_01",
+      "UI_Talent_S_Keqing_02",
+      "UI_Talent_U_Keqing_01",
+      "UI_Talent_S_Keqing_03",
+      "UI_Talent_U_Keqing_02",
+      "UI_Talent_S_Keqing_04"
+    ],
+    "SkillOrder": [
+      10421,
+      10422,
+      10425
+    ],
+    "Skills": {
+      "10421": "Skill_A_01",
+      "10422": "Skill_S_Keqing_01",
+      "10425": "Skill_E_Keqing_01"
+    },
+    "ProudMap": {
+      "10421": 4231,
+      "10422": 4232,
+      "10425": 4239
+    },
+    "Costumes": {
+      "204201": {
+        "sideIconName": "UI_AvatarIcon_Side_KeqingCostumeFeather",
+        "icon": "UI_AvatarIcon_KeqingCostumeFeather",
+        "art": "UI_Costume_KeqingCostumeFeather",
+        "avatarId": 10000042
+      }
+    }
+  },
+  "10000043": {
+    "Element": "Wind",
+    "Name": "Sucrose",
+    "NameCN": "砂糖",
+    "NameTextMapHash": 1053433018,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Sucrose",
+    "SideIconName": "UI_AvatarIcon_Side_Sucrose",
+    "Base": {
+      "hpBase": 775.0223388671875,
+      "attackBase": 14.246399879455566,
+      "defenseBase": 58.941749572753906
+    },
+    "Consts": [
+      "UI_Talent_S_Sucrose_01",
+      "UI_Talent_S_Sucrose_02",
+      "UI_Talent_U_Sucrose_01",
+      "UI_Talent_S_Sucrose_03",
+      "UI_Talent_U_Sucrose_02",
+      "UI_Talent_S_Sucrose_04"
+    ],
+    "SkillOrder": [
+      10431,
+      10432,
+      10435
+    ],
+    "Skills": {
+      "10431": "Skill_A_Catalyst_MD",
+      "10432": "Skill_S_Sucrose_01",
+      "10435": "Skill_E_Sucrose_01"
+    },
+    "ProudMap": {
+      "10431": 4331,
+      "10432": 4332,
+      "10435": 4339
+    }
+  },
+  "10000044": {
+    "Element": "Fire",
+    "Name": "Xinyan",
+    "NameCN": "辛焱",
+    "NameTextMapHash": 4273845410,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Xinyan",
+    "SideIconName": "UI_AvatarIcon_Side_Xinyan",
+    "Base": {
+      "hpBase": 939.1447143554688,
+      "attackBase": 20.835359573364258,
+      "defenseBase": 66.9532470703125
+    },
+    "Consts": [
+      "UI_Talent_S_Xinyan_01",
+      "UI_Talent_S_Xinyan_02",
+      "UI_Talent_U_Xinyan_01",
+      "UI_Talent_S_Xinyan_03",
+      "UI_Talent_U_Xinyan_02",
+      "UI_Talent_S_Xinyan_04"
+    ],
+    "SkillOrder": [
+      10441,
+      10442,
+      10443
+    ],
+    "Skills": {
+      "10441": "Skill_A_04",
+      "10442": "Skill_S_Xinyan_01",
+      "10443": "Skill_E_Xinyan_01"
+    },
+    "ProudMap": {
+      "10441": 4431,
+      "10442": 4432,
+      "10443": 4439
+    }
+  },
+  "10000045": {
+    "Element": "Ice",
+    "Name": "Rosaria",
+    "NameCN": "罗莎莉亚",
+    "NameTextMapHash": 4260733330,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Rosaria",
+    "SideIconName": "UI_AvatarIcon_Side_Rosaria",
+    "Base": {
+      "hpBase": 1030.3238525390625,
+      "attackBase": 20.12303924560547,
+      "defenseBase": 59.513999938964844
+    },
+    "Consts": [
+      "UI_Talent_S_Rosaria_01",
+      "UI_Talent_S_Rosaria_02",
+      "UI_Talent_U_Rosaria_01",
+      "UI_Talent_S_Rosaria_03",
+      "UI_Talent_U_Rosaria_02",
+      "UI_Talent_S_Rosaria_04"
+    ],
+    "SkillOrder": [
+      10451,
+      10452,
+      10453
+    ],
+    "Skills": {
+      "10451": "Skill_A_03",
+      "10452": "Skill_S_Rosaria_01",
+      "10453": "Skill_E_Rosaria_01"
+    },
+    "ProudMap": {
+      "10451": 4531,
+      "10452": 4532,
+      "10453": 4539
+    },
+    "Costumes": {
+      "204501": {
+        "sideIconName": "UI_AvatarIcon_Side_RosariaCostumeWic",
+        "icon": "UI_AvatarIcon_RosariaCostumeWic",
+        "art": "UI_Costume_RosariaCostumeWic",
+        "avatarId": 10000045
+      }
+    }
+  },
+  "10000046": {
+    "Element": "Fire",
+    "Name": "Hutao",
+    "NameCN": "胡桃",
+    "NameTextMapHash": 1940919994,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Hutao",
+    "SideIconName": "UI_AvatarIcon_Side_Hutao",
+    "Base": {
+      "hpBase": 1210.7164306640625,
+      "attackBase": 8.285900115966797,
+      "defenseBase": 68.2061996459961
+    },
+    "Consts": [
+      "UI_Talent_S_Hutao_03",
+      "UI_Talent_S_Hutao_01",
+      "UI_Talent_U_Hutao_01",
+      "UI_Talent_S_Hutao_02",
+      "UI_Talent_U_Hutao_02",
+      "UI_Talent_S_Hutao_04"
+    ],
+    "SkillOrder": [
+      10461,
+      10462,
+      10463
+    ],
+    "Skills": {
+      "10461": "Skill_A_03",
+      "10462": "Skill_S_Hutao_01",
+      "10463": "Skill_E_Hutao_01"
+    },
+    "ProudMap": {
+      "10461": 4631,
+      "10462": 4632,
+      "10463": 4639
+    }
+  },
+  "10000047": {
+    "Element": "Wind",
+    "Name": "Kazuha",
+    "NameCN": "枫原万叶",
+    "NameTextMapHash": 88505754,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Kazuha",
+    "SideIconName": "UI_AvatarIcon_Side_Kazuha",
+    "Base": {
+      "hpBase": 1039.1187744140625,
+      "attackBase": 23.08880043029785,
+      "defenseBase": 62.82149887084961
+    },
+    "Consts": [
+      "UI_Talent_S_Kazuha_01",
+      "UI_Talent_S_Kazuha_02",
+      "UI_Talent_U_Kazuha_01",
+      "UI_Talent_S_Kazuha_03",
+      "UI_Talent_U_Kazuha_02",
+      "UI_Talent_S_Kazuha_04"
+    ],
+    "SkillOrder": [
+      10471,
+      10472,
+      10475
+    ],
+    "Skills": {
+      "10471": "Skill_A_01",
+      "10472": "Skill_S_Kazuha_01",
+      "10475": "Skill_E_Kazuha_01"
+    },
+    "ProudMap": {
+      "10471": 4731,
+      "10472": 4732,
+      "10475": 4739
+    }
+  },
+  "10000048": {
+    "Element": "Fire",
+    "Name": "Feiyan",
+    "NameCN": "烟绯",
+    "NameTextMapHash": 697277554,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Feiyan",
+    "SideIconName": "UI_AvatarIcon_Side_Feiyan",
+    "Base": {
+      "hpBase": 784.1402587890625,
+      "attackBase": 20.12303924560547,
+      "defenseBase": 49.2135009765625
+    },
+    "Consts": [
+      "UI_Talent_S_Feiyan_01",
+      "UI_Talent_S_Feiyan_02",
+      "UI_Talent_U_Feiyan_01",
+      "UI_Talent_S_Feiyan_03",
+      "UI_Talent_U_Feiyan_02",
+      "UI_Talent_S_Feiyan_04"
+    ],
+    "SkillOrder": [
+      10481,
+      10482,
+      10485
+    ],
+    "Skills": {
+      "10481": "Skill_A_Catalyst_MD",
+      "10482": "Skill_S_Feiyan_01",
+      "10485": "Skill_E_Feiyan_01"
+    },
+    "ProudMap": {
+      "10481": 4831,
+      "10482": 4832,
+      "10485": 4839
+    }
+  },
+  "10000049": {
+    "Element": "Fire",
+    "Name": "Yoimiya",
+    "NameCN": "宵宫",
+    "NameTextMapHash": 2504399314,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Yoimiya",
+    "SideIconName": "UI_AvatarIcon_Side_Yoimiya",
+    "Base": {
+      "hpBase": 791.255615234375,
+      "attackBase": 25.136999130249023,
+      "defenseBase": 47.86399841308594
+    },
+    "Consts": [
+      "UI_Talent_S_Yoimiya_01",
+      "UI_Talent_S_Yoimiya_02",
+      "UI_Talent_U_Yoimiya_01",
+      "UI_Talent_S_Yoimiya_03",
+      "UI_Talent_U_Yoimiya_02",
+      "UI_Talent_S_Yoimiya_04"
+    ],
+    "SkillOrder": [
+      10491,
+      10492,
+      10495
+    ],
+    "Skills": {
+      "10491": "Skill_A_02",
+      "10492": "Skill_S_Yoimiya_01",
+      "10495": "Skill_E_Yoimiya_01"
+    },
+    "ProudMap": {
+      "10491": 4931,
+      "10492": 4932,
+      "10495": 4939
+    }
+  },
+  "10000050": {
+    "Element": "Fire",
+    "Name": "Tohma",
+    "NameCN": "托马",
+    "NameTextMapHash": 3555115602,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Tohma",
+    "SideIconName": "UI_AvatarIcon_Side_Tohma",
+    "Base": {
+      "hpBase": 866.2014770507812,
+      "attackBase": 16.917600631713867,
+      "defenseBase": 62.9474983215332
+    },
+    "Consts": [
+      "UI_Talent_S_Tohma_01",
+      "UI_Talent_S_Tohma_02",
+      "UI_Talent_U_Tohma_01",
+      "UI_Talent_S_Tohma_03",
+      "UI_Talent_U_Tohma_02",
+      "UI_Talent_S_Tohma_04"
+    ],
+    "SkillOrder": [
+      10501,
+      10502,
+      10505
+    ],
+    "Skills": {
+      "10501": "Skill_A_03",
+      "10502": "Skill_S_Tohma_01",
+      "10505": "Skill_E_Tohma_01"
+    },
+    "ProudMap": {
+      "10501": 5031,
+      "10502": 5032,
+      "10505": 5039
+    }
+  },
+  "10000051": {
+    "Element": "Ice",
+    "Name": "Eula",
+    "NameCN": "优菈",
+    "NameTextMapHash": 3717667418,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Eula",
+    "SideIconName": "UI_AvatarIcon_Side_Eula",
+    "Base": {
+      "hpBase": 1029.5855712890625,
+      "attackBase": 26.62660026550293,
+      "defenseBase": 58.45391082763672
+    },
+    "Consts": [
+      "UI_Talent_S_Eula_02",
+      "UI_Talent_S_Eula_01",
+      "UI_Talent_U_Eula_01",
+      "UI_Talent_S_Eula_03",
+      "UI_Talent_U_Eula_02",
+      "UI_Talent_S_Eula_04"
+    ],
+    "SkillOrder": [
+      10511,
+      10512,
+      10515
+    ],
+    "Skills": {
+      "10511": "Skill_A_04",
+      "10512": "Skill_S_Eula_01",
+      "10515": "Skill_E_Eula_01"
+    },
+    "ProudMap": {
+      "10511": 5131,
+      "10512": 5132,
+      "10515": 5139
+    }
+  },
+  "10000052": {
+    "Element": "Electric",
+    "Name": "Shougun",
+    "NameCN": "雷电将军",
+    "NameTextMapHash": 3024507506,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Shougun",
+    "SideIconName": "UI_AvatarIcon_Side_Shougun",
+    "Base": {
+      "hpBase": 1004.7992553710938,
+      "attackBase": 26.254199981689453,
+      "defenseBase": 61.445411682128906
+    },
+    "Consts": [
+      "UI_Talent_S_Shougun_01",
+      "UI_Talent_S_Shougun_03",
+      "UI_Talent_U_Shougun_02",
+      "UI_Talent_S_Shougun_02",
+      "UI_Talent_U_Shougun_01",
+      "UI_Talent_S_Shougun_04"
+    ],
+    "SkillOrder": [
+      10521,
+      10522,
+      10525
+    ],
+    "Skills": {
+      "10521": "Skill_A_03",
+      "10522": "Skill_S_Shougun_01",
+      "10525": "Skill_E_Shougun_01"
+    },
+    "ProudMap": {
+      "10521": 5231,
+      "10522": 5232,
+      "10525": 5239
+    }
+  },
+  "10000053": {
+    "Element": "Wind",
+    "Name": "Sayu",
+    "NameCN": "早柚",
+    "NameTextMapHash": 2388785242,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Sayu",
+    "SideIconName": "UI_AvatarIcon_Side_Sayu",
+    "Base": {
+      "hpBase": 993.8521728515625,
+      "attackBase": 20.47920036315918,
+      "defenseBase": 62.43247604370117
+    },
+    "Consts": [
+      "UI_Talent_S_Sayu_01",
+      "UI_Talent_S_Sayu_02",
+      "UI_Talent_U_Sayu_02",
+      "UI_Talent_S_Sayu_03",
+      "UI_Talent_U_Sayu_01",
+      "UI_Talent_S_Sayu_04"
+    ],
+    "SkillOrder": [
+      10531,
+      10532,
+      10535
+    ],
+    "Skills": {
+      "10531": "Skill_A_04",
+      "10532": "Skill_S_Sayu_01",
+      "10535": "Skill_E_Sayu_01"
+    },
+    "ProudMap": {
+      "10531": 5331,
+      "10532": 5332,
+      "10535": 5339
+    }
+  },
+  "10000054": {
+    "Element": "Water",
+    "Name": "Kokomi",
+    "NameCN": "珊瑚宫心海",
+    "NameTextMapHash": 3914045794,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Kokomi",
+    "SideIconName": "UI_AvatarIcon_Side_Kokomi",
+    "Base": {
+      "hpBase": 1048.6519775390625,
+      "attackBase": 18.247600555419922,
+      "defenseBase": 51.1546516418457
+    },
+    "Consts": [
+      "UI_Talent_S_Kokomi_01",
+      "UI_Talent_S_Kokomi_02",
+      "UI_Talent_U_Kokomi_02",
+      "UI_Talent_S_Kokomi_03",
+      "UI_Talent_U_Kokomi_01",
+      "UI_Talent_S_Kokomi_04"
+    ],
+    "SkillOrder": [
+      10541,
+      10542,
+      10545
+    ],
+    "Skills": {
+      "10541": "Skill_A_Catalyst_MD",
+      "10542": "Skill_S_Kokomi_01",
+      "10545": "Skill_E_Kokomi_01"
+    },
+    "ProudMap": {
+      "10541": 5431,
+      "10542": 5432,
+      "10545": 5439
+    }
+  },
+  "10000055": {
+    "Element": "Rock",
+    "Name": "Gorou",
+    "NameCN": "五郎",
+    "NameTextMapHash": 3400133546,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Gorou",
+    "SideIconName": "UI_AvatarIcon_Side_Gorou",
+    "Base": {
+      "hpBase": 802.3760986328125,
+      "attackBase": 15.31488037109375,
+      "defenseBase": 54.36375045776367
+    },
+    "Consts": [
+      "UI_Talent_S_Gorou_01",
+      "UI_Talent_S_Gorou_02",
+      "UI_Talent_U_Gorou_01",
+      "UI_Talent_S_Gorou_03",
+      "UI_Talent_U_Gorou_02",
+      "UI_Talent_S_Gorou_04"
+    ],
+    "SkillOrder": [
+      10551,
+      10552,
+      10555
+    ],
+    "Skills": {
+      "10551": "Skill_A_02",
+      "10552": "Skill_S_Gorou_01",
+      "10555": "Skill_E_Gorou_01"
+    },
+    "ProudMap": {
+      "10551": 5531,
+      "10552": 5532,
+      "10555": 5539
+    }
+  },
+  "10000056": {
+    "Element": "Electric",
+    "Name": "Sara",
+    "NameCN": "九条裟罗",
+    "NameTextMapHash": 1483922610,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Sara",
+    "SideIconName": "UI_AvatarIcon_Side_Sara",
+    "Base": {
+      "hpBase": 802.3760986328125,
+      "attackBase": 16.383359909057617,
+      "defenseBase": 52.64699935913086
+    },
+    "Consts": [
+      "UI_Talent_S_Sara_05",
+      "UI_Talent_S_Sara_02",
+      "UI_Talent_U_Sara_02",
+      "UI_Talent_S_Sara_03",
+      "UI_Talent_U_Sara_01",
+      "UI_Talent_S_Sara_04"
+    ],
+    "SkillOrder": [
+      10561,
+      10562,
+      10565
+    ],
+    "Skills": {
+      "10561": "Skill_A_02",
+      "10562": "Skill_S_Sara_01",
+      "10565": "Skill_E_Sara_01"
+    },
+    "ProudMap": {
+      "10561": 5631,
+      "10562": 5632,
+      "10565": 5639
+    }
+  },
+  "10000057": {
+    "Element": "Rock",
+    "Name": "Itto",
+    "NameCN": "荒泷一斗",
+    "NameTextMapHash": 3068316954,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Itto",
+    "SideIconName": "UI_AvatarIcon_Side_Itto",
+    "Base": {
+      "hpBase": 1000.9860229492188,
+      "attackBase": 17.68899917602539,
+      "defenseBase": 74.66783905029297
+    },
+    "Consts": [
+      "UI_Talent_S_Itto_01",
+      "UI_Talent_S_Itto_02",
+      "UI_Talent_U_Itto_01",
+      "UI_Talent_S_Itto_03",
+      "UI_Talent_U_Itto_02",
+      "UI_Talent_S_Itto_04"
+    ],
+    "SkillOrder": [
+      10571,
+      10572,
+      10575
+    ],
+    "Skills": {
+      "10571": "Skill_A_04",
+      "10572": "Skill_S_Itto_01",
+      "10575": "Skill_E_Itto_01"
+    },
+    "ProudMap": {
+      "10571": 5731,
+      "10572": 5732,
+      "10575": 5739
+    }
+  },
+  "10000058": {
+    "Element": "Electric",
+    "Name": "Yae",
+    "NameCN": "八重神子",
+    "NameTextMapHash": 2713453234,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Yae",
+    "SideIconName": "UI_AvatarIcon_Side_Yae",
+    "Base": {
+      "hpBase": 807.4620361328125,
+      "attackBase": 26.440399169921875,
+      "defenseBase": 44.274200439453125
+    },
+    "Consts": [
+      "UI_Talent_S_Yae_01",
+      "UI_Talent_S_Yae_02",
+      "UI_Talent_U_Yae_01",
+      "UI_Talent_S_Yae_03",
+      "UI_Talent_U_Yae_02",
+      "UI_Talent_S_Yae_04"
+    ],
+    "SkillOrder": [
+      10581,
+      10582,
+      10585
+    ],
+    "Skills": {
+      "10581": "Skill_A_Catalyst_MD",
+      "10582": "Skill_S_Yae_01",
+      "10585": "Skill_E_Yae_01"
+    },
+    "ProudMap": {
+      "10581": 5831,
+      "10582": 5832,
+      "10585": 5839
+    }
+  },
+  "10000059": {
+    "Element": "Wind",
+    "Name": "Heizo",
+    "NameCN": "鹿野院平藏",
+    "NameTextMapHash": 646032090,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Heizo",
+    "SideIconName": "UI_AvatarIcon_Side_Heizo",
+    "Base": {
+      "hpBase": 893.55517578125,
+      "attackBase": 18.876480102539062,
+      "defenseBase": 57.33945083618164
+    },
+    "Consts": [
+      "UI_Talent_S_Heizo_01",
+      "UI_Talent_S_Heizo_02",
+      "UI_Talent_U_Heizo_01",
+      "UI_Talent_S_Heizo_03",
+      "UI_Talent_U_Heizo_02",
+      "UI_Talent_S_Heizo_04"
+    ],
+    "SkillOrder": [
+      10591,
+      10592,
+      10595
+    ],
+    "Skills": {
+      "10591": "Skill_A_Catalyst_MD",
+      "10592": "Skill_S_Heizo_01",
+      "10595": "Skill_E_Heizo_01"
+    },
+    "ProudMap": {
+      "10591": 5931,
+      "10592": 5932,
+      "10595": 5939
+    }
+  },
+  "10000060": {
+    "Element": "Water",
+    "Name": "Yelan",
+    "NameCN": "夜兰",
+    "NameTextMapHash": 2848374378,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Yelan",
+    "SideIconName": "UI_AvatarIcon_Side_Yelan",
+    "Base": {
+      "hpBase": 1124.9176025390625,
+      "attackBase": 18.992399215698242,
+      "defenseBase": 42.658790588378906
+    },
+    "Consts": [
+      "UI_Talent_S_Yelan_01",
+      "UI_Talent_S_Yelan_02",
+      "UI_Talent_U_Yelan_01",
+      "UI_Talent_S_Yelan_03",
+      "UI_Talent_U_Yelan_02",
+      "UI_Talent_S_Yelan_04"
+    ],
+    "SkillOrder": [
+      10606,
+      10607,
+      10610
+    ],
+    "Skills": {
+      "10606": "Skill_A_02",
+      "10607": "Skill_S_Yelan_01",
+      "10610": "Skill_E_Yelan_01"
+    },
+    "ProudMap": {
+      "10606": 6031,
+      "10607": 6032,
+      "10610": 6039
+    }
+  },
+  "10000062": {
+    "Element": "Ice",
+    "Name": "Aloy",
+    "NameCN": "埃洛伊",
+    "NameTextMapHash": 3689108098,
+    "QualityType": "QUALITY_ORANGE_SP",
+    "iconName": "UI_AvatarIcon_Aloy",
+    "SideIconName": "UI_AvatarIcon_Side_Aloy",
+    "Base": {
+      "hpBase": 848.4547729492188,
+      "attackBase": 18.210359573364258,
+      "defenseBase": 52.65039825439453
+    },
+    "Consts": [
+      "UI_Talent_S_Aloy_Lock",
+      "UI_Talent_S_Aloy_Lock",
+      "UI_Talent_S_Aloy_Lock",
+      "UI_Talent_S_Aloy_Lock",
+      "UI_Talent_S_Aloy_Lock",
+      "UI_Talent_S_Aloy_Lock"
+    ],
+    "SkillOrder": [
+      10621,
+      10622,
+      10625
+    ],
+    "Skills": {
+      "10621": "Skill_A_02",
+      "10622": "Skill_S_Aloy_01",
+      "10625": "Skill_E_Aloy_01"
+    },
+    "ProudMap": {
+      "10621": 6231,
+      "10622": 6232,
+      "10625": 6239
+    }
+  },
+  "10000063": {
+    "Element": "Ice",
+    "Name": "Shenhe",
+    "NameCN": "申鹤",
+    "NameTextMapHash": 334242634,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Shenhe",
+    "SideIconName": "UI_AvatarIcon_Side_Shenhe",
+    "Base": {
+      "hpBase": 1011.4725341796875,
+      "attackBase": 23.64739990234375,
+      "defenseBase": 64.61640167236328
+    },
+    "Consts": [
+      "UI_Talent_S_Shenhe_02",
+      "UI_Talent_S_Shenhe_01",
+      "UI_Talent_U_Shenhe_01",
+      "UI_Talent_S_Shenhe_03",
+      "UI_Talent_U_Shenhe_02",
+      "UI_Talent_S_Shenhe_04"
+    ],
+    "SkillOrder": [
+      10631,
+      10632,
+      10635
+    ],
+    "Skills": {
+      "10631": "Skill_A_03",
+      "10632": "Skill_S_Shenhe_01",
+      "10635": "Skill_E_Shenhe_01"
+    },
+    "ProudMap": {
+      "10631": 6331,
+      "10632": 6332,
+      "10635": 6339
+    }
+  },
+  "10000064": {
+    "Element": "Rock",
+    "Name": "Yunjin",
+    "NameCN": "云堇",
+    "NameTextMapHash": 655825874,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Yunjin",
+    "SideIconName": "UI_AvatarIcon_Side_Yunjin",
+    "Base": {
+      "hpBase": 893.55517578125,
+      "attackBase": 16.02720069885254,
+      "defenseBase": 61.574100494384766
+    },
+    "Consts": [
+      "UI_Talent_S_Yunjin_01",
+      "UI_Talent_S_Yunjin_02",
+      "UI_Talent_U_Yunjin_01",
+      "UI_Talent_S_Yunjin_03",
+      "UI_Talent_U_Yunjin_02",
+      "UI_Talent_S_Yunjin_04"
+    ],
+    "SkillOrder": [
+      10641,
+      10642,
+      10643
+    ],
+    "Skills": {
+      "10641": "Skill_A_03",
+      "10642": "Skill_S_Yunjin_01",
+      "10643": "Skill_E_Yunjin_01"
+    },
+    "ProudMap": {
+      "10641": 6431,
+      "10642": 6432,
+      "10643": 6439
+    }
+  },
+  "10000065": {
+    "Element": "Electric",
+    "Name": "Shinobu",
+    "NameCN": "久岐忍",
+    "NameTextMapHash": 1940821986,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Shinobu",
+    "SideIconName": "UI_AvatarIcon_Side_Shinobu",
+    "Base": {
+      "hpBase": 1030.3238525390625,
+      "attackBase": 17.808000564575195,
+      "defenseBase": 62.9474983215332
+    },
+    "Consts": [
+      "UI_Talent_S_Shinobu_01",
+      "UI_Talent_S_Shinobu_02",
+      "UI_Talent_U_Shinobu_01",
+      "UI_Talent_S_Shinobu_03",
+      "UI_Talent_U_Shinobu_02",
+      "UI_Talent_S_Shinobu_04"
+    ],
+    "SkillOrder": [
+      10651,
+      10652,
+      10655
+    ],
+    "Skills": {
+      "10651": "Skill_A_01",
+      "10652": "Skill_S_Shinobu_01",
+      "10655": "Skill_E_Shinobu_01"
+    },
+    "ProudMap": {
+      "10651": 6531,
+      "10652": 6532,
+      "10655": 6539
+    }
+  },
+  "10000066": {
+    "Element": "Water",
+    "Name": "Ayato",
+    "NameCN": "神里绫人",
+    "NameTextMapHash": 1588620330,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Ayato",
+    "SideIconName": "UI_AvatarIcon_Side_Ayato",
+    "Base": {
+      "hpBase": 1067.7183837890625,
+      "attackBase": 23.274999618530273,
+      "defenseBase": 59.83000183105469
+    },
+    "Consts": [
+      "UI_Talent_S_Ayato_01",
+      "UI_Talent_S_Ayato_02",
+      "UI_Talent_U_Ayato_02",
+      "UI_Talent_S_Ayato_03",
+      "UI_Talent_U_Ayato_01",
+      "UI_Talent_S_Ayato_04"
+    ],
+    "SkillOrder": [
+      10661,
+      10662,
+      10665
+    ],
+    "Skills": {
+      "10661": "Skill_A_01",
+      "10662": "Skill_S_Ayato_01",
+      "10665": "Skill_E_Ayato_01"
+    },
+    "ProudMap": {
+      "10661": 6631,
+      "10662": 6632,
+      "10665": 6639
+    }
+  },
+  "10000067": {
+    "Element": "Grass",
+    "Name": "Collei",
+    "NameCN": "柯莱",
+    "NameTextMapHash": 2948362178,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Collei",
+    "SideIconName": "UI_AvatarIcon_Side_Collei",
+    "Base": {
+      "hpBase": 820.6118774414062,
+      "attackBase": 16.739519119262695,
+      "defenseBase": 50.358001708984375
+    },
+    "Consts": [
+      "UI_Talent_S_Collei_01",
+      "UI_Talent_S_Collei_02",
+      "UI_Talent_U_Collei_02",
+      "UI_Talent_S_Collei_03",
+      "UI_Talent_U_Collei_01",
+      "UI_Talent_S_Collei_04"
+    ],
+    "SkillOrder": [
+      10671,
+      10672,
+      10675
+    ],
+    "Skills": {
+      "10671": "Skill_A_02",
+      "10672": "Skill_S_Collei_01",
+      "10675": "Skill_E_Collei_01"
+    },
+    "ProudMap": {
+      "10671": 6731,
+      "10672": 6732,
+      "10675": 6739
+    }
+  },
+  "10000068": {
+    "Element": "Electric",
+    "Name": "Dori",
+    "NameCN": "多莉",
+    "NameTextMapHash": 388272194,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Dori",
+    "SideIconName": "UI_AvatarIcon_Side_Dori",
+    "Base": {
+      "hpBase": 1039.4417724609375,
+      "attackBase": 18.698400497436523,
+      "defenseBase": 60.65850067138672
+    },
+    "Consts": [
+      "UI_Talent_S_Dori_01",
+      "UI_Talent_S_Dori_02",
+      "UI_Talent_U_Dori_02",
+      "UI_Talent_S_Dori_03",
+      "UI_Talent_U_Dori_01",
+      "UI_Talent_S_Dori_04"
+    ],
+    "SkillOrder": [
+      10681,
+      10682,
+      10685
+    ],
+    "Skills": {
+      "10681": "Skill_A_04",
+      "10682": "Skill_S_Dori_01",
+      "10685": "Skill_E_Dori_01"
+    },
+    "ProudMap": {
+      "10681": 6831,
+      "10682": 6832,
+      "10685": 6839
+    }
+  },
+  "10000069": {
+    "Element": "Grass",
+    "Name": "Tighnari",
+    "NameCN": "提纳里",
+    "NameTextMapHash": 2506955778,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Tighnari",
+    "SideIconName": "UI_AvatarIcon_Side_Tighnari",
+    "Base": {
+      "hpBase": 844.6415405273438,
+      "attackBase": 20.854400634765625,
+      "defenseBase": 49.06060028076172
+    },
+    "Consts": [
+      "UI_Talent_S_Tighnari_01",
+      "UI_Talent_S_Tighnari_02",
+      "UI_Talent_U_Tighnari_01",
+      "UI_Talent_S_Tighnari_03",
+      "UI_Talent_U_Tighnari_02",
+      "UI_Talent_S_Tighnari_04"
+    ],
+    "SkillOrder": [
+      10691,
+      10692,
+      10695
+    ],
+    "Skills": {
+      "10691": "Skill_A_02",
+      "10692": "Skill_S_Tighnari_01",
+      "10695": "Skill_E_Tighnari_01"
+    },
+    "ProudMap": {
+      "10691": 6931,
+      "10692": 6932,
+      "10695": 6939
+    }
+  },
+  "10000070": {
+    "Element": "Water",
+    "Name": "Nilou",
+    "NameCN": "妮露",
+    "NameTextMapHash": 3850149970,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Nilou",
+    "SideIconName": "UI_AvatarIcon_Side_Nilou",
+    "Base": {
+      "hpBase": 1182.1168212890625,
+      "attackBase": 17.875200271606445,
+      "defenseBase": 56.718841552734375
+    },
+    "Consts": [
+      "UI_Talent_S_Nilou_01",
+      "UI_Talent_S_Nilou_02",
+      "UI_Talent_U_Nilou_01",
+      "UI_Talent_S_Nilou_03",
+      "UI_Talent_U_Nilou_02",
+      "UI_Talent_S_Nilou_04"
+    ],
+    "SkillOrder": [
+      10701,
+      10702,
+      10705
+    ],
+    "Skills": {
+      "10701": "Skill_A_01",
+      "10702": "Skill_S_Nilou_01",
+      "10705": "Skill_E_Nilou_01"
+    },
+    "ProudMap": {
+      "10701": 7031,
+      "10702": 7032,
+      "10705": 7039
+    }
+  },
+  "10000071": {
+    "Element": "Electric",
+    "Name": "Cyno",
+    "NameCN": "赛诺",
+    "NameTextMapHash": 1049891906,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Cyno",
+    "SideIconName": "UI_AvatarIcon_Side_Cyno",
+    "Base": {
+      "hpBase": 972.3864135742188,
+      "attackBase": 24.76460075378418,
+      "defenseBase": 66.88993835449219
+    },
+    "Consts": [
+      "UI_Talent_S_Cyno_01",
+      "UI_Talent_S_Cyno_02",
+      "UI_Talent_U_Cyno_01",
+      "UI_Talent_S_Cyno_03",
+      "UI_Talent_U_Cyno_02",
+      "UI_Talent_S_Cyno_04"
+    ],
+    "SkillOrder": [
+      10711,
+      10712,
+      10715
+    ],
+    "Skills": {
+      "10711": "Skill_A_03",
+      "10712": "Skill_S_Cyno_01",
+      "10715": "Skill_E_Cyno_01"
+    },
+    "ProudMap": {
+      "10711": 7131,
+      "10712": 7132,
+      "10715": 7139
+    }
+  },
+  "10000072": {
+    "Element": "Water",
+    "Name": "Candace",
+    "NameCN": "坎蒂丝",
+    "NameTextMapHash": 3092975658,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Candace",
+    "SideIconName": "UI_AvatarIcon_Side_Candace",
+    "Base": {
+      "hpBase": 911.791015625,
+      "attackBase": 17.808000564575195,
+      "defenseBase": 57.224998474121094
+    },
+    "Consts": [
+      "UI_Talent_S_Candace_01",
+      "UI_Talent_S_Candace_02",
+      "UI_Talent_U_Candace_01",
+      "UI_Talent_S_Candace_03",
+      "UI_Talent_U_Candace_02",
+      "UI_Talent_S_Candace_04"
+    ],
+    "SkillOrder": [
+      10721,
+      10722,
+      10725
+    ],
+    "Skills": {
+      "10721": "Skill_A_03",
+      "10722": "Skill_S_Candace_01",
+      "10725": "Skill_E_Candace_01"
+    },
+    "ProudMap": {
+      "10721": 7231,
+      "10722": 7232,
+      "10725": 7239
+    }
+  }
+}

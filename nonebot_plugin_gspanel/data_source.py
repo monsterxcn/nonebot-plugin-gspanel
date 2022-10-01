@@ -19,6 +19,7 @@ from .__utils__ import (
     MAIN_AFFIXS,
     POS,
     PROP,
+    RANK_MAP,
     SKILL,
     SUB_AFFIXS,
     download,
@@ -32,7 +33,7 @@ async def getRawData(
     uid: str,
     charId: str = "000",
     refresh: bool = False,
-    name2id: Dict = {},
+    characters: Dict = {},
     source: Literal["enka", "mgg"] = "enka",
 ) -> Dict:
     """
@@ -41,14 +42,14 @@ async def getRawData(
     * ``param uid: str`` 指定查询用户 UID
     * ``param charId: str = "000"`` 指定查询角色 ID
     * ``param refresh: bool = False`` 指定是否强制刷新数据
-    * ``param name2id: Dict = {}`` 角色 ID 与中文名转换所需资源
+    * ``param characters: Dict = {}`` 角色 ID 与中文名转换所需资源
     * ``param source: Literal["enka", "mgg"] = "enka"`` 指定查询接口
     - ``return: Dict`` 查询结果。出错时返回 ``{"error": "错误信息"}``
     """
     cache = LOCAL_DIR / "cache" / f"{uid}__data.json"
-    logger.debug(f"checking cache for {uid}'s {charId}")
     # 缓存文件存在且未过期、未要求刷新、查询角色存在于缓存中，三个条件均满足时才返回缓存
     if cache.exists() and (not refresh):
+        logger.debug(f"检查 UID{uid} 角色 ID 为 {charId} 的缓存..")
         cacheData = json.loads(cache.read_text(encoding="utf-8"))
         avalCharIds = [
             str(c["avatarId"]) for c in cacheData["playerInfo"]["showAvatarInfoList"]
@@ -62,11 +63,7 @@ async def getRawData(
         elif charId == "000":
             return {
                 "list": [
-                    [
-                        nameCn
-                        for nameCn, cId in name2id.items()
-                        if cId == str(x["avatarId"])
-                    ][0]
+                    characters.get(str(x["avatarId"]), {}).get("NameCN", "未知角色")
                     for x in cacheData["playerInfo"]["showAvatarInfoList"]
                     if x["avatarId"] not in [10000005, 10000007]
                 ]
@@ -83,7 +80,7 @@ async def getRawData(
                     "Cache-Control": "no-cache",
                     "Cookie": "locale=zh-CN",
                     "Referer": "https://enka.network/",
-                    "User-Agent": (  # "Miao-Plugin/3.0",
+                    "User-Agent": (
                         "Mozilla/5.0 (Linux; Android 12; Nexus 5) "
                         "AppleWebKit/537.36 (KHTML, like Gecko) "
                         "Chrome/102.0.0.0 Mobile Safari/537.36"
@@ -106,16 +103,12 @@ async def getRawData(
             if charId == "000":
                 return {
                     "list": [
-                        [
-                            nameCn
-                            for nameCn, cId in name2id.items()
-                            if cId == str(x["avatarId"])
-                        ][0]
+                        characters.get(str(x["avatarId"]), {}).get("NameCN", "未知角色")
                         for x in resJson["playerInfo"]["showAvatarInfoList"]
                         if x["avatarId"] not in [10000005, 10000007]
                     ]
                 }
-            elif [x for x in resJson["avatarInfoList"] if str(x["avatarId"]) == charId]:
+            elif charId in [str(x["avatarId"]) for x in resJson["avatarInfoList"]]:
                 return [
                     x for x in resJson["avatarInfoList"] if str(x["avatarId"]) == charId
                 ][0]
@@ -215,12 +208,20 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     - ``return: Dict`` 查询结果。出错时返回 ``{"error": "错误信息"}``
     """
     # 获取查询角色 ID
-    name2id = json.loads((LOCAL_DIR / "name2id.json").read_text(encoding="utf-8"))
-    charId = "000" if char == "all" else name2id.get(char, "阿巴")
+    characters: Dict = json.loads(
+        (LOCAL_DIR / "characters.json").read_text(encoding="utf-8")
+    )
+    charId = (
+        "000"
+        if char == "all"
+        else {characters[cId]["NameCN"]: cId for cId in characters}.get(
+            char, "notdigit"
+        )
+    )
     if not charId.isdigit():
         return {"error": f"「{char}」是哪个角色？"}
     # 获取面板数据
-    raw = await getRawData(uid, charId=charId, refresh=refresh, name2id=name2id)
+    raw = await getRawData(uid, charId=charId, refresh=refresh, characters=characters)
     if raw.get("error"):
         return raw
     if char == "all":
@@ -230,8 +231,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
 
     # 加载模板、翻译等资源
     tpl = (LOCAL_DIR / "tpl.html").read_text(encoding="utf-8")
-    loc = json.loads((LOCAL_DIR / "TextMapCHS.json").read_text(encoding="utf-8"))
-    characters = json.loads((LOCAL_DIR / "characters.json").read_text(encoding="utf-8"))
+    trans: Dict = json.loads((LOCAL_DIR / "trans.json").read_text(encoding="utf-8"))
     propData, equipData = raw["fightPropMap"], raw["equipList"]
     # 加载角色数据（抽卡图片、命座、技能图标配置等）
     charData = characters[str(raw["avatarId"])]
@@ -254,9 +254,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
         )
     )
     charImg = LOCAL_DIR / char / f"{charImgName}.png"
-    dlTasks.append(
-        download(f"https://enka.network/ui/{charImgName}.png", local=charImg)
-    )
+    dlTasks.append(download(charImgName, local=charImg))
     tpl = tpl.replace("{{char_img}}", str(charImg.resolve().as_posix()))
 
     # 角色信息
@@ -277,9 +275,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     for cIdx, consImgName in enumerate(charData["Consts"]):
         # 图像下载及模板替换
         consImg = LOCAL_DIR / char / f"{consImgName}.png"
-        dlTasks.append(
-            download(f"https://enka.network/ui/{consImgName}.png", local=consImg)
-        )
+        dlTasks.append(download(consImgName, local=consImg))
         consHtml.append(
             f"""
             <div class="cons-item">
@@ -300,9 +296,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
         # 图像下载及模板替换
         skillImgName = charData["Skills"][str(skillId)]
         skillImg = LOCAL_DIR / char / f"{skillImgName}.png"
-        dlTasks.append(
-            download(f"https://enka.network/ui/{skillImgName}.png", local=skillImg)
-        )
+        dlTasks.append(download(skillImgName, local=skillImg))
         tpl = tpl.replace(
             f"<!--skill_{list(SKILL.values())[idx]}-->",
             f"""
@@ -391,17 +385,13 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             # 图像下载及模板替换
             weaponImgName = equip["flat"]["icon"]
             weaponImg = LOCAL_DIR / "weapon" / f"{weaponImgName}.png"
-            dlTasks.append(
-                download(
-                    f"https://enka.network/ui/{weaponImgName}.png", local=weaponImg
-                )
-            )
+            dlTasks.append(download(weaponImgName, local=weaponImg))
             tpl = tpl.replace(
                 "<!--weapon-->",
                 f"""
                 <img src="{str(weaponImg.resolve())}" />
                 <div class="head">
-                    <strong>{loc.get(equip["flat"]["nameTextMapHash"], "缺少翻译")}</strong>
+                    <strong>{trans.get(equip["flat"]["nameTextMapHash"], "缺少翻译")}</strong>
                     <div class="star star-{equip["flat"]["rankLevel"]}"></div>
                     <span>Lv.{equip["weapon"]["level"]} <span class="affix affix-{affixCnt}">精{affixCnt}</span></span>
                 </div>
@@ -473,21 +463,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             )
             # 最终圣遗物评级
             calcRankStr = (
-                [
-                    r[0]
-                    for r in [
-                        ["D", 10],
-                        ["C", 16.5],
-                        ["B", 23.1],
-                        ["A", 29.7],
-                        ["S", 36.3],
-                        ["SS", 42.9],
-                        ["SSS", 49.5],
-                        ["ACE", 56.1],
-                        ["ACE²", 66],
-                    ]
-                    if calcTotal <= r[1]
-                ][0]
+                [r[0] for r in RANK_MAP if calcTotal <= r[1]][0]
                 if calcTotal <= 66
                 else "E"
             )
@@ -497,9 +473,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             # 图像下载及模板替换
             artiImgName = equip["flat"]["icon"]
             artiImg = LOCAL_DIR / "artifacts" / f"{artiImgName}.png"
-            dlTasks.append(
-                download(f"https://enka.network/ui/{artiImgName}.png", local=artiImg)
-            )
+            dlTasks.append(download(artiImgName, local=artiImg))
             tpl = tpl.replace(
                 f"<!--arti_{posIdx}-->",
                 f"""
@@ -508,7 +482,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
                     <span>+{equip["reliquary"]["level"] - 1}</span>
                 </div>
                 <div class="head">
-                    <strong>{loc.get(equip["flat"]["nameTextMapHash"], "缺少翻译")}</strong>
+                    <strong>{trans.get(equip["flat"]["nameTextMapHash"], "缺少翻译")}</strong>
                     <span class="mark mark-{calcRankStr}"><span>{round(calcTotal, 1)}分</span> - {calcRankStr}</span>
                 </div>
                 <ul class="detail attr">
@@ -546,21 +520,7 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     # tpl = tpl.replace("<!--time-->", f"@ {strftime('%m-%d %H:%M', localtime(raw['time']))}")
     # 圣遗物总分
     equipsMarkLevel = (
-        [
-            r[0]
-            for r in [
-                ["D", 10],
-                ["C", 16.5],
-                ["B", 23.1],
-                ["A", 29.7],
-                ["S", 36.3],
-                ["SS", 42.9],
-                ["SSS", 49.5],
-                ["ACE", 56.1],
-                ["ACE²", 66],
-            ]
-            if equipsMark / equipsCnt <= r[1]
-        ][0]
+        [r[0] for r in RANK_MAP if equipsMark / equipsCnt <= r[1]][0]
         if equipsCnt and equipsMark <= 66 * equipsCnt
         else "E"
     )

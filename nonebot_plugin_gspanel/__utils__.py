@@ -30,6 +30,17 @@ MAIN_AFFIXS = {  # 可能的主词条
     "5": "攻击力百分比,防御力百分比,生命值百分比,元素精通,治疗加成,暴击率,暴击伤害".split(","),  # EQUIP_DRESS
 }
 SUB_AFFIXS = "攻击力,攻击力百分比,防御力,防御力百分比,生命值,生命值百分比,元素精通,元素充能效率,暴击率,暴击伤害".split(",")
+RANK_MAP = [
+    ["D", 10],
+    ["C", 16.5],
+    ["B", 23.1],
+    ["A", 29.7],
+    ["S", 36.3],
+    ["SS", 42.9],
+    ["SSS", 49.5],
+    ["ACE", 56.1],
+    ["ACE²", 66],
+]
 # STAR = {"QUALITY_ORANGE": 5, "QUALITY_PURPLE": 4}
 ELEM = {
     "Fire": "火",
@@ -168,12 +179,7 @@ async def getBrowser(**kwargs) -> Optional[Browser]:
 
 async def fetchInitRes() -> None:
     """
-    插件初始化资源下载，通过阿里云 CDN 获取 Enka.Network API 提供的 JSON 文件、HTML 模板资源文件、角色词条权重配置等
-    - https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/loc.json
-    - https://raw.githubusercontent.com/Dimbreath/GenshinData/master/TextMap/TextMapCHS.json
-    - https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json
-    - https://raw.githubusercontent.com/monsterxcn/nonebot_plugin_gspanel/main/data/gspanel/template.json
-    - https://raw.githubusercontent.com/monsterxcn/nonebot_plugin_gspanel/main/data/gspanel/calc-rule.json
+    插件初始化资源下载，通过阿里云 CDN 获取 HTML 模板资源文件、角色词条权重配置、角色图标数据、TextMap 中文翻译数据等
     """
     logger.info("正在检查面板插件所需资源...")
     # 仅首次启用插件下载的文件
@@ -211,33 +217,17 @@ async def fetchInitRes() -> None:
     # 总是尝试更新的文件
     urls = [
         # "https://cdn.monsterx.cn/bot/gapanel/loc.json",  # 仅包含 zh-CN 语言
-        "https://cdn.monsterx.cn/bot/gspanel/TextMapCHS.json",
-        "https://cdn.monsterx.cn/bot/gspanel/characters.json",
         "https://cdn.monsterx.cn/bot/gspanel/calc-rule.json",
+        "https://cdn.monsterx.cn/bot/gspanel/characters.json",
+        "https://cdn.monsterx.cn/bot/gspanel/trans.json",
     ]
-    tmp = {"0": {}, "1": {}, "2": {}}
     async with AsyncClient(verify=False) as client:
-        for idx, url in enumerate(urls):
-            tmp[str(idx)] = (await client.get(url)).json()
+        for url in urls:
+            tmp = (await client.get(url)).json()
             (LOCAL_DIR / url.split("/")[-1]).write_text(
-                json.dumps(tmp[str(idx)], ensure_ascii=False, indent=2),
+                json.dumps(tmp, ensure_ascii=False, indent=2),
                 encoding="utf-8",
             )
-    # 额外生成一份 {"中文名": "8 位角色 ID", ...} 配置
-    name2id, unknownCnt = {}, 1
-    for charId in tmp["1"]:  # characters.json
-        if not tmp["1"][charId].get("NameTextMapHash"):
-            # 10000005-502 10000005-503 10000005-505
-            # 10000007-702 10000007-703 10000007-705
-            continue
-        nameTextMapHash = tmp["1"][charId]["NameTextMapHash"]  # type: int
-        nameCn = tmp["0"].get(str(nameTextMapHash), f"未知角色{unknownCnt}")
-        name2id[nameCn] = charId
-        if nameCn == f"未知角色{unknownCnt}":
-            unknownCnt += 1
-    (LOCAL_DIR / "name2id.json").write_text(
-        json.dumps(name2id, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
     logger.info("面板插件所需资源检查完毕！")
 
 
@@ -249,6 +239,8 @@ async def download(url: str, local: Union[Path, str] = "") -> Union[Path, None]:
     * ``param local: Union[Path, str] = ""`` 指定本地目标路径，传入类型为 ``Path`` 时视为保存文件完整路径，传入类型为 ``str`` 时视为保存文件子文件夹名（默认下载至插件资源根目录）
     - ``return: Union[Path, None]`` 本地文件地址，出错时返回空
     """
+    if not url.startswith("http"):
+        url = "https://enka.network/ui/" + url + ".png"
     if not isinstance(local, Path):
         d = (LOCAL_DIR / local) if local else LOCAL_DIR
         if not d.exists():
