@@ -37,37 +37,6 @@ python3 -m pip install nonebot-plugin-gspanel
 ```
 
 
-<details><summary><i>在 NoneBot 2.0.0.alpha16 上使用此插件</i></summary></br>
-
-
-在过时的 NoneBot 2.0.0.alpha16 上 **可能** 仍有机会体验此插件！不过，千万不要通过 NoneBot 脚手架或 PyPI 安装，仅支持通过 Git 手动安装此插件。
-
-以下命令仅作参考：
-
-
-```bash
-# 进入 Bot 根目录
-cd /path/to/bot
-# 安装依赖
-# source venv/bin/activate
-python3 -m pip install playwright httpx
-# 安装 Playwright 依赖
-python3 -m playwright install-deps
-python3 -m playwright install
-# 安装插件
-git clone https://github.com/monsterxcn/nonebot-plugin-gspanel.git
-cd nonebot-plugin-gspanel
-# 将文件夹 nonebot_plugin_gspanel 复制到 NoneBot2 插件目录下
-cp -r nonebot_plugin_gspanel /path/to/bot/plugins/
-# 将文件夹 resources 下内容复制到 /path/to/bot/data/ 目录下
-mkdir /path/to/resources/gspanel/
-cp -r data/gspanel /path/to/bot/data/
-```
-
-
-</details>
-
-
 ## 使用须知
 
 

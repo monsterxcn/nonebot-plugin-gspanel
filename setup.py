@@ -21,9 +21,9 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     packages=["nonebot-plugin-gspanel"],
-    python_requires=">=3.7.3,<4.0",
+    python_requires=">=3.8,<4.0",
     install_requires=[
-        "nonebot2>=2.0.0a16",
+        "nonebot2>=2.0.0b3",
         "nonebot-adapter-onebot>=2.0.0b1",
         "httpx>=0.20.0,<1.0.0",
         "playwright>=1.18.2",
