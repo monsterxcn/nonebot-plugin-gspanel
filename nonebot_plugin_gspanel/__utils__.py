@@ -79,6 +79,7 @@ PROP = {
     "FIGHT_PROP_FIRE_ADD_HURT": "火元素伤害加成",
     "FIGHT_PROP_ELEC_ADD_HURT": "雷元素伤害加成",
     "FIGHT_PROP_WATER_ADD_HURT": "水元素伤害加成",
+    "FIGHT_PROP_GRASS_ADD_HURT": "草元素伤害加成",
     "FIGHT_PROP_WIND_ADD_HURT": "风元素伤害加成",
     "FIGHT_PROP_ICE_ADD_HURT": "冰元素伤害加成",
     "FIGHT_PROP_ROCK_ADD_HURT": "岩元素伤害加成",
