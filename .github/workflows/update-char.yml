@@ -27,7 +27,7 @@ jobs:
           wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarCostumeExcelConfigData.json
           wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/WeaponExcelConfigData.json
           wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/ReliquaryExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/ReliquarySetExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/EquipAffixExcelConfigData.json
           python update-char.py
           mv -f characters.json ../data/gspanel/characters.json
           mv -f trans.json ../data/gspanel/trans.json

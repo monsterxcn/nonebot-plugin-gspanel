@@ -14,7 +14,7 @@ AvatarTalentRaw = read("AvatarTalentExcelConfigData.json")
 AvatarCostumeRaw = read("AvatarCostumeExcelConfigData.json")
 Weapons = read("WeaponExcelConfigData.json")
 Reliquary = read("ReliquaryExcelConfigData.json")
-ReliquarySet = read("ReliquarySetExcelConfigData.json")
+ReliquarySet = read("EquipAffixExcelConfigData.json")
 
 AvatarSkill = {i["id"]: i for i in AvatarSkillRaw}
 AvatarSkillDepot = {i["id"]: i for i in AvatarSkillDepotRaw}
@@ -128,6 +128,10 @@ def gnrtTransJson():
     for weapon in Weapons:
         hs = str(weapon.get("nameTextMapHash", 0))
         if TextMapCHS.get(hs):
+            TranslateDictionary[hs] = TextMapCHS[hs]
+    for set in ReliquarySet:
+        hs = str(set.get("nameTextMapHash", 0))
+        if str(set.get("openConfig")).startswith("Relic_") and TextMapCHS.get(hs):
             TranslateDictionary[hs] = TextMapCHS[hs]
     for reliquary in Reliquary:
         hs = str(reliquary.get("nameTextMapHash", 0))
