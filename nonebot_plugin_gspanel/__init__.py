@@ -10,7 +10,7 @@ from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.plugin import on_command
 
-from .__utils__ import fetchInitRes, uidHelper
+from .__utils__ import fetchInitRes, uidHelper, aliasWho
 from .data_source import getPanelMsg
 
 driver = get_driver()
@@ -37,7 +37,7 @@ async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
         elif not str(s).isdigit() and not char:
             char = str(s)
     uid = uid or await uidHelper(atqq or qq)
-    char = char or "all"
+    char = await aliasWho(char or "all")
     return uid, char
 
 

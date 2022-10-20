@@ -166,6 +166,7 @@ async def fetchInitRes() -> None:
     urls = [
         # "https://cdn.monsterx.cn/bot/gapanel/loc.json",  # 仅包含 zh-CN 语言
         "https://cdn.monsterx.cn/bot/gspanel/calc-rule.json",
+        "https://cdn.monsterx.cn/bot/gspanel/char-alias.json",
         "https://cdn.monsterx.cn/bot/gspanel/characters.json",
         "https://cdn.monsterx.cn/bot/gspanel/trans.json",
     ]
@@ -236,3 +237,12 @@ async def uidHelper(qq: Union[str, int], uid: str = "") -> str:
         )
         return f"已{'更新' if already else '绑定'} QQ{qq} 的 UID 为 {uid}"
     return uidCfg.get(str(qq), "")
+
+
+async def aliasWho(input: str) -> str:
+    """ 角色别名，未找到别名配置的原样返回 """
+    aliasData = json.loads((LOCAL_DIR / "char-alias.json").read_text(encoding="UTF-8"))
+    for char in aliasData:
+        if (input in char) or (input in aliasData[char]):
+            return char
+    return input
