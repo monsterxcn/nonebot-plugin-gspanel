@@ -72,7 +72,6 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
     if not uid.isdigit() or uid[0] not in uidStart or len(uid) > 9:
         await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
     rt = await getPanelMsg(uid, char)
-    if rt.get("error") or rt.get("msg"):
-        await showPanel.finish(rt.get("error") or rt.get("msg"))
-    if rt.get("pic"):
-        await showPanel.finish(MessageSegment.image(rt["pic"]))
+    if isinstance(rt, str):
+        await showPanel.finish(MessageSegment.text(rt))
+    await showPanel.finish(MessageSegment.image(rt))

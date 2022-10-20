@@ -48,6 +48,16 @@ body {
     background-size: contain
 }
 
+.copyright-source {
+    margin-bottom: -35px;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 10px;
+    text-shadow: 0 0 3px #d3bc8e, 2px 2px 4px rgb(0 0 0 / 70%);
+    color: #fff;
+    opacity: .5;
+}
+
 .copyright {
     font-size: 16px;
     text-align: center;
@@ -56,13 +66,6 @@ body {
     padding-left: 10px;
     text-shadow: 1px 1px 1px #000;
     margin: 10px 0
-}
-
-.copyright .version {
-    font-size: 13px;
-    color: #d3bc8e;
-    display: inline-block;
-    padding: 0 3px
 }
 
 .cons {
@@ -148,15 +151,6 @@ body {
     background: #ff5722;
     color: #fff
 }
-
-/* .elem-anemo .talent-icon {
-    background-image: url(imgs/talent-anemo.png)
-}
-
-.anemo-bg,
-.elem-anemo .elem-bg {
-    background-image: url(imgs/bg-anemo.jpg)
-} */
 
 .cont {
     border-radius: 10px;
@@ -249,14 +243,14 @@ body {
 }
 
 .char-lv .uid {
-    margin-right: 1em;
+    margin-right: 1em
 }
 
 .char-lv .fetter {
     border-radius: 4px;
     background: #ff5722;
     color: #fff;
-    padding: 0.2em 0.3em 0.1em 0.2em;
+    padding: .2em .3em .1em .2em
 }
 
 .attr {
@@ -322,11 +316,6 @@ body {
     margin-left: .5em;
     padding: 0 .2em;
     border-radius: 5px
-}
-
-.detail .attr li code.error,
-.detail.attr li code.error {
-    background-color: rgba(240, 6, 6, 0.7) !important;
 }
 
 .talent-icon {
@@ -409,19 +398,19 @@ body {
 }
 
 .elem_火 .talent-icon {
-    background-image: url(imgs/talent-pyro.png);
+    background-image: url(imgs/talent-pyro.png)
 }
 
 .elem_火 .container {
-    background-image: url(imgs/bg-pyro.jpg);
+    background-image: url(imgs/bg-pyro.jpg)
 }
 
 .elem_水 .talent-icon {
-    background-image: url(imgs/talent-hydro.png);
+    background-image: url(imgs/talent-hydro.png)
 }
 
 .elem_水 .container {
-    background-image: url(imgs/bg-hydro.jpg);
+    background-image: url(imgs/bg-hydro.jpg)
 }
 
 .elem_风 .talent-icon {
@@ -433,35 +422,35 @@ body {
 }
 
 .elem_雷 .talent-icon {
-    background-image: url(imgs/talent-electro.png);
+    background-image: url(imgs/talent-electro.png)
 }
 
 .elem_雷 .container {
-    background-image: url(imgs/bg-electro.jpg);
+    background-image: url(imgs/bg-electro.jpg)
 }
 
 .elem_草 .talent-icon {
-    background-image: url(imgs/talent-dendro.png);
+    background-image: url(imgs/talent-dendro.png)
 }
 
 .elem_草 .container {
-    background-image: url(imgs/bg-dendro.jpg);
+    background-image: url(imgs/bg-dendro.jpg)
 }
 
 .elem_冰 .talent-icon {
-    background-image: url(imgs/talent-cryo.png);
+    background-image: url(imgs/talent-cryo.png)
 }
 
 .elem_冰 .container {
-    background-image: url(imgs/bg-cryo.jpg);
+    background-image: url(imgs/bg-cryo.jpg)
 }
 
 .elem_岩 .talent-icon {
-    background-image: url(imgs/talent-geo.png);
+    background-image: url(imgs/talent-geo.png)
 }
 
 .elem_岩 .container {
-    background-image: url(imgs/bg-geo.jpg);
+    background-image: url(imgs/bg-geo.jpg)
 }
 
 .cont {
@@ -559,16 +548,16 @@ body {
     font-weight: bold;
 }
 
-.mark-SSS,
-.mark-SS {
+.mark-SS,
+.mark-SSS {
     color: #ffe699;
-    font-weight: bold;
+    font-weight: 700
 }
 
-.mark-S,
-.mark-A {
+.mark-A,
+.mark-S {
     color: #d699ff;
-    font-weight: bold;
+    font-weight: 700
 }
 
 .arti-main {
@@ -750,34 +739,6 @@ body {
     color: #bbb
 }
 
-.char-优菈 .main-pic {
-    margin-left: -175px
-}
-
-.char-烟绯 .main-pic {
-    margin-left: -135px
-}
-
-.char-香菱 .main-pic {
-    margin-left: -195px
-}
-
-.char-迪奥娜 .main-pic {
-    margin-left: -180px
-}
-
-.char-可莉 .main-pic {
-    margin-left: -210px
-}
-
-.char-凝光 .main-pic {
-    margin-left: -320px
-}
-
-.char-班尼特 .main-pic {
-    margin-left: -220px
-}
-
 .container,
 body {
     width: 650px
@@ -857,4 +818,95 @@ body {
 
 .artis div .item.arti-stat {
     padding: 24px 10px
+}
+
+.cont {
+    border-radius: 10px;
+    background: url(../common/cont/card-bg.png) top left repeat-x;
+    background-size: auto 100%;
+    margin: 5px 15px 5px 10px;
+    position: relative;
+    box-shadow: 0 0 1px 0 #ccc, 2px 2px 4px 0 rgba(50, 50, 50, .8);
+    overflow: hidden;
+    color: #fff;
+    font-size: 16px
+}
+
+.dmg-cont {
+    display: table;
+    width: calc(100% - 31px);
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.cont-title {
+    background: rgba(0, 0, 0, .4);
+    color: #d3bc8e;
+    padding: 10px 20px;
+    text-align: left
+}
+
+.cont-title span {
+    font-size: 12px;
+    color: #aaa;
+    margin-left: 10px;
+    font-weight: 400
+}
+
+.cont-table {
+    display: table;
+    width: 100%
+}
+
+.dmg-cont .tr {
+    display: table-row;
+    padding: 10px 10px
+}
+
+.dmg-cont .tr:nth-child(even) {
+    background: rgba(0, 0, 0, .4)
+}
+
+.dmg-cont .tr:nth-child(odd) {
+    background: rgba(50, 50, 50, .4)
+}
+
+.dmg-cont .tr>div {
+    display: table-cell;
+    box-shadow: 0 0 1px 0 #fff
+}
+
+.dmg-cont .tr>div.data {
+    padding-top: 8px;
+    padding-bottom: 8px
+}
+
+.dmg-cont .thead,
+.dmg-cont .tr>div.value {
+    text-align: center;
+    vertical-align: middle
+}
+
+.dmg-cont .tr>div.data.buff {
+    padding-left: 15px
+}
+
+.dmg-cont .thead>div {
+    color: #d3bc8e;
+    background: rgba(0, 0, 0, .4);
+    line-height: 40px;
+    height: 40px
+}
+
+.dmg-cont .dmg-title,
+.dmg-cont .th {
+    color: #d3bc8e;
+    padding-right: 15px;
+    text-align: right;
+    background: rgba(0, 0, 0, .4);
+    min-width: 100px
+}
+
+.dmg-cont .dmg-title {
+    width: 33.3333%
 }

@@ -1,14 +1,12 @@
 import asyncio
 import json
-from base64 import b64encode
-
-# from io import BytesIO
-# from PIL import Image
 from time import time
-from typing import Dict, List, Literal, Tuple
+from traceback import format_exc
+from typing import Dict, List, Literal, Tuple, Union
 
-from httpx import AsyncClient, HTTPError
+from httpx import AsyncClient, HTTPError, NetworkError
 from nonebot.log import logger
+from nonebot_plugin_htmlrender import template_to_pic
 
 from .__utils__ import (
     DMG,
@@ -18,12 +16,12 @@ from .__utils__ import (
     LOCAL_DIR,
     MAIN_AFFIXS,
     POS,
+    POSCN,
     PROP,
     RANK_MAP,
     SKILL,
     SUB_AFFIXS,
     download,
-    getBrowser,
     kStr,
     vStr,
 )
@@ -122,6 +120,38 @@ async def getRawData(
             return {"error": f"[{e.__class__.__name__}]面板数据处理出错辣.."}
 
 
+async def getTeyvatData(body: Dict) -> Dict:
+    """
+    提瓦特小助手伤害计算接口请求。
+
+    * ``param body: Dict`` 指定查询角色数据
+    - ``return: Dict`` 查询结果。出错时返回 ``{}``
+    """
+    async with AsyncClient() as client:
+        try:
+            res = await client.post(
+                "https://api.lelaer.com/ys/getDamageResult.php",
+                json=body,
+                headers={
+                    "referer": "https://servicewechat.com/",
+                    "user-agent": (
+                        "Mozilla/5.0 (Linux; Android 12; SM-G977N Build/SP1A.210812.016; wv) "
+                        "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.99 "
+                        "XWEB/4317 MMWEBSDK/20220709 Mobile Safari/537.36 MMWEBID/4357 "
+                        "MicroMessenger/8.0.25.2200(0x28001955) WeChat/arm64 Weixin NetType/WIFI "
+                        "Language/zh_CN ABI/arm64 MiniProgramEnv/android"
+                    ),
+                },
+            )
+            return res.json()
+        except (NetworkError, json.JSONDecodeError):
+            logger.error(f"提瓦特小助手接口无法访问或返回错误\n{format_exc()}")
+            return {}
+        except Exception:
+            logger.error(f"提瓦特小助手接口错误\n{format_exc()}")
+            return {}
+
+
 async def getAffixCfg(char: str, base: Dict) -> Tuple[Dict, Dict, Dict]:
     """
     指定角色词条配置获取，包括词条评分权重、词条数值原始权重、各位置圣遗物总分理论最高分和主词条理论最高得分
@@ -198,7 +228,9 @@ async def getAffixCfg(char: str, base: Dict) -> Tuple[Dict, Dict, Dict]:
     return affixWeight, pointMark, maxMark
 
 
-async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dict:
+async def getPanelMsg(
+    uid: str, char: str = "all", refresh: bool = False
+) -> Union[bytes, str]:
     """
     原神游戏内角色展柜消息生成，针对原始数据进行文本翻译和结构重排。
 
@@ -214,98 +246,120 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
     charId = (
         "000"
         if char == "all"
-        else {characters[cId]["NameCN"]: cId for cId in characters}.get(
-            char, "notdigit"
-        )
+        else {characters[cId]["NameCN"]: cId for cId in characters}.get(char, "notdigit")
     )
     if not charId.isdigit():
-        return {"error": f"「{char}」是哪个角色？"}
+        return f"「{char}」是哪个角色？"
     # 获取面板数据
     raw = await getRawData(uid, charId=charId, refresh=refresh, characters=characters)
     if raw.get("error"):
-        return raw
+        return raw["error"]
     if char == "all":
-        return {
-            "msg": f"成功获取了 UID{uid} 的{'、'.join(raw['list'])}等 {len(raw['list'])} 位角色数据！"
-        }
+        return f"成功获取了 UID{uid} 的{'、'.join(raw['list'])}等 {len(raw['list'])} 位角色数据！"
 
-    # 加载模板、翻译等资源
-    tpl = (LOCAL_DIR / "tpl.html").read_text(encoding="utf-8")
-    trans: Dict = json.loads((LOCAL_DIR / "trans.json").read_text(encoding="utf-8"))
-    propData, equipData = raw["fightPropMap"], raw["equipList"]
-    # 加载角色数据（抽卡图片、命座、技能图标配置等）
     charData = characters[str(raw["avatarId"])]
-    # 加载角色词条配置
+    propData, equipData = raw["fightPropMap"], raw["equipList"]
+    trans: Dict = json.loads((LOCAL_DIR / "trans.json").read_text(encoding="utf-8"))
     base = {"生命值": propData["1"], "攻击力": propData["4"], "防御力": propData["7"]}
     affixWeight, pointMark, maxMark = await getAffixCfg(char, base)
-    dlTasks = []  # 所有待下载任务
 
-    # 准备好了吗，要开始了哦！
-
-    # 元素背景
-    tpl = tpl.replace("{{elem_type}}", f"elem_{ELEM[charData['Element']]}")
-
-    # 角色大图
-    charImgName = (
+    # 下载任务
+    charImgName = (  # 角色大图
         charData["Costumes"][str(raw["costumeId"])]["art"]
         if raw.get("costumeId")
-        else charData["SideIconName"].replace(
-            "UI_AvatarIcon_Side", "UI_Gacha_AvatarImg"
-        )
+        else charData["SideIconName"].replace("UI_AvatarIcon_Side", "UI_Gacha_AvatarImg")
     )
-    charImg = LOCAL_DIR / char / f"{charImgName}.png"
-    dlTasks.append(download(charImgName, local=charImg))
-    tpl = tpl.replace("{{char_img}}", str(charImg.resolve().as_posix()))
+    dlTasks = [download(charImgName, local=LOCAL_DIR / char / f"{charImgName}.png")]
 
-    # 角色信息
-    tpl = tpl.replace(
-        "<!--char_info-->",
-        f"""
-        <div class="char-name">{char}</div>
-        <div class="char-lv">
-            <span class="uid">UID {uid}</span>
-            Lv.{raw["propMap"]["4001"]["val"]}
-            <span class="fetter">&hearts; {raw["fetterInfo"]["expLevel"]}</span>
-        </div>
-        """,
-    )
-
-    # 命座数据
-    consActivated, consHtml = len(raw.get("talentIdList", [])), []
-    for cIdx, consImgName in enumerate(charData["Consts"]):
-        # 图像下载及模板替换
-        consImg = LOCAL_DIR / char / f"{consImgName}.png"
-        dlTasks.append(download(consImgName, local=consImg))
-        consHtml.append(
-            f"""
-            <div class="cons-item">
-                <div class="talent-icon {"off" if cIdx + 1 > consActivated else ""}">
-                    <div class="talent-icon-img" style="background-image:url({str(consImg.resolve().as_posix())})"></div>
-                </div>
-            </div>
-            """
+    # 伤害计算请求数据
+    teyvatBody = {
+        "uid": uid,
+        "role_data": [
+            {
+                "uid": uid,
+                "role": char,
+                "role_class": len(raw.get("talentIdList", [])),
+                "level": raw["propMap"]["4001"]["val"],
+                "weapon": "",
+                "weapon_level": 1,
+                "weapon_class": "精炼1阶",
+                "hp": int(propData["2000"]),
+                "base_hp": int(propData["1"]),
+                # "attack": int(propData["2001"]),
+                "attack": int(
+                    propData["4"] * (1 + propData.get("6", 0)) + propData.get("5", 0)
+                ),
+                "base_attack": int(propData["4"]),
+                "defend": int(propData["2002"]),
+                "base_defend": int(propData["7"]),
+                "element": round(propData["28"]),
+                "crit": f"{round(propData['20'] * 100, 1)}%",
+                "crit_dmg": f"{round(propData['22'] * 100, 1)}%",
+                "heal": f"{round(propData['26'] * 100, 1)}%",
+                "recharge": f"{round(propData['23'] * 100, 1)}%",
+                "fire_dmg": f"{round(propData['40'] * 100, 1)}%",
+                "water_dmg": f"{round(propData['42'] * 100, 1)}%",
+                "thunder_dmg": f"{round(propData['41'] * 100, 1)}%",
+                "wind_dmg": f"{round(propData['44'] * 100, 1)}%",
+                "ice_dmg": f"{round(propData['46'] * 100, 1)}%",
+                "rock_dmg": f"{round(propData['45'] * 100, 1)}%",
+                "grass_dmg": f"{round(propData['43'] * 100, 1)}%",
+                "physical_dmg": f"{round(propData['30'] * 100, 1)}%",
+                "artifacts": "",
+                "ability1": 1,
+                "ability2": 1,
+                "ability3": 1,
+                "artifacts_detail": [],
+            }
+        ],
+    }
+    # dataFix from https://github.com/yoimiya-kokomi/miao-plugin/blob/ac27075276154ef5a87a458697f6e5492bd323bd/components/profile-data/enka-data.js#L186
+    if char == "雷电将军":
+        teyvatBody["role_data"][0]["thunder_dmg"] = "{}%".format(
+            round(
+                max(
+                    0,
+                    float(teyvatBody["role_data"][0]["thunder_dmg"].replace("%", ""))
+                    - (
+                        float(teyvatBody["role_data"][0]["recharge"].replace("%", ""))
+                        - 100
+                    )
+                    * 0.4,
+                ),
+                1,
+            )
         )
-    tpl = tpl.replace("<!--cons_data-->", "".join(consHtml))
+    elif char == "莫娜":
+        teyvatBody["role_data"][0]["water_dmg"] = "{}%".format(
+            round(
+                max(
+                    0,
+                    float(teyvatBody["role_data"][0]["water_dmg"].replace("%", ""))
+                    - float(teyvatBody["role_data"][0]["recharge"].replace("%", ""))
+                    * 0.2,
+                ),
+                1,
+            )
+        )
 
     # 技能数据
+    tplSkills = {"a": {}, "e": {}, "q": {}}
     extraLevels = {k[-1]: v for k, v in raw.get("proudSkillExtraLevelMap", {}).items()}
     for idx, skillId in enumerate(charData["SkillOrder"]):
         # 实际技能等级、显示技能等级
         level = raw["skillLevelMap"][str(skillId)]
         currentLvl = level + extraLevels.get(list(SKILL)[idx], 0)
-        # 图像下载及模板替换
         skillImgName = charData["Skills"][str(skillId)]
-        skillImg = LOCAL_DIR / char / f"{skillImgName}.png"
-        dlTasks.append(download(skillImgName, local=skillImg))
-        tpl = tpl.replace(
-            f"<!--skill_{list(SKILL.values())[idx]}-->",
-            f"""
-            <div class="talent-icon {"talent-plus" if currentLvl > level else ""} {"talent-crown" if level == 10 else ""}">
-                <div class="talent-icon-img" style="background-image:url({str(skillImg.resolve().as_posix())})"></div>
-                <span>{currentLvl}</span>
-            </div>
-            """,
+        dlTasks.append(
+            download(skillImgName, local=LOCAL_DIR / char / f"{skillImgName}.png")
         )
+        # 模板渲染所需数据
+        tplSkills[list(SKILL.values())[idx]] = {
+            "plus": "talent-plus" if currentLvl > level else "",
+            "img": f"./{char}/{skillImgName}.png",
+            "lvl": currentLvl,
+        }
+        teyvatBody["role_data"][0][f"ability{idx + 1}"] = currentLvl
 
     # 面板数据
     # 显示物理伤害加成或元素伤害加成中数值最高者
@@ -319,84 +373,122 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
         dmgType, dmgValue = "物理伤害加成", phyDmg
     else:
         dmgType, dmgValue = f"{elemDmg['type']}元素伤害加成", elemDmg["value"]
-    # 模板替换，奶妈角色额外显示治疗加成，元素伤害异常时评分权重显示提醒
-    tpl = tpl.replace(
-        "<!--fight_prop-->",
-        f"""
-        <li>生命值
-            {("<code>" + str(affixWeight["生命值百分比"]) + "</code>") if affixWeight.get("生命值百分比") else ""}
-            <strong>{round(propData["2000"])}</strong>
-            <span><font>{round(propData["1"])}</font>+{round(propData["2000"] - propData["1"])}</span>
-        </li>
-        <li>攻击力
-            {("<code>" + str(affixWeight["攻击力百分比"]) + "</code>") if affixWeight.get("攻击力百分比") else ""}
-            <strong>{round(propData["2001"])}</strong>
-            <span><font>{round(propData["4"])}</font>+{round(propData["2001"] - propData["4"])}</span>
-        </li>
-        <li>防御力
-            {("<code>" + str(affixWeight["防御力百分比"]) + "</code>") if affixWeight.get("防御力百分比") else ""}
-            <strong>{round(propData["2002"])}</strong>
-            <span><font>{round(propData["7"])}</font>+{round(propData["2002"] - propData["7"])}</span>
-        </li>
-        <li>暴击率
-            {("<code>" + str(affixWeight["暴击率"]) + "</code>") if affixWeight.get("暴击率") else ""}
-            <strong>{round(propData["20"] * 100, 1)}%</strong>
-        </li>
-        <li>暴击伤害
-            {("<code>" + str(affixWeight["暴击伤害"]) + "</code>") if affixWeight.get("暴击伤害") else ""}
-            <strong>{round(propData["22"] * 100, 1)}%</strong>
-        </li>
-        <li>元素精通
-            {("<code>" + str(affixWeight["元素精通"]) + "</code>") if affixWeight.get("元素精通") else ""}
-            <strong>{round(propData["28"])}</strong>
-        </li>
-        {f'''<li>治疗加成
-            {("<code>" + str(affixWeight["治疗加成"]) + "</code>")}
-            <strong>{round(propData["26"] * 100, 1)}%</strong>
-        </li>''' if affixWeight.get("治疗加成") else ""}
-        <li>元素充能效率
-            {("<code>" + str(affixWeight["元素充能效率"]) + "</code>") if affixWeight.get("元素充能效率") else ""}
-            <strong>{round(propData["23"] * 100, 1)}%</strong>
-        </li>
-        <li>{dmgType}
-            {
-                (
-                    "<code" +
-                    (
-                        ' style="background-color: rgba(240, 6, 6, 0.7)"'
-                        if dmgType[0] not in ["物", ELEM[charData['Element']]]
-                        else ""
-                    ) + ">" + str(affixWeight[dmgType[-6:]]) + "</code>"
-                )
-                if affixWeight.get(dmgType[-6:])
-                else ""
-            }
-            <strong>{dmgValue}%</strong>
-        </li>
-        """,
-    )
+    # 模板渲染所需数据
+    tplProps = [
+        {
+            "name": "生命值",
+            "weight": affixWeight.get("生命值百分比", 0),
+            "value": round(propData["2000"]),
+            "base": round(propData["1"]),
+            "extra": round(propData["2000"] - propData["1"]),
+        },
+        {
+            "name": "攻击力",
+            "weight": affixWeight.get("攻击力百分比", 0),
+            "value": round(propData["2001"]),
+            "base": round(propData["1"]),
+            "extra": round(propData["2001"] - propData["4"]),
+        },
+        {
+            "name": "防御力",
+            "weight": affixWeight.get("防御力百分比", 0),
+            "value": round(propData["2002"]),
+            "base": round(propData["7"]),
+            "extra": round(propData["2002"] - propData["7"]),
+        },
+        {
+            "name": "暴击率",
+            "weight": affixWeight.get("暴击率", 0),
+            "value": f'{round(propData["20"] * 100, 1)}%',
+        },
+        {
+            "name": "暴击伤害",
+            "weight": affixWeight.get("暴击伤害", 0),
+            "value": f'{round(propData["22"] * 100, 1)}%',
+        },
+        {
+            "name": "元素精通",
+            "weight": affixWeight.get("元素精通", 0),
+            "value": round(propData["28"]),
+        },
+        {
+            "name": "治疗加成",
+            "weight": affixWeight.get("治疗加成", 0),
+            "value": f'{round(propData["26"] * 100, 1)}%',
+        },
+        {
+            "name": "元素充能效率",
+            "weight": affixWeight.get("元素充能效率", 0),
+            "value": f'{round(propData["23"] * 100, 1)}%',
+        },
+        {
+            "name": dmgType,
+            "error": bool(dmgType[0] not in ["物", ELEM[charData["Element"]]]),
+            "weight": affixWeight.get(dmgType[-6:], 0),
+            "value": f"{dmgValue}%",
+        },
+    ]
+    if tplProps[6]["value"] == "0%" and not tplProps[6]["weight"]:
+        tplProps.pop(6)  # remove heal add
 
-    # 装备数据（圣遗物、武器）
-    equipsMark, equipsCnt = 0.0, 0
+    # 命座数据
+    consActivated, tplCons = teyvatBody["role_data"][0]["role_class"], []
+    for cIdx, consImgName in enumerate(charData["Consts"]):
+        tplCons.append(
+            {
+                "img": f"./{char}/{consImgName}.png",
+                "state": "off" if cIdx + 1 > consActivated else "",
+            }
+        )
+        dlTasks.append(
+            download(charImgName, local=LOCAL_DIR / char / f"{consImgName}.png")
+        )
+
+    # 装备数据
+    equipsMark, equipsCnt, tplWeapon, tplArtis, artiSet = 0.0, 0, {}, [], {}
     for equip in equipData:
         if equip["flat"]["itemType"] == "ITEM_WEAPON":
-            # 武器精炼等级
-            affixCnt = list(equip["weapon"].get("affixMap", {".": 0}).values())[0] + 1
             # 图像下载及模板替换
             weaponImgName = equip["flat"]["icon"]
             weaponImg = LOCAL_DIR / "weapon" / f"{weaponImgName}.png"
             dlTasks.append(download(weaponImgName, local=weaponImg))
-            tpl = tpl.replace(
-                "<!--weapon-->",
-                f"""
-                <img src="{str(weaponImg.resolve())}" />
-                <div class="head">
-                    <strong>{trans.get(equip["flat"]["nameTextMapHash"], "缺少翻译")}</strong>
-                    <div class="star star-{equip["flat"]["rankLevel"]}"></div>
-                    <span>Lv.{equip["weapon"]["level"]} <span class="affix affix-{affixCnt}">精{affixCnt}</span></span>
-                </div>
-                """,
+            # 模板渲染所需数据
+            tplWeapon = {
+                "name": trans.get(equip["flat"]["nameTextMapHash"], "缺少翻译"),
+                "rarity": equip["flat"]["rankLevel"],
+                "img": f"./weapon/{weaponImgName}.png",
+                "affix": list(equip["weapon"].get("affixMap", {".": 0}).values())[0] + 1,
+                "lvl": equip["weapon"]["level"],
+            }
+            teyvatBody["role_data"][0].update(
+                {
+                    "weapon": tplWeapon["name"],
+                    "weapon_level": tplWeapon["lvl"],
+                    "weapon_class": f"精炼{tplWeapon['affix']}阶",
+                }
             )
+            # dataFix from https://github.com/yoimiya-kokomi/miao-plugin/blob/ac27075276154ef5a87a458697f6e5492bd323bd/components/profile-data/enka-data.js#L186
+            if tplWeapon["name"] in ["息灾", "波乱月白经津", "雾切之回光", "猎人之径"]:
+                for dmg in [
+                    "fire_dmg",
+                    "water_dmg",
+                    "thunder_dmg",
+                    "wind_dmg",
+                    "ice_dmg",
+                    "rock_dmg",
+                    "grass_dmg",
+                ]:
+                    teyvatBody["role_data"][0][dmg] = "{}%".format(
+                        round(
+                            max(
+                                0,
+                                float(teyvatBody["role_data"][0][dmg].replace("%", ""))
+                                - 12
+                                - 12 * (tplWeapon["affix"] - 1) / 4,
+                            ),
+                            1,
+                        )
+                    )
         elif equip["flat"]["itemType"] == "ITEM_RELIQUARY":
             mainProp = equip["flat"]["reliquaryMainstat"]  # type: Dict
             subProps = equip["flat"].get("reliquarySubstats", [])  # type: List
@@ -474,85 +566,96 @@ async def getPanelMsg(uid: str, char: str = "all", refresh: bool = False) -> Dic
             artiImgName = equip["flat"]["icon"]
             artiImg = LOCAL_DIR / "artifacts" / f"{artiImgName}.png"
             dlTasks.append(download(artiImgName, local=artiImg))
-            tpl = tpl.replace(
-                f"<!--arti_{posIdx}-->",
-                f"""
-                <div class="arti-icon">
-                    <img src="{str(artiImg.resolve())}" />
-                    <span>+{equip["reliquary"]["level"] - 1}</span>
-                </div>
-                <div class="head">
-                    <strong>{trans.get(equip["flat"]["nameTextMapHash"], "缺少翻译")}</strong>
-                    <span class="mark mark-{calcRankStr}"><span>{round(calcTotal, 1)}分</span> - {calcRankStr}</span>
-                </div>
-                <ul class="detail attr">
-                    <li class="arti-main">
-                        <span class="title">{kStr(PROP[mainProp["mainPropId"]])}</span>
-                        <span class="val">+{vStr(PROP[mainProp["mainPropId"]], mainProp["statValue"])}</span>
-                        <span class="{"mark" if calcMain else "val"}"> {round(calcMain, 1) if calcMain else "-"} </span>
-                    </li>
-                    {"".join(
-                    '''<li class="{}"><span class="title">{}</span><span class="val">+{}</span>
-                        <span class="mark">{}</span>
-                    </li>'''.format(
-                        "great" if affixWeight.get(f'{s[0]}百分比' if s[0] in ["生命值", "攻击力", "防御力"] else s[0], 0) > 79.9 else ("useful" if s[2] else "nouse"),
-                        kStr(s[0]), vStr(s[0], s[1]), round(s[2], 1)
-                    ) for s in calcSubs
-                    )}
-                </ul>
-                <ul class="detail attr mark-calc">
-                    {f'''
-                    <li class="result">
-                        <span class="title">主词条收益系数</span>
-                        <span class="val">
-                            * {round(calcMainPct, 1)}%
-                        </span>
-                    </li>''' if posIdx >= 3 else ""}
-                    <li class="result">
-                        <span class="title">总分对齐系数</span>
-                        <span class="val">* {round(calcTotalPct, 1)}%</span>
-                    </li>
-                </ul>
-                """,
+            # 面板渲染所需数据
+            tplArtis.append(
+                {
+                    "index": posIdx,
+                    "img": f"./artifacts/{artiImgName}.png",
+                    "lvl": equip["reliquary"]["level"] - 1,
+                    "name": trans.get(equip["flat"]["nameTextMapHash"], "缺少翻译"),
+                    "calc_mark": round(calcTotal, 1),
+                    "calc_rank": calcRankStr,
+                    "calc_main": round(calcMainPct, 1),
+                    "calc_total": round(calcTotalPct, 1),
+                    "main_title": kStr(PROP[mainProp["mainPropId"]]),
+                    "main_value": vStr(
+                        PROP[mainProp["mainPropId"]], mainProp["statValue"]
+                    ),
+                    "main_mark": round(calcMain, 1) if calcMain else "-",
+                    "main_style": "mark" if calcMain else "val",
+                    "subs": [
+                        {
+                            "title": kStr(s[0]),
+                            "value": vStr(s[0], s[1]),
+                            "mark": round(s[2], 1),
+                            "style": "great"
+                            if affixWeight.get(
+                                f"{s[0]}百分比" if s[0] in ["生命值", "攻击力", "防御力"] else s[0], 0
+                            )
+                            > 79.9
+                            else ("useful" if s[2] else "nouse"),
+                        }
+                        for s in calcSubs
+                    ],
+                }
             )
+            # 提瓦特请求数据
+            artifacts = {
+                "artifacts_name": trans.get(equip["flat"]["nameTextMapHash"], "缺少翻译"),
+                "artifacts_type": POSCN[posIdx - 1],
+                "level": equip["reliquary"]["level"] - 1,
+                "maintips": PROP[mainProp["mainPropId"]].replace("百分比", ""),
+                "mainvalue": vStr(PROP[mainProp["mainPropId"]], mainProp["statValue"]),
+            }
+            artifacts.update(
+                {
+                    f"tips{sIdx + 1}": f"{s[0].replace('百分比', '')}+{vStr(s[0], s[1])}"
+                    for sIdx, s in enumerate(calcSubs)
+                }
+            )
+            teyvatBody["role_data"][0]["artifacts_detail"].append(artifacts)
+            artiSetName = trans.get(equip["flat"]["setNameTextMapHash"], "缺少翻译")
+            artiSet[artiSetName] = artiSet.get(artiSetName, 0) + 1
 
-    # # 评分时间
-    # tpl = tpl.replace("<!--time-->", f"@ {strftime('%m-%d %H:%M', localtime(raw['time']))}")
-    # 圣遗物总分
-    equipsMarkLevel = (
-        [r[0] for r in RANK_MAP if equipsMark / equipsCnt <= r[1]][0]
-        if equipsCnt and equipsMark <= 66 * equipsCnt
-        else "E"
+    # 套装计算
+    teyvatBody["role_data"][0]["artifacts"] = "+".join(
+        f"{k}{v if v in [2, 4] else (2 if v == 3 else 4)}"
+        for k, v in artiSet.items()
+        if (v >= 2) or ("之人" in k)
     )
-    tpl = tpl.replace("{{total_mark_lvl}}", equipsMarkLevel)
-    tpl = tpl.replace("{{total_mark}}", str(round(equipsMark, 1)))
 
     # 下载所有图片
     await asyncio.gather(*dlTasks)
     dlTasks.clear()
-
     # 渲染截图
-    tmpFile = LOCAL_DIR / f"{uid}-{char}.html"
-    tmpFile.write_text(tpl, encoding="utf-8")
-    logger.info("启动浏览器截图..")
-    browser = await getBrowser()
-    if not browser:
-        return {"error": "无法生成图片！"}
-    try:
-        page = await browser.new_page()
-        await page.set_viewport_size({"width": 1000, "height": 1500})
-        await page.goto("file://" + str(tmpFile.resolve()), timeout=5000)
-        card = await page.query_selector("body")
-        assert card is not None
-        picBytes = await card.screenshot(timeout=5000)
-        logger.info(f"图片大小 {len(picBytes)} 字节")
-        # _ = Image.open(BytesIO(picBytes)).save(
-        #     str(tmpFile.resolve()).replace(".html", ".png")
-        # )
-        await page.close()
-        res = "base64://" + b64encode(picBytes).decode()
-        tmpFile.unlink(missing_ok=True)
-        return {"pic": res}
-    except Exception as e:
-        logger.error(f"生成角色圣遗物评分图片失败 {type(e)}：{e}")
-        return {"error": "生成角色圣遗物评分总图失败！"}
+    tplDamage = await getTeyvatData(teyvatBody)
+    htmlBase = str(LOCAL_DIR.resolve())
+    return await template_to_pic(
+        template_path=htmlBase,
+        template_name="jinjia.html",
+        templates={
+            "uid": uid,
+            "elem_type": f"elem_{ELEM[charData['Element']]}",
+            "char_img": f"./{char}/{charImgName}.png",
+            "char_name": char,
+            "char_lvl": raw["propMap"]["4001"]["val"],
+            "char_fet": raw["fetterInfo"]["expLevel"],
+            "char_skills": tplSkills,
+            "char_cons": tplCons,
+            "char_props": tplProps,
+            "total_mark_lvl": (
+                [r[0] for r in RANK_MAP if equipsMark / equipsCnt <= r[1]][0]
+                if equipsCnt and equipsMark <= 66 * equipsCnt
+                else "E"
+            ),
+            "total_mark": str(round(equipsMark, 1)),
+            "weapon": tplWeapon,
+            "artis": tplArtis,
+            "damage": tplDamage,
+        },
+        pages={
+            "viewport": {"width": 600, "height": 300},
+            "base_url": f"file://{htmlBase}",
+        },
+        wait=2,
+    )
