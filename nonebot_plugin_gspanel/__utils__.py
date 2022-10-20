@@ -94,6 +94,11 @@ LOCAL_DIR = (
     if hasattr(driver.config, "resources_dir")
     else (Path() / "data" / "gspanel")
 )
+DOWNLOAD_MIRROR = (
+    str(driver.config.resources_mirror)
+    if hasattr(driver.config, "resources_mirror")
+    else "https://enka.network/ui/"
+)
 if not LOCAL_DIR.exists():
     LOCAL_DIR.mkdir(parents=True, exist_ok=True)
 if not (LOCAL_DIR / "cache").exists():
@@ -183,7 +188,7 @@ async def download(url: str, local: Union[Path, str] = "") -> Union[Path, None]:
     - ``return: Union[Path, None]`` 本地文件地址，出错时返回空
     """
     if not url.startswith("http"):
-        url = "https://enka.network/ui/" + url + ".png"
+        url = DOWNLOAD_MIRROR + url + ".png"
     if not isinstance(local, Path):
         d = (LOCAL_DIR / local) if local else LOCAL_DIR
         if not d.exists():

@@ -57,6 +57,7 @@ python3 -m pip install nonebot-plugin-gspanel
    |:-------|:----:|:-----|:----|
    | `gspanel_expire_sec` | 否 | `300` | 面板数据缓存过期秒数 |
    | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
+   | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`https://file.microgg.cn/KimigaiiWuyi/resource/icon/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划） |
    
  - 插件图片生成采用 [@kexue-z/nonebot-plugin-htmlrender](https://github.com/kexue-z/nonebot-plugin-htmlrender)，若插件自动安装运行 Chromium 所需的额外依赖失败，请参考 [@SK-415/HarukaBot](https://haruka-bot.sk415.icu/faq.html#playwright-%E4%BE%9D%E8%B5%96%E4%B8%8D%E5%85%A8) 给出的以下解决方案：
    
