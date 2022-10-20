@@ -386,7 +386,7 @@ async def getPanelMsg(
             "name": "攻击力",
             "weight": affixWeight.get("攻击力百分比", 0),
             "value": round(propData["2001"]),
-            "base": round(propData["1"]),
+            "base": round(propData["4"]),
             "extra": round(propData["2001"] - propData["4"]),
         },
         {
@@ -441,7 +441,7 @@ async def getPanelMsg(
             }
         )
         dlTasks.append(
-            download(charImgName, local=LOCAL_DIR / char / f"{consImgName}.png")
+            download(consImgName, local=LOCAL_DIR / char / f"{consImgName}.png")
         )
 
     # 装备数据

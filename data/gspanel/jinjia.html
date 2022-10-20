@@ -179,10 +179,12 @@
             <div class="cont-title">Buff 列表<span>部分 Buff 的触发条件以及层数可能影响实际伤害结果</span></div>
             <div class="cont-table">
                 {% for buff in damage["bonus"] %}
+                {% if buff["intro"].split("：")[0] not in ["注", "备注"] %}
                 <div class="tr">
                     <div class="data th">{{ buff["intro"].split("：")[0] }}</div>
                     <div class="data td buff">{{ buff["intro"].split("：")[1] }}</div>
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>

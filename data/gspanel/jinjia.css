@@ -903,10 +903,12 @@ body {
     color: #d3bc8e;
     padding-right: 15px;
     text-align: right;
+    vertical-align: middle;
     background: rgba(0, 0, 0, .4);
     min-width: 100px
 }
 
+.cont-table .th,
 .dmg-cont .dmg-title {
     width: 33.3333%
 }
