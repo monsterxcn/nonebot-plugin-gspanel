@@ -131,7 +131,7 @@ def gnrtTransJson():
             TranslateDictionary[hs] = TextMapCHS[hs]
     for set in ReliquarySet:
         hs = str(set.get("nameTextMapHash", 0))
-        if str(set.get("openConfig")).startswith("Relic_") and TextMapCHS.get(hs):
+        if str(set.get("openConfig")).startswith("Rel") and TextMapCHS.get(hs):
             TranslateDictionary[hs] = TextMapCHS[hs]
     for reliquary in Reliquary:
         hs = str(reliquary.get("nameTextMapHash", 0))
