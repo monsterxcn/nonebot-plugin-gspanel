@@ -55,6 +55,7 @@ python3 -m pip install nonebot-plugin-gspanel
    
    | 环境变量 | 必需 | 默认 | 说明 |
    |:-------|:----:|:-----|:----|
+   | `gspanel_alias` | 否 | `["面板"]` | 插件响应词别名，多个别名按 `["面面", "板板"]` 格式填写 |
    | `gspanel_expire_sec` | 否 | `300` | 面板数据缓存过期秒数 |
    | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
    | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`https://file.microgg.cn/KimigaiiWuyi/resource/icon/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划） |
@@ -69,7 +70,10 @@ python3 -m pip install nonebot-plugin-gspanel
 ## 命令说明
 
 
-插件响应以 `面板` / `评分` / `panel` 开头的消息，下面仅以 `面板` 为例。
+插件响应以 `panel` / `面板` 开头的消息，下面仅以 `面板` 为例：
+
+
+*\*如果定义了环境变量 `gspanel_alias` 则以环境变量定义的命令别名为准，默认情况下该环境变量会使插件响应 `面板` 开头的消息。*
 
 
  - `面板绑定100123456`

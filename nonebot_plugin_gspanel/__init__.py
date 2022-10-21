@@ -10,12 +10,12 @@ from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.plugin import on_command
 
-from .__utils__ import fetchInitRes, uidHelper, aliasWho
+from .__utils__ import fetchInitRes, uidHelper, aliasWho, GSPANEL_ALIAS
 from .data_source import getPanelMsg
 
 driver = get_driver()
 uidStart = ["1", "2", "5", "6", "7", "8", "9"]
-showPanel = on_command("panel", aliases={"评分", "面板"}, priority=13)
+showPanel = on_command("panel", aliases=GSPANEL_ALIAS, priority=13)
 
 
 async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:

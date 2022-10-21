@@ -1,7 +1,7 @@
 import asyncio
 import json
 from pathlib import Path
-from typing import Union
+from typing import Set, Tuple, Union
 
 from httpx import AsyncClient
 from nonebot import get_driver
@@ -84,6 +84,11 @@ PROP = {
 
 driver: Driver = get_driver()
 
+GSPANEL_ALIAS: Set[Union[str, Tuple[str, ...]]] = (
+    set(driver.config.gspanel_alias)
+    if hasattr(driver.config, "gspanel_alias")
+    else {"面板"}
+)
 EXPIRE_SEC = (
     int(driver.config.gspanel_expire_sec)
     if hasattr(driver.config, "gspanel_expire_sec")
