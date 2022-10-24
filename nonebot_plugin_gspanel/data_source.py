@@ -2,9 +2,9 @@ import asyncio
 import json
 from time import time
 from traceback import format_exc
-from typing import Dict, List, Literal, Tuple, Union
+from typing import Any, Dict, List, Literal, Tuple, Union
 
-from httpx import AsyncClient, HTTPError, NetworkError
+from httpx import AsyncClient, HTTPError
 from nonebot.log import logger
 from nonebot_plugin_htmlrender import template_to_pic
 
@@ -44,80 +44,108 @@ async def getRawData(
     * ``param source: Literal["enka", "mgg"] = "enka"`` 指定查询接口
     - ``return: Dict`` 查询结果。出错时返回 ``{"error": "错误信息"}``
     """
+    # 若缓存存在则总是读取
     cache = LOCAL_DIR / "cache" / f"{uid}__data.json"
-    # 缓存文件存在且未过期、未要求刷新、查询角色存在于缓存中，三个条件均满足时才返回缓存
-    if cache.exists() and (not refresh):
-        logger.debug(f"检查 UID{uid} 角色 ID 为 {charId} 的缓存..")
+    if not cache.exists():
+        cacheData = {}
+    else:
         cacheData = json.loads(cache.read_text(encoding="utf-8"))
-        avalCharIds = [
-            str(c["avatarId"]) for c in cacheData["playerInfo"]["showAvatarInfoList"]
-        ]
-        if int(time()) - cacheData["time"] > EXPIRE_SEC:
-            pass
-        elif charId in avalCharIds:
-            return [
-                c for c in cacheData["avatarInfoList"] if str(c["avatarId"]) == charId
-            ][0]
-        elif charId == "000":
-            return {
-                "list": [
-                    characters.get(str(x["avatarId"]), {}).get("NameCN", "未知角色")
-                    for x in cacheData["playerInfo"]["showAvatarInfoList"]
-                    if x["avatarId"] not in [10000005, 10000007]
-                ]
-            }
-    # 请求最新数据
+        # 缓存文件存在且未过期、未要求刷新、查询角色存在于缓存中，三个条件均满足时才返回缓存
+        if not refresh:
+            logger.debug(f"检查 UID{uid} 角色 ID 为 {charId} 的缓存..")
+            avalCharIds = [
+                str(c["avatarId"]) for c in cacheData["playerInfo"]["showAvatarInfoList"]
+            ]
+            if int(time()) - cacheData["time"] > EXPIRE_SEC:
+                pass
+            elif charId in avalCharIds:
+                return [
+                    c for c in cacheData["avatarInfoList"] if str(c["avatarId"]) == charId
+                ][0]
+            elif charId == "000":
+                return {
+                    "list": [
+                        characters.get(str(x["avatarId"]), {}).get("NameCN", "未知角色")
+                        for x in cacheData["playerInfo"]["showAvatarInfoList"]
+                        if x["avatarId"] not in [10000005, 10000007]
+                    ]
+                }
+    # 请求最新数据，更新缓存数据
     root = "https://enka.network" if source == "enka" else "https://enka.minigg.cn"
     async with AsyncClient() as client:
         try:
-            res = await client.get(
-                url=f"{root}/u/{uid}/__data.json",
-                headers={
-                    "Accept": "application/json",
-                    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7",
-                    "Cache-Control": "no-cache",
-                    "Cookie": "locale=zh-CN",
-                    "Referer": "https://enka.network/",
-                    "User-Agent": (
-                        "Mozilla/5.0 (Linux; Android 12; Nexus 5) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/102.0.0.0 Mobile Safari/537.36"
-                    ),
-                },
-                timeout=20.0,
-            )
-            resJson = res.json()
-            resJson["time"] = int(time())
+            try:
+                res = await client.get(
+                    url=f"{root}/u/{uid}/__data.json",
+                    headers={
+                        "Accept": "application/json",
+                        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7",
+                        "Cache-Control": "no-cache",
+                        "Cookie": "locale=zh-CN",
+                        "Referer": "https://enka.network/",
+                        "User-Agent": (
+                            "Mozilla/5.0 (Linux; Android 12; Nexus 5) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/102.0.0.0 Mobile Safari/537.36"
+                        ),
+                    },
+                    timeout=20.0,
+                )
+                resJson = res.json()
+            except (HTTPError, json.decoder.JSONDecodeError):
+                logger.error(f"面板数据接口无法访问或返回错误\n{format_exc()}")
+                resJson = {"error": "暂时无法访问面板数据接口.."}
             if not resJson.get("playerInfo"):
-                raise HTTPError("返回信息不全")
-            if not resJson["playerInfo"].get("showAvatarInfoList"):
-                return {"error": f"UID{uid} 的角色展柜内还没有角色哦！"}
-            if not resJson.get("avatarInfoList"):
-                return {"error": f"UID{uid} 的角色展柜详细数据已隐藏！"}
-            (LOCAL_DIR / "cache" / f"{uid}__data.json").write_text(
-                json.dumps(resJson, ensure_ascii=False, indent=2), encoding="utf-8"
+                resJson = {"error": f"UID{uid} 返回信息不全"}
+            elif not resJson.get("avatarInfoList"):
+                resJson = {"error": f"UID{uid} 的角色展柜详细数据已隐藏！"}
+            elif not resJson["playerInfo"].get("showAvatarInfoList"):
+                resJson = {"error": f"UID{uid} 的角色展柜内还没有角色哦！"}
+            if resJson.get("error"):
+                if not cacheData:
+                    return resJson
+            elif not cacheData:
+                cacheData = resJson  # type: Any
+                cacheData["time"] = int(time())
+            else:
+                resJson = resJson  # type: Any
+                avatarIdListNew = [n["avatarId"] for n in resJson["avatarInfoList"]]
+                cacheData["avatarInfoList"] = [
+                    *resJson["avatarInfoList"],
+                    *[
+                        o
+                        for o in cacheData["avatarInfoList"]
+                        if o["avatarId"] not in avatarIdListNew
+                    ],
+                ]
+                cacheData["playerInfo"] = resJson["playerInfo"]
+                cacheData["playerInfo"]["showAvatarInfoList"] = [
+                    {"avatarId": a["avatarId"], "level": int(a["propMap"]["4001"]["val"])}
+                    for a in cacheData["avatarInfoList"]
+                ]
+                cacheData["time"] = int(time())
+            cache.write_text(
+                json.dumps(cacheData, ensure_ascii=False, indent=2), encoding="utf-8"
             )
             # 返回 Enka.Network API 查询结果
             if charId == "000":
                 return {
                     "list": [
                         characters.get(str(x["avatarId"]), {}).get("NameCN", "未知角色")
-                        for x in resJson["playerInfo"]["showAvatarInfoList"]
+                        for x in cacheData["playerInfo"]["showAvatarInfoList"]
                         if x["avatarId"] not in [10000005, 10000007]
                     ]
                 }
-            elif charId in [str(x["avatarId"]) for x in resJson["avatarInfoList"]]:
+            elif charId in [str(x["avatarId"]) for x in cacheData["avatarInfoList"]]:
                 return [
-                    x for x in resJson["avatarInfoList"] if str(x["avatarId"]) == charId
+                    x for x in cacheData["avatarInfoList"] if str(x["avatarId"]) == charId
                 ][0]
             else:
                 return {"error": f"UID{uid} 的最新数据中未发现该角色！"}
-        except (HTTPError or json.decoder.JSONDecodeError):
-            return {"error": "暂时无法访问面板数据接口.."}
         except Exception as e:
-            # 出错时返回 {"error": "错误信息"}
-            logger.error(f"请求 Enka.Network 出错 {type(e)}：{e}")
-            return {"error": f"[{e.__class__.__name__}]面板数据处理出错辣.."}
+            # 这里出错应该是 Bug..
+            logger.error(f"面板数据处理出错：{e.__class__.__name__}\n{format_exc()}")
+            return {"error": f"[{e.__class__.__name__}] 面板数据处理出 Bug 辣.."}
 
 
 async def getTeyvatData(body: Dict) -> Dict:
@@ -144,11 +172,11 @@ async def getTeyvatData(body: Dict) -> Dict:
                 },
             )
             return res.json()
-        except (NetworkError, json.JSONDecodeError):
+        except (HTTPError, json.decoder.JSONDecodeError):
             logger.error(f"提瓦特小助手接口无法访问或返回错误\n{format_exc()}")
             return {}
-        except Exception:
-            logger.error(f"提瓦特小助手接口错误\n{format_exc()}")
+        except Exception as e:
+            logger.error(f"提瓦特小助手接口错误：{e.__class__.__name__}\n{format_exc()}")
             return {}
 
 
