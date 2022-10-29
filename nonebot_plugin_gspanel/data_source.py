@@ -256,16 +256,17 @@ async def getAffixCfg(char: str, base: Dict) -> Tuple[Dict, Dict, Dict]:
     return affixWeight, pointMark, maxMark
 
 
-async def getPanelMsg(
-    uid: str, char: str = "all", refresh: bool = False
-) -> Union[bytes, str]:
+async def getPanel(
+    uid: str, char: str = "all", refresh: bool = False, onlyTeyvat: bool = False
+) -> Union[bytes, str, Dict]:
     """
     原神游戏内角色展柜消息生成，针对原始数据进行文本翻译和结构重排。
 
     * ``param uid: str`` 指定查询用户 UID
     * ``param char: str = "all"`` 指定查询角色
     * ``param refresh: bool = False`` 指定是否强制刷新数据
-    - ``return: Dict`` 查询结果。出错时返回 ``{"error": "错误信息"}``
+    * ``param onlyTeyvat: bool = False`` 指定是否仅返回提瓦特请求所需数据
+    - ``return: Union[bytes, str, Dict]`` 查询结果。一般返回图片字节，出错时返回错误信息字符串，指定 ``onlyTeyvat`` 时仅返回提瓦特请求所需数据
     """
     # 获取查询角色 ID
     characters: Dict = json.loads(
@@ -655,6 +656,11 @@ async def getPanelMsg(
     # 下载所有图片
     await asyncio.gather(*dlTasks)
     dlTasks.clear()
+
+    # 写的好烂啊，但是我不想动了，糊一下吧
+    if onlyTeyvat:
+        return teyvatBody
+
     # 渲染截图
     tplDamage = await getTeyvatData(teyvatBody)
     htmlBase = str(LOCAL_DIR.resolve())

@@ -11,7 +11,7 @@ from nonebot.params import CommandArg
 from nonebot.plugin import on_command
 
 from .__utils__ import fetchInitRes, uidHelper, aliasWho, GSPANEL_ALIAS
-from .data_source import getPanelMsg
+from .data_source import getPanel
 
 driver = get_driver()
 uidStart = ["1", "2", "5", "6", "7", "8", "9"]
@@ -71,7 +71,8 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
     logger.info(f"可能需要查找 UID{uid} 的「{char}」角色面板..")
     if not uid.isdigit() or uid[0] not in uidStart or len(uid) > 9:
         await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
-    rt = await getPanelMsg(uid, char)
+    rt = await getPanel(uid, char)
     if isinstance(rt, str):
         await showPanel.finish(MessageSegment.text(rt))
-    await showPanel.finish(MessageSegment.image(rt))
+    elif isinstance(rt, bytes):
+        await showPanel.finish(MessageSegment.image(rt))
