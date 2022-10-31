@@ -20,7 +20,7 @@ AvatarSkill = {i["id"]: i for i in AvatarSkillRaw}
 AvatarSkillDepot = {i["id"]: i for i in AvatarSkillDepotRaw}
 AvatarTalent = {i["talentId"]: i for i in AvatarTalentRaw}
 AvatarCostume = {i["itemId"]: i for i in AvatarCostumeRaw if i.get("itemId")}
-haveCostume = [i["AKOANLMAFDD"] for i in AvatarCostumeRaw if i.get("itemId")]
+haveCostume = [list(dict(i).values())[5] for i in AvatarCostumeRaw if i.get("itemId")]
 print(f"拥有时装角色列表: {haveCostume}")
 
 
@@ -98,17 +98,17 @@ def gnrtCharJson():
             costumes = [
                 i
                 for i in AvatarCostumeRaw
-                if i["AKOANLMAFDD"] == avatarID and i.get("sideIconName")
+                if list(dict(i).values())[5] == avatarID and i.get("sideIconName")
             ]
             print(
                 f"角色 {TextMapCHS.get(str(hs), '未知')} 有 {len(costumes)} 件时装：{'/'.join(x['sideIconName'].split('_')[-1] for x in costumes)}"
             )
             AvatarDictionary[avatarID]["Costumes"] = {
-                str(costume["OGKFGGNLLDG"]): {
+                str(list(dict(costume).values())[0]): {
                     "sideIconName": costume["sideIconName"],
                     "icon": "UI_AvatarIcon_" + costume["sideIconName"].split("_")[-1],
                     "art": "UI_Costume_" + costume["sideIconName"].split("_")[-1],
-                    "avatarId": costume["AKOANLMAFDD"],
+                    "avatarId": list(dict(costume).values())[5],
                 }
                 for costume in costumes
                 if costume.get("sideIconName")
