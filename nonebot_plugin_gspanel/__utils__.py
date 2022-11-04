@@ -245,7 +245,7 @@ async def uidHelper(qq: Union[str, int], uid: str = "") -> str:
 
 
 async def aliasWho(input: str) -> str:
-    """ 角色别名，未找到别名配置的原样返回 """
+    """角色别名，未找到别名配置的原样返回"""
     aliasData = json.loads((LOCAL_DIR / "char-alias.json").read_text(encoding="UTF-8"))
     for char in aliasData:
         if (input in char) or (input in aliasData[char]):

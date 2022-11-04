@@ -2148,5 +2148,79 @@
       "10722": 7232,
       "10725": 7239
     }
+  },
+  "10000073": {
+    "Element": "Grass",
+    "Name": "Nahida",
+    "NameCN": "纳西妲",
+    "NameTextMapHash": 712501082,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Nahida",
+    "SideIconName": "UI_AvatarIcon_Side_Nahida",
+    "Base": {
+      "hpBase": 806.5087280273438,
+      "attackBase": 23.274999618530273,
+      "defenseBase": 49.06060028076172
+    },
+    "Consts": [
+      "UI_Talent_S_Nahida_01",
+      "UI_Talent_S_Nahida_02",
+      "UI_Talent_U_Nahida_01",
+      "UI_Talent_S_Nahida_03",
+      "UI_Talent_U_Nahida_02",
+      "UI_Talent_S_Nahida_04"
+    ],
+    "SkillOrder": [
+      10731,
+      10732,
+      10735
+    ],
+    "Skills": {
+      "10731": "Skill_A_Catalyst_MD",
+      "10732": "Skill_S_Nahida_01",
+      "10735": "Skill_E_Nahida_01"
+    },
+    "ProudMap": {
+      "10731": 7331,
+      "10732": 7332,
+      "10735": 7339
+    }
+  },
+  "10000074": {
+    "Element": "Ice",
+    "Name": "Layla",
+    "NameCN": "莱依拉",
+    "NameTextMapHash": 2889777514,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Layla",
+    "SideIconName": "UI_AvatarIcon_Side_Layla",
+    "Base": {
+      "hpBase": 930.0267944335938,
+      "attackBase": 18.164159774780273,
+      "defenseBase": 54.93600082397461
+    },
+    "Consts": [
+      "UI_Talent_S_Layla_01",
+      "UI_Talent_S_Layla_02",
+      "UI_Talent_U_Layla_01",
+      "UI_Talent_S_Layla_03",
+      "UI_Talent_U_Layla_02",
+      "UI_Talent_S_Layla_04"
+    ],
+    "SkillOrder": [
+      10741,
+      10742,
+      10745
+    ],
+    "Skills": {
+      "10741": "Skill_A_01",
+      "10742": "Skill_S_Layla_01",
+      "10745": "Skill_E_Layla_01"
+    },
+    "ProudMap": {
+      "10741": 7431,
+      "10742": 7432,
+      "10745": 7439
+    }
   }
 }

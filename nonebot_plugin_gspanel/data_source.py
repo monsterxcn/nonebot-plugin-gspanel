@@ -344,31 +344,26 @@ async def getPanel(
     }
     # dataFix from https://github.com/yoimiya-kokomi/miao-plugin/blob/ac27075276154ef5a87a458697f6e5492bd323bd/components/profile-data/enka-data.js#L186
     if char == "雷电将军":
+        _thunderDmg = float(teyvatBody["role_data"][0]["thunder_dmg"].replace("%", ""))
+        _recharge = float(teyvatBody["role_data"][0]["recharge"].replace("%", ""))
         teyvatBody["role_data"][0]["thunder_dmg"] = "{}%".format(
-            round(
-                max(
-                    0,
-                    float(teyvatBody["role_data"][0]["thunder_dmg"].replace("%", ""))
-                    - (
-                        float(teyvatBody["role_data"][0]["recharge"].replace("%", ""))
-                        - 100
-                    )
-                    * 0.4,
-                ),
-                1,
-            )
+            round(max(0, _thunderDmg - (_recharge - 100) * 0.4), 1)
         )
     elif char == "莫娜":
+        _waterDmg = float(teyvatBody["role_data"][0]["water_dmg"].replace("%", ""))
+        _recharge = float(teyvatBody["role_data"][0]["recharge"].replace("%", ""))
         teyvatBody["role_data"][0]["water_dmg"] = "{}%".format(
-            round(
-                max(
-                    0,
-                    float(teyvatBody["role_data"][0]["water_dmg"].replace("%", ""))
-                    - float(teyvatBody["role_data"][0]["recharge"].replace("%", ""))
-                    * 0.2,
-                ),
-                1,
-            )
+            round(max(0, _waterDmg - _recharge * 0.2), 1)
+        )
+    elif char == "妮露" and teyvatBody["role_data"][0]["role_class"] == 6:
+        _count = float(teyvatBody["role_data"][0]["hp"] / 1000)
+        _crit = float(teyvatBody["role_data"][0]["crit"].replace("%", ""))
+        _critDmg = float(teyvatBody["role_data"][0]["crit_dmg"].replace("%", ""))
+        teyvatBody["role_data"][0]["crit"] = "{}%".format(
+            round(max(5, _crit - min(30, _count * 0.6)), 1)
+        )
+        teyvatBody["role_data"][0]["crit_dmg"] = "{}%".format(
+            round(max(50, _critDmg - min(60, _count * 1.2)), 1)
         )
 
     # 技能数据
