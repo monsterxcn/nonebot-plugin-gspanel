@@ -18,7 +18,7 @@
 </p></br>
 
 
-| ![刻晴](https://user-images.githubusercontent.com/22407052/187607775-61cfa24c-d736-4994-bd16-d211d807ae50.png) | ![琴](https://user-images.githubusercontent.com/22407052/187607799-b503f504-770f-4f80-85c6-9db78d5f849a.png) | ![香菱](https://user-images.githubusercontent.com/22407052/187607839-d29e3962-5bf6-4bf5-912d-2516e16b7643.png) |
+| ![刻晴](https://user-images.githubusercontent.com/22407052/201596343-45d1aa2d-4c0d-4e74-927b-8d8b39da4ef4.png) | ![琴](https://user-images.githubusercontent.com/22407052/201596604-5fc123ad-a0bb-4c33-851f-cd5f25907ab0.png) | ![香菱](https://user-images.githubusercontent.com/22407052/187607839-d29e3962-5bf6-4bf5-912d-2516e16b7643.png) |
 |:--:|:--:|:--:|
 
 
@@ -40,7 +40,7 @@ python3 -m pip install nonebot-plugin-gspanel
 ## 使用须知
 
 
- - 插件的圣遗物评分计算规则、卡片样式均来自 [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin)。此插件移植后作了以下修改：
+ - 插件的圣遗物评分计算规则、卡片样式均来自 [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin)。插件移植时对 **评分规则** 主要做了以下修改：
    
    + 以角色生命值、攻击力、防御力的实际基础值进行词条得分计算，导致固定值的生命值、攻击力、防御力词条评分相较原版有小幅度波动
    + 于面板数据区域展示圣遗物评分使用的词条权重规则，插件尚未自定义词条权重规则的角色使用默认规则（攻击力 `75`、暴击率 `100`、暴击伤害 `100`）
@@ -56,9 +56,8 @@ python3 -m pip install nonebot-plugin-gspanel
    | 环境变量 | 必需 | 默认 | 说明 |
    |:-------|:----:|:-----|:----|
    | `gspanel_alias` | 否 | `["面板"]` | 插件响应词别名，多个别名按 `["面面", "板板"]` 格式填写 |
-   | `gspanel_expire_sec` | 否 | `300` | 面板数据缓存过期秒数 |
    | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
-   | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`http://file.microgg.cn/ui/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划） |
+   | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`https://cdn.monsterx.cn/genshin/`（插件作者）<br>`http://file.microgg.cn/ui/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划） |
    
  - 插件图片生成采用 [@kexue-z/nonebot-plugin-htmlrender](https://github.com/kexue-z/nonebot-plugin-htmlrender)，若插件自动安装运行 Chromium 所需的额外依赖失败，请参考 [@SK-415/HarukaBot](https://haruka-bot.sk415.icu/faq.html#playwright-%E4%BE%9D%E8%B5%96%E4%B8%8D%E5%85%A8) 给出的以下解决方案：
    
