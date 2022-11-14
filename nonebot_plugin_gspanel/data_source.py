@@ -8,7 +8,7 @@ from httpx import AsyncClient, HTTPError
 from nonebot.log import logger
 from nonebot_plugin_htmlrender import template_to_pic
 
-from .__utils__ import LOCAL_DIR, PANEL_TPL, download
+from .__utils__ import LOCAL_DIR, SCALE_FACTOR, PANEL_TPL, download
 from .data_convert import simplDamageRes, simplFightProp, transFromEnka, transToTeyvat
 
 
@@ -204,7 +204,7 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
         template_name=f"{PANEL_TPL}.html",
         templates={"css": PANEL_TPL, "uid": uid, "data": data},
         pages={
-            "device_scale_factor": 1.8,
+            "device_scale_factor": SCALE_FACTOR,
             "viewport": {"width": 600, "height": 300},
             "base_url": f"file://{htmlBase}",
         },

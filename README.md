@@ -18,7 +18,7 @@
 </p></br>
 
 
-| ![刻晴](https://user-images.githubusercontent.com/22407052/201596343-45d1aa2d-4c0d-4e74-927b-8d8b39da4ef4.png) | ![琴](https://user-images.githubusercontent.com/22407052/201596604-5fc123ad-a0bb-4c33-851f-cd5f25907ab0.png) | ![香菱](https://user-images.githubusercontent.com/22407052/187607839-d29e3962-5bf6-4bf5-912d-2516e16b7643.png) |
+| ![刻晴](https://user-images.githubusercontent.com/22407052/201596343-45d1aa2d-4c0d-4e74-927b-8d8b39da4ef4.png) | ![琴](https://user-images.githubusercontent.com/22407052/201596604-5fc123ad-a0bb-4c33-851f-cd5f25907ab0.png) | ![妮露](https://user-images.githubusercontent.com/22407052/201609330-3894474c-c7a9-4d18-9896-c4ca06b8f1c2.png) |
 |:--:|:--:|:--:|
 
 
@@ -56,6 +56,7 @@ python3 -m pip install nonebot-plugin-gspanel
    | 环境变量 | 必需 | 默认 | 说明 |
    |:-------|:----:|:-----|:----|
    | `gspanel_alias` | 否 | `["面板"]` | 插件响应词别名，多个别名按 `["面面", "板板"]` 格式填写 |
+   | `gspanel_scale` | 否 | `1.0` | 浏览器缩放比例，此值越大返回图片的分辨率越高 |
    | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
    | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`https://cdn.monsterx.cn/genshin/`（插件作者）<br>`http://file.microgg.cn/ui/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划） |
    

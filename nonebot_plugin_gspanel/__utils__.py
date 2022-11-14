@@ -109,6 +109,9 @@ LOCAL_DIR = (
     if hasattr(driver.config, "resources_dir")
     else (Path() / "data" / "gspanel")
 )
+SCALE_FACTOR = (
+    float(driver.config.gspanel_scale) if hasattr(driver.config, "gspanel_scale") else 1.0
+)
 DOWNLOAD_MIRROR = (
     str(driver.config.resources_mirror)
     if hasattr(driver.config, "resources_mirror")
@@ -144,7 +147,7 @@ RELIC_APPEND = {str(x["id"]): x["propType"] for x in _RELIC_APPEND}
 (LOCAL_DIR / "ReliquaryAffixExcelConfigData.json").write_text(
     json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-PANEL_TPL = "panel-20221113"
+PANEL_TPL = "panel-0.2.2"
 
 
 def kStr(prop: str, reverse: bool = False) -> str:
@@ -179,7 +182,6 @@ async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
     - ``return: Tuple[str, str]``  UID、角色名
     """
     uid, char, tmp = "", "", ""
-    logger.info(msg)
     group = findall(
         r"[0-9]+|[\u4e00-\u9fa5]+|[a-z]+", sub(r"\[CQ:.*\]", "", msg), flags=IGNORECASE
     )
