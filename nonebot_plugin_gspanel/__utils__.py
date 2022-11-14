@@ -147,7 +147,7 @@ RELIC_APPEND = {str(x["id"]): x["propType"] for x in _RELIC_APPEND}
 (LOCAL_DIR / "ReliquaryAffixExcelConfigData.json").write_text(
     json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-PANEL_TPL = "panel-0.2.2"
+PANEL_TPL = "panel-0.2.3"
 
 
 def kStr(prop: str, reverse: bool = False) -> str:
