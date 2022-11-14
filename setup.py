@@ -26,6 +26,6 @@ setuptools.setup(
         "nonebot2>=2.0.0b3",
         "nonebot-adapter-onebot>=2.0.0b1",
         "httpx>=0.20.0,<1.0.0",
-        "nonebot-plugin-htmlrender>=0.0.4",
+        "nonebot-plugin-htmlrender>=0.2.0.1",
     ],
 )
