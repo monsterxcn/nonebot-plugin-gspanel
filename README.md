@@ -14,11 +14,11 @@
   <a href="https://pypi.python.org/pypi/nonebot-plugin-gspanel">
     <img src="https://img.shields.io/pypi/v/nonebot-plugin-gspanel?style=flat-square" alt="pypi">
   </a>
-  <img src="https://img.shields.io/badge/python-3.7.3+-blue?style=flat-square" alt="python"><br />
+  <img src="https://img.shields.io/badge/python-3.8+-blue?style=flat-square" alt="python"><br />
 </p></br>
 
 
-| ![刻晴](https://user-images.githubusercontent.com/22407052/201596343-45d1aa2d-4c0d-4e74-927b-8d8b39da4ef4.png) | ![琴](https://user-images.githubusercontent.com/22407052/201596604-5fc123ad-a0bb-4c33-851f-cd5f25907ab0.png) | ![妮露](https://user-images.githubusercontent.com/22407052/201609330-3894474c-c7a9-4d18-9896-c4ca06b8f1c2.png) |
+| ![刻晴](https://user-images.githubusercontent.com/22407052/201661930-f9ecdfe0-e278-4641-a012-cf090da6b6c7.PNG) | ![琴](https://user-images.githubusercontent.com/22407052/201662130-2b3bdcd3-acaa-4b59-9c88-3e50fa1887f3.PNG) | ![妮露](https://user-images.githubusercontent.com/22407052/201667744-decfdf25-c889-4a65-bbe0-94e194fe8d82.PNG) |
 |:--:|:--:|:--:|
 
 
