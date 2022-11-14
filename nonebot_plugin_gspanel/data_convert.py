@@ -327,7 +327,7 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
                 ],
                 "calc": {},
                 "icon": equip["flat"]["icon"],
-                "_appendPropIdList": equip["reliquary"]["appendPropIdList"],
+                "_appendPropIdList": equip["reliquary"].get("appendPropIdList", []),
             }
             relicData["calc"] = await calcRelicMark(
                 relicData, res["element"], affixWeight, pointMark, maxMark
@@ -503,17 +503,21 @@ async def simplFightProp(
     * ``param element: str`` 角色元素属性
     - ``return: Dict[str, Dict]`` HTML 模板需求格式面板数据
     """
+    affixWeight = CALC_RULES.get(char, {"攻击力百分比": 75, "暴击率": 100, "暴击伤害": 100})
+
     # 排列伤害加成
+    prefer = (
+        element if affixWeight.get("元素伤害加成", 0) > affixWeight.get("物理伤害加成", 0) else "物"
+    )
     damages = sorted(
         [{"k": k, "v": v} for k, v in fightProp.items() if str(k).endswith("伤害加成")],
-        key=lambda x: (x["v"], x["k"][0] in [element, "物"]),
+        key=lambda x: (x["v"], x["k"][0] == prefer),
         reverse=True,
     )
     for unuseDmg in damages[1:]:
         fightProp.pop(unuseDmg["k"])
 
     # 生成模板渲染所需数据
-    affixWeight = CALC_RULES.get(char, {"攻击力百分比": 75, "暴击率": 100, "暴击伤害": 100})
     res = {}
     for propTitle, propValue in fightProp.items():
         # 跳过无效治疗加成
