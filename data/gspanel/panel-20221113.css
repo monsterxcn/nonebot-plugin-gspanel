@@ -1,0 +1,1126 @@
+:root {
+    --charRarity5: rgba(200, 124, 36, 0.68);
+    --charRarity4: rgba(148, 112, 187, 0.68);
+    --itemRarity5: #C87C24;
+    --itemRarity4: #9470BB;
+    --itemRarity3: #5987AD;
+    --itemRarity2: #5A977A;
+    --itemRarity1: #818486;
+    --elemPyro: #FF9999;
+    --elemHydro: #80C0FF;
+    --elemAnemo: #80FFD7;
+    --elemElectro: #FFACFF;
+    --elemDendro: #99FF88;
+    --elemCryo: #99FFFF;
+    --elemGeo: #FFE699;
+    --weaponAffix5: #DEAF39;
+    --weaponAffix4: #C539DE;
+    --weaponAffix3: #396CDE;
+    --weaponAffix2: #51B72F;
+    --weaponAffix1: #A3A3A3;
+    --artiMark4: #E85656;
+    --artiMark3: #FFE699;
+    --artiMark2: #D699FF;
+    --artiMark1: #FFFFFF;
+    --ambrLight: rgb(233, 229, 220);
+    --ambrDeep: rgb(74, 83, 102);
+}
+
+@font-face {
+    font-family: "PanelFont";
+    src: url(./font/HYWH-65W.ttf);
+    font-weight: 400;
+    font-style: normal
+}
+
+@font-face {
+    font-family: "PanelNumFont";
+    src: url(./font/tttgbnumber.ttf);
+    font-weight: 400;
+    font-style: normal
+}
+
+body {
+    overflow: overlay;
+    margin: 0px;
+    /* transform: scale(1.5); */
+}
+
+#container {
+    /* position: relative; */
+    width: 960px;
+    height: auto;
+    min-height: 720px;
+    font-family: "PanelFont";
+    background-repeat: no-repeat;
+    background-position: center 0%;
+    background-size: auto 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* bottom: calc(-203px - -30px); */
+}
+
+#container.火 {
+    background-image: url(./imgs/bg-pyro.jpg);
+}
+
+#container.火 div.TopRightBlur {
+    background-color: rgba(var(--elemPyro), 0.25);
+}
+
+#container.火 div.TopRightBlur>ul.PropPanel {
+    border-color: var(--elemPyro);
+}
+
+#container.火 div.AvatarCons>div.cons,
+#container.火 div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-image: url(./imgs/talent-pyro.png);
+}
+
+#container.水 {
+    background-image: url(./imgs/bg-hydro.jpg);
+}
+
+#container.水 div.TopRightBlur {
+    background-color: rgba(var(--elemHydro), 0.25);
+}
+
+#container.水 div.TopRightBlur>ul.PropPanel {
+    border-color: var(--elemHydro);
+}
+
+#container.水 div.AvatarCons>div.cons,
+#container.水 div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-image: url(./imgs/talent-hydro.png);
+}
+
+#container.风 {
+    background-image: url(./imgs/bg-anemo.jpg);
+}
+
+#container.风 div.TopRightBlur {
+    background-color: rgba(var(--elemAnemo), 0.25);
+}
+
+#container.风 div.TopRightBlur>ul.PropPanel {
+    border-color: var(--elemAnemo);
+}
+
+#container.风 div.AvatarCons>div.cons,
+#container.风 div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-image: url(./imgs/talent-anemo.png);
+}
+
+#container.雷 {
+    background-image: url(./imgs/bg-electro.jpg);
+}
+
+#container.雷 div.TopRightBlur {
+    background-color: rgba(var(--elemElectro), 0.25);
+}
+
+#container.雷 div.TopRightBlur>ul.PropPanel {
+    border-color: var(--elemElectro);
+}
+
+#container.雷 div.AvatarCons>div.cons,
+#container.雷 div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-image: url(./imgs/talent-electro.png);
+}
+
+#container.草 {
+    background-image: url(./imgs/bg-dendro.jpg);
+}
+
+#container.草 div.TopRightBlur {
+    background-color: rgba(var(--elemDendro), 0.25);
+}
+
+#container.草 div.TopRightBlur>ul.PropPanel {
+    border-color: var(--elemDendro);
+}
+
+#container.草 div.AvatarCons>div.cons,
+#container.草 div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-image: url(./imgs/talent-dendro.png);
+}
+
+#container.冰 {
+    background-image: url(./imgs/bg-cryo.jpg);
+}
+
+#container.冰 div.TopRightBlur {
+    background-color: rgba(var(--elemCryo), 0.25);
+}
+
+#container.冰 div.TopRightBlur>ul.PropPanel {
+    border-color: var(--elemCryo);
+}
+
+#container.冰 div.AvatarCons>div.cons,
+#container.冰 div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-image: url(./imgs/talent-cryo.png);
+}
+
+#container.岩 {
+    background-image: url(./imgs/bg-geo.jpg);
+}
+
+#container.岩 div.TopRightBlur {
+    background-color: rgba(var(--elemGeo), 0.25);
+}
+
+#container.岩 div.TopRightBlur>ul.PropPanel {
+    border-color: var(--elemGeo);
+}
+
+#container.岩 div.AvatarCons>div.cons,
+#container.岩 div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-image: url(./imgs/talent-geo.png);
+}
+
+img.UIGachaAvatarImg {
+    position: absolute;
+    width: 1440px;
+    height: 720px;
+    right: 0px;
+    top: 0px
+}
+
+div.UID {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 32px;
+    font-weight: 700;
+    height: 35px;
+    line-height: 35px;
+    text-shadow: 0 0 3px #d3bc8e, 2px 2px 4px rgb(0 0 0 / 70%);
+    color: #fff;
+    opacity: .68;
+}
+
+div.UID::before {
+    content: "UID";
+    padding-right: 5px;
+}
+
+div.AvatarLevel {
+    position: absolute;
+    width: 120px;
+    height: 100px;
+    right: 500px;
+    top: 530px
+}
+
+div.AvatarLevel>div {
+    align-items: flex-start;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    min-width: 120px;
+}
+
+div.AvatarLevel>div>div {
+    font-size: 24px;
+    font-weight: 700;
+    font-style: normal;
+    height: 50px;
+    letter-spacing: 0;
+    line-height: normal;
+    text-shadow: 3px 5px 4px #333333ad;
+    color: #ffffff;
+    /* vertical middle */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div.AvatarLevel>div.exp {
+    border-radius: 20px 0px 0px 0px;
+}
+
+div.AvatarLevel>div.exp.r5 {
+    background-color: var(--charRarity5);
+}
+
+div.AvatarLevel>div.exp.r4 {
+    background-color: var(--charRarity4);
+}
+
+div.AvatarLevel>div.fetter {
+    background-color: #ff5722ad;
+    border-radius: 0px 0px 20px 0px;
+}
+
+div.AvatarCons {
+    position: absolute;
+    width: 452px;
+    height: 78px;
+    right: 494px;
+    top: 642px;
+
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    min-width: 452px;
+}
+
+div.AvatarCons>div.cons {
+    align-items: center;
+    background-position: 50% 50%;
+    background-size: cover;
+    display: flex;
+    height: 78px;
+    width: 72px;
+}
+
+div.AvatarCons>div.cons.off {
+    filter: blur(2px);
+    opacity: 0.68;
+}
+
+div.AvatarCons>div.cons>img.UITalentIcon {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    padding-left: 16px;
+}
+
+div.TopRightBlur {
+    position: relative;
+    width: 480px;
+    height: 720px;
+    left: 480px;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px) brightness(100%);
+    -webkit-backdrop-filter: blur(5px) brightness(100%);
+}
+
+div.TopRightBlur>h1.AvatarTitle {
+    top: 30px;
+    color: #FFFFFF;
+    font-size: 36px;
+    font-weight: 700;
+    height: 60px;
+    width: 460px;
+    line-height: 60px;
+    letter-spacing: 0;
+    text-align: center;
+    /* text-stroke: 2px solid rgba(0, 0, 0, 0.68);
+    -webkit-text-stroke: 2px solid rgba(0, 0, 0, 0.68);
+    text-shadow: 3px 6px 4px rgba(0, 0, 0, 0.25); */
+    text-shadow:
+        2px 2px 0 rgba(0, 0, 0, 0.68),
+        -2px -2px 0 rgba(0, 0, 0, 0.68),
+        2px -2px 0 rgba(0, 0, 0, 0.68),
+        -2px 2px 0 rgba(0, 0, 0, 0.68),
+        2px 2px 0 rgba(0, 0, 0, 0.68);
+    /* disable user agent stylesheet */
+    margin-block-start: 25px;
+    margin-block-end: 10px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+div.TopRightBlur>div.AvatarSkills {
+    align-items: center;
+    align-self: center;
+    display: flex;
+    gap: 28px;
+    width: 362px;
+}
+
+div.TopRightBlur>div.AvatarSkills>div.skill {
+    height: 130px;
+    position: relative;
+    width: 102px;
+}
+
+div.TopRightBlur>div.AvatarSkills>div.skill>div.element {
+    background-position: 50% 50%;
+    background-size: cover;
+    width: 102px;
+    height: 110px;
+    left: 0;
+    top: 0;
+    position: absolute;
+}
+
+div.TopRightBlur>div.AvatarSkills>div.skill>img.UISkillIcon {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 32px;
+    left: 26px;
+    object-fit: cover;
+}
+
+div.TopRightBlur>div.AvatarSkills>div.skill>div.level {
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 3px #00000040;
+    display: flex;
+    width: 50px;
+    height: 40px;
+    position: absolute;
+    left: 26px;
+    top: 90px;
+}
+
+div.TopRightBlur>div.AvatarSkills>div.skill>div.level.extra {
+    color: #000000;
+    background-color: #45deff;
+}
+
+div.TopRightBlur>div.AvatarSkills>div.skill>div.level>div {
+    color: rgba(0, 0, 0, 0.68);
+    font-size: 24px;
+    font-weight: 700;
+    width: 50px;
+    height: 40px;
+    line-height: 40px;
+    letter-spacing: 0;
+    /* vertical middle */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.TopRightBlur>ul.PropPanel {
+    background-color: #33333399;
+    border: 2px dashed;
+    border-radius: 10px;
+    height: 440px;
+    width: 440px;
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* disable user agent stylesheet */
+    list-style-type: none;
+    margin-block-start: unset;
+    margin-block-end: unset;
+    margin-inline-start: unset;
+    margin-inline-end: unset;
+    padding-inline-start: unset;
+}
+
+div.TopRightBlur>ul.PropPanel>li {
+    color: #ffffff;
+    height: 50px;
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+div.TopRightBlur>ul.PropPanel>li>span.weight {
+    width: 40px;
+    height: 24px;
+    position: absolute;
+    left: 20px;
+    color: #000000;
+    background-color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 5px;
+    text-shadow: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.TopRightBlur>ul.PropPanel>li>span.weight.error {
+    color: #ffe699;
+    background-color: rgba(240, 6, 6, 0.7);
+}
+
+div.TopRightBlur>ul.PropPanel>li>div {
+    position: absolute;
+    left: 80px;
+}
+
+div.TopRightBlur>ul.PropPanel>li>span.value {
+    height: 15px;
+    line-height: 15px;
+    text-align: right;
+    position: absolute;
+    right: 55px;
+}
+
+div.TopRightBlur>ul.PropPanel>li>span.value>div {
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+div.TopRightBlur>ul.PropPanel>li>span.value>div:last-child {
+    color: #90e800;
+}
+
+div.TopRightBlur>ul.PropPanel>li>span.value>div:last-child::before {
+    content: "+";
+}
+
+div.AvatarEquips {
+    position: relative;
+    width: 900px;
+    min-height: 310px;
+    padding-bottom: 60px;
+    left: 30px;
+    top: 30px;
+
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+div.AvatarEquips>div.item {
+    color: #ffffff;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    height: 310px;
+    border-radius: 15px;
+    border: none;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon,
+div.AvatarEquips>div.item.arti {
+    background-color: var(--ambrDeep);
+    box-shadow: 0px 15px 15px rgb(0 0 0 / 40%);
+}
+
+div.AvatarEquips>div.item:not(.arti) {
+    gap: 30px;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div {
+    width: 280px;
+    height: 135px;
+    background-color: #2e353e;
+    box-shadow: 0px 15px 15px rgb(0 0 0 / 40%);
+    border-radius: 15px;
+    border: none;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon {
+    height: 145px;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip {
+    color: var(--ambrLight);
+    font-size: 18px;
+    width: 280px;
+    position: relative;
+    top: 15px;
+    text-align: center;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip::before {
+    content: "你怎么不强化啊？";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.ACE²,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.ACE,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.SSS {
+    color: #ff5722;
+    font-weight: 700;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.SS,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.S,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.A {
+    color: #ffffff;
+    font-weight: 400;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.ACE²::before {
+    content: "晒吧，欧不可耻，只是可恨";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.ACE::before {
+    content: "达成成就：阳寿圣遗物";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.SSS::before {
+    content: "达成成就：高分圣遗物";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.SS::before {
+    content: "以普遍理性而论，很好";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.S::before {
+    content: "达成成就：合格圣遗物";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.A::before {
+    content: "嗯嗯好好好可以（敷衍";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.tip.B::before {
+    content: "抽卡有保底，圣遗物无下限";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail {
+    font-size: 40px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 280px;
+    height: 75px;
+    position: relative;
+    top: 20px;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div {
+    font-family: "PanelNumFont";
+    color: var(--artiMark1);
+    width: 90px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.level.ACE²,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.level.ACE {
+    color: var(--artiMark4);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.level.SSS,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.level.SS {
+    color: var(--artiMark3);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.level.S,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.level.A {
+    color: var(--artiMark2);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.level::after,
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.goal::after {
+    font-family: "PanelFont";
+    content: "圣遗物评级";
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ambrLight);
+    text-shadow: none;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.mark>div.detail>div.goal::after {
+    content: "圣遗物评分";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>img.UIWeaponIcon {
+    width: 145px;
+    height: 145px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-radius: 15px 0 0 15px;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.level,
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix {
+    width: 55px;
+    height: 30px;
+    font-size: 18px;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+    position: relative;
+    top: -150px;
+    left: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.level {
+    background-color: var(--itemRarity1);
+    border-radius: 15px 0 0 0;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.level::before {
+    content: "Lv.";
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.level.r5 {
+    background-color: var(--itemRarity5);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.level.r4 {
+    background-color: var(--itemRarity4);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.level.r3 {
+    background-color: var(--itemRarity3);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.level.r2 {
+    background-color: var(--itemRarity2);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix {
+    background-color: var(--weaponAffix1);
+    border-radius: 0 0 15px 0;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix::before {
+    content: "精";
+    padding-right: 5px;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix.a5 {
+    background-color: var(--weaponAffix5);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix.a4 {
+    background-color: var(--weaponAffix4);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix.a3 {
+    background-color: var(--weaponAffix3);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix.a2 {
+    background-color: var(--weaponAffix2);
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.affix.a1 {
+    opacity: 0;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon:has(div.affix.a1)>div.level {
+    border-bottom-right-radius: 15px;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.name,
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.prop {
+    font-size: 25px;
+    font-weight: 700;
+    width: 180px;
+    height: 32px;
+    position: relative;
+    top: -195px;
+    right: -80px;
+    text-align: right;
+}
+
+div.AvatarEquips>div.item:not(.arti)>div.weapon>div.prop {
+    color: var(--ambrLight);
+    font-size: 18px;
+    font-weight: normal;
+    top: -170px;
+}
+
+div.AvatarEquips>div.item.arti>img.UIRelicIcon {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    left: -95px;
+    border-radius: 15px 0 15px 0;
+    background-color: var(--itemRarity1);
+    background-image: linear-gradient(136deg, rgba(49, 43, 71, .5294117647058824), transparent);
+}
+
+div.AvatarEquips>div.item.arti>img.UIRelicIcon.r5 {
+    background-color: var(--itemRarity5);
+}
+
+div.AvatarEquips>div.item.arti>img.UIRelicIcon.r4 {
+    background-color: var(--itemRarity4);
+}
+
+div.AvatarEquips>div.item.arti>img.UIRelicIcon.r3 {
+    background-color: var(--itemRarity3);
+}
+
+div.AvatarEquips>div.item.arti>img.UIRelicIcon.r2 {
+    background-color: var(--itemRarity2);
+}
+
+div.AvatarEquips>div.item.arti>div.level {
+    width: 90px;
+    min-height: 30px;
+    position: relative;
+    top: -15px;
+    left: -95px;
+    font-size: 18px;
+    color: rgb(74, 83, 102);
+    background-color: rgb(233, 229, 220);
+    border-bottom-right-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.AvatarEquips>div.item.arti>div.level::before {
+    content: "Lv.";
+}
+
+div.AvatarEquips>div.item.arti>div.title {
+    min-height: 100px;
+    width: 175px;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    top: -120px;
+    left: 45px;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+div.AvatarEquips>div.item.arti>div.title>div.mark {
+    font-family: "PanelNumFont";
+    font-size: 32px;
+    color: var(--artiMark1);
+    margin-top: 10px;
+}
+
+div.AvatarEquips>div.item.arti>div.title>div.mark.ACE²,
+div.AvatarEquips>div.item.arti>div.title>div.mark.ACE {
+    color: var(--artiMark4);
+}
+
+div.AvatarEquips>div.item.arti>div.title>div.mark.SSS,
+div.AvatarEquips>div.item.arti>div.title>div.mark.SS {
+    color: var(--artiMark3);
+}
+
+div.AvatarEquips>div.item.arti>div.title>div.mark.S,
+div.AvatarEquips>div.item.arti>div.title>div.mark.A {
+    color: var(--artiMark2);
+}
+
+div.AvatarEquips>div.item.arti>ul.affix {
+    min-height: 155px;
+    width: 250px;
+    position: relative;
+    bottom: 105px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    list-style-type: none;
+    margin-block-start: unset;
+    margin-block-end: unset;
+    margin-inline-start: unset;
+    margin-inline-end: unset;
+    padding-inline-start: unset;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li {
+    font-size: 18px;
+    font-weight: 400;
+    text-shadow: 3px 3px 3px rgb(0 0 0 / 40%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li.main {
+    font-size: 18px;
+    font-weight: 700;
+    text-shadow: 5px 5px 5px rgb(0 0 0 / 68%);
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li.sub.unuse {
+    color: #aaaaaa;
+    text-shadow: none;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li.sub.use {
+    color: #ffffff;
+    text-shadow: none;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li.sub.great {
+    color: var(--artiMark3);
+    text-shadow: none;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li>div.key {
+    width: 110px;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li>div.value,
+div.AvatarEquips>div.item.arti>ul.affix>li>div.goal {
+    width: 70px;
+    text-align: left;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li>div.goal {
+    text-align: right;
+    font-size: small;
+    opacity: 0.68;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li>div.value::before {
+    content: "+";
+    padding-right: 2px;
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li>div.value.pct::after {
+    content: "%";
+}
+
+div.AvatarEquips>div.item.arti>ul.affix>li>div.goal::after {
+    content: "分";
+    padding-left: 3px;
+}
+
+div.AvatarEquips>div.item.arti>div.note {
+    width: 280px;
+    min-height: 35px;
+    font-size: 16px;
+    position: relative;
+    top: -100px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div {
+    width: 40px;
+    height: 35px;
+    background-color: #ff5652;
+    border-radius: 0 15px 0 15px;
+    /* box-shadow: inset 0px 0px 0px 1px var(--ambrLight); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.nohit::before {
+    content: "歪";
+    padding-right: 3px;
+    font-size: 10px;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.nohit::after {
+    content: "次";
+    padding-left: 3px;
+    font-size: 10px;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.calc {
+    width: auto;
+    min-width: 130px;
+    background-color: #2e353e;
+    border-radius: 15px 0 15px 0;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.calc>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.calc>div.main {
+    width: 110px;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.calc>div.total {
+    width: 130px;
+}
+
+div.AvatarEquips>div.item.arti>div.note:not(:has(div.nohit))>div.calc {
+    position: relative;
+    right: -150px;
+}
+
+div.AvatarEquips>div.item.arti>div.note:not(:has(div.nohit)):has(div.main)>div.calc {
+    position: relative;
+    right: -40px;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.calc>div.main::before {
+    content: "主词条・";
+    font-size: 10px;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.calc>div.total::before {
+    content: "总分对齐・";
+    font-size: 10px;
+}
+
+div.AvatarEquips>div.item.arti>div.note>div.calc>div.main::after,
+div.AvatarEquips>div.item.arti>div.note>div.calc>div.total::after {
+    content: "%";
+}
+
+ul.AvatarDamage,
+ul.AvatarBuffs {
+    height: auto;
+    min-height: 90px;
+    width: 900px;
+    border-radius: 15px;
+    background-color: #2e353e;
+    box-shadow: 0px 15px 15px rgb(0 0 0 / 40%);
+    position: relative;
+    top: 0px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    list-style-type: none;
+    margin-block-start: unset;
+    margin-block-end: 30px;
+    margin-inline-start: unset;
+    margin-inline-end: unset;
+    padding-inline-start: unset;
+}
+
+ul.AvatarDamage>li,
+ul.AvatarBuffs>li {
+    color: #ffffff;
+    height: auto;
+    min-height: 40px;
+    padding-left: 25px;
+    font-size: 20px;
+    font-weight: 400;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border-bottom: 2px solid rgba(255 255 255 / 20%);
+    /* justify-content: center; */
+}
+
+ul.AvatarDamage>li:last-child,
+ul.AvatarBuffs>li:last-child {
+    border-bottom: none;
+}
+
+ul.AvatarDamage>li.title,
+ul.AvatarBuffs>li.title {
+    height: 50px;
+    font-size: 25px;
+    font-weight: 700;
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+ul.AvatarDamage>li.title::after,
+ul.AvatarBuffs>li.title::after {
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.68;
+    color: var(--ambrLight);
+    padding-left: 20px;
+}
+
+ul.AvatarDamage>li>div,
+ul.AvatarBuffs>li>div {
+    color: var(--ambrLight);
+    height: auto;
+    min-height: 25px;
+    padding: 0.4em;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+ul.AvatarDamage>li>div:first-child,
+ul.AvatarBuffs>li>div:first-child {
+    color: #ffffff;
+    text-align: right;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+ul.AvatarDamage>li>div:not(:last-child),
+ul.AvatarBuffs>li>div:not(:last-child) {
+    border-right: 2px solid rgba(255 255 255 / 20%);
+}
+
+ul.AvatarDamage>li.title {
+    font-family: "PanelNumFont";
+}
+
+ul.AvatarDamage>li.title::before {
+    content: "伤害计算・评级";
+    font-family: "PanelFont";
+    padding-right: 15px;
+}
+
+ul.AvatarDamage>li.title::after {
+    content: "伤害以 86 级怪物为基准，等级不同数值有微小偏差";
+    font-family: "PanelFont";
+}
+
+ul.AvatarDamage>li>div:first-child {
+    width: 308px;
+}
+
+ul.AvatarDamage>li>div:not(:first-child) {
+    width: 270px;
+}
+
+
+ul.AvatarDamage>li:nth-child(2)>div:first-child::before {
+    content: "伤害类型";
+    color: #ffffff;
+}
+
+ul.AvatarDamage>li:nth-child(2)>div:nth-child(2)::before {
+    content: "暴击伤害";
+    color: #ffffff;
+}
+
+ul.AvatarDamage>li:nth-child(2)>div:last-child::before {
+    content: "期望伤害";
+    color: #ffffff;
+}
+
+ul.AvatarBuffs>li>div:first-child {
+    max-width: 270px;
+}
+
+ul.AvatarBuffs>li.title::before {
+    content: "Buff 列表";
+}
+
+ul.AvatarBuffs>li.title::after {
+    content: "部分 Buff 的触发条件以及层数可能影响实际伤害结果";
+}
+
+div.copyright {
+    color: #ffffff;
+    opacity: 0.68;
+    text-shadow: 3px 5px 4px #333333ad;
+    font-size: 20px;
+    width: 960px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+div.copyright::before {
+    content: "Data from Enka.Network × Powered by NoneBot2 × Inspired by Miao-Plugin";
+}

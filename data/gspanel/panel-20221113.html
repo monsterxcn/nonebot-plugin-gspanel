@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.5">
+    <link rel="stylesheet" href="./{{ css }}.css">
+    <title>Document</title>
+</head>
+<body><!--  style=transform:scale(1.5) -->
+    <div id="container" class="{{ data['element'] }}">
+        <img class="UIGachaAvatarImg" src="./{{ data['name'] }}/{{ data['gachaAvatarImg'] }}.png">
+        <div class="UID">{{ uid }}</div>
+        <div class="AvatarLevel">
+            <div class="exp r{{ data['rarity'] }}"><div>等级 {{ data["level"] }}</div></div>
+            <div class="fetter"><div>好感 {{ data["fetter"] }}</div></div>
+        </div>
+        <div class="AvatarCons">
+            {% for con in data["consts"] %}
+            <div class="cons {{ con['style'] }}"><img class="UITalentIcon" src="./{{ data['name'] }}/{{ con['icon'] }}.png" /></div>
+            {% endfor %}
+        </div>
+        <div class="TopRightBlur">
+            <h1 class="AvatarTitle">{{ data["slogan"] }}·{{ data["name"] }}</h1>
+            <div class="AvatarSkills">
+                {% for sKey, sValue in data["skills"].items() %}
+                <div class="skill">
+                    <div class="element"></div>
+                    <img class="UISkillIcon" src="./{{ data['name'] }}/{{ sValue['icon'] }}.png" />
+                    <div class="level {{ sValue['style'] }}"><div>{{ sValue['level'] }}</div></div>
+                </div>
+                {% endfor %}
+            </div>
+            <ul class="PropPanel">
+                {% for pKey, prop in data["fightProp"].items() %}
+                <li>
+                    {% if prop["weight"] %}
+                    <span class="weight {{ 'error' if prop.get('error', '') else '' }}">{{ prop["weight"] }}</span>
+                    {% endif %}
+                    <div>{{ pKey }}</div>
+                    <span class="value">{{ prop["value"] }}
+                        {% if prop.get('detail', '') %}
+                        <br /><div>{{ prop["detail"][0] }}</div><div>{{ prop["detail"][1] }}</div>
+                        {% endif %}
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="AvatarEquips">
+            <div class="item">
+                <div class="mark">
+                    <div class="tip {{ data['relicCalc']['rank'] }}"></div>
+                    <div class="detail">
+                        <div class="level {{ data['relicCalc']['rank'] }}">{{ data["relicCalc"]["rank"] }}</div>
+                        <div class="goal">{{ data["relicCalc"]["total"] }}</div>
+                    </div>
+                </div>
+                <div class="weapon">
+                    <img class="UIWeaponIcon" src="./weapon/{{ data['weapon']['icon'] }}.png">
+                    <div class="level r{{ data['weapon']['rarity'] }}">{{ data["weapon"]["level"] }}</div>
+                    <div class="affix a{{ data['weapon']['affix'] }}">{{ data["weapon"]["affix"] }}</div>
+                    <div class="name">{{ data["weapon"]["name"] }}</div>
+                    <div class="prop main">基础攻击力 {{ data["weapon"]["main"] }}</div>
+                    <div class="prop sub">{{ data["weapon"]["sub"]["prop"] }} {{ data["weapon"]["sub"]["value"] }}</div>
+                </div>
+            </div>
+            {% for arti in data["relics"] %}
+            <div class="item arti">
+                <img class="UIRelicIcon r{{ arti['rarity'] }}" src="./artifacts/{{ arti['icon'] }}.png">
+                <div class="level">{{ arti["level"] }}</div>
+                <div class="title">
+                    <div class="name">{{ arti["name"] }}</div>
+                    <div class="mark {{ arti['calc']['rank'] }}">{{ arti["calc"]["total"] }} - {{ arti["calc"]['rank'] }}</div>
+                </div>
+                <ul class="affix">
+                    <li class="main">
+                        <div class="key">{{ arti["main"]["prop"] }}</div>
+                        <div class="value">{{ arti["main"]["value"] }}</div>
+                        <div class="goal">{{ arti["calc"]["main"] }}</div>
+                    </li>
+                    
+                    {% for sub in arti["sub"] %}
+                    <li class="sub {{ arti['calc']['sub'][loop.index0]['style'] }}">
+                        <div class="key">{{ sub["prop"] }}</div>
+                        <div class="value">{{ sub["value"] }}</div>
+                        <div class="goal">{{ arti["calc"]["sub"][loop.index0]["goal"] }}</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="note">
+                    {% if arti["calc"]["nohit"] %}
+                    <div class="nohit">{{ arti["calc"]["nohit"] }}</div>
+                    {% endif %}
+                    <div class="calc">
+                        {% if arti["pos"] >= 3 %}
+                        <div class="main">{{ arti["calc"]["main_pct"] }}</div>
+                        {% endif %}
+                        <div class="total">{{ arti["calc"]["total_pct"] }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if data["damage"] %}
+        <ul class="AvatarDamage">
+            <li class="title">{{ data["damage"]["level"] }}</li>
+            <li class="head">
+                <!-- use css to fill this -->
+                <div></div>
+                <div></div>
+                <div></div>
+            </li>
+            {% for dmg in data["damage"]["data"] %}
+            <li class="dmg">
+                <div>{{ dmg[0] }}</div>
+                <div>{{ dmg[1] }}</div>
+                <div>{{ dmg[2] }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% if data["damage"]["buff"] %}
+        <ul class="AvatarBuffs">
+            <li class="title"></li>
+            {% for buff in data["damage"]["buff"] %}
+            <li class="buf">
+                <div>{{ buff[0] }}</div>
+                <div>{{ buff[1] }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endif %}
+        <div class="copyright"></div>
+    </div>
+</body>
+</html>
