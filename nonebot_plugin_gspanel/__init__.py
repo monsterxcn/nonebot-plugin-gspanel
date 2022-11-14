@@ -15,11 +15,8 @@ driver = get_driver()
 uidStart = ["1", "2", "5", "6", "7", "8", "9"]
 showPanel = on_command("panel", aliases=GSPANEL_ALIAS, priority=13, block=True)
 
-
-@driver.on_startup
-async def exStartup() -> None:
-    await fetchInitRes()
-    await updateCache()
+driver.on_startup(fetchInitRes)
+driver.on_bot_connect(updateCache)
 
 
 @showPanel.handle()
