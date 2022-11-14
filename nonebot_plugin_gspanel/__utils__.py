@@ -1,14 +1,16 @@
 import asyncio
 import json
 from pathlib import Path
+from re import IGNORECASE, findall, sub
+from traceback import format_exc
 from typing import Set, Tuple, Union
 
-from httpx import AsyncClient
+from httpx import AsyncClient, Client
 from nonebot import get_driver
 from nonebot.drivers import Driver
 from nonebot.log import logger
 
-GROW_VALUE = {  # 词条成长值
+GROW_VALUE = {  # 理论最高档（4档）词条成长值
     "暴击率": 3.89,
     "暴击伤害": 7.77,
     "元素精通": 23.31,
@@ -19,6 +21,15 @@ GROW_VALUE = {  # 词条成长值
     "元素伤害加成": 5.825,
     "物理伤害加成": 7.288,
     "治疗加成": 4.487,
+}
+SINGLE_VALUE = {  # 用于计算词条数
+    "暴击率": 3.3,
+    "暴击伤害": 6.6,
+    "元素精通": 19.75,
+    "生命值百分比": 4.975,
+    "攻击力百分比": 4.975,
+    "防御力百分比": 6.2,
+    "元素充能效率": 5.5,
 }
 MAIN_AFFIXS = {  # 可能的主词条
     "3": "攻击力百分比,防御力百分比,生命值百分比,元素精通,元素充能效率".split(","),  # EQUIP_SHOES
@@ -37,7 +48,6 @@ RANK_MAP = [
     ["ACE", 56.1],
     ["ACE²", 66],
 ]
-# STAR = {"QUALITY_ORANGE": 5, "QUALITY_PURPLE": 4}
 ELEM = {
     "Fire": "火",
     "Water": "水",
@@ -47,8 +57,13 @@ ELEM = {
     "Ice": "冰",
     "Rock": "岩",
 }
-POS = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"]
-POSCN = ["生之花", "死之羽", "时之沙", "空之杯", "理之冠"]
+POS = {
+    "EQUIP_BRACER": "生之花",
+    "EQUIP_NECKLACE": "死之羽",
+    "EQUIP_SHOES": "时之沙",
+    "EQUIP_RING": "空之杯",
+    "EQUIP_DRESS": "理之冠",
+}
 SKILL = {"1": "a", "2": "e", "9": "q"}
 DMG = {
     "40": "火",
@@ -89,11 +104,6 @@ GSPANEL_ALIAS: Set[Union[str, Tuple[str, ...]]] = (
     if hasattr(driver.config, "gspanel_alias")
     else {"面板"}
 )
-EXPIRE_SEC = (
-    int(driver.config.gspanel_expire_sec)
-    if hasattr(driver.config, "gspanel_expire_sec")
-    else 60 * 5
-)
 LOCAL_DIR = (
     (Path(driver.config.resources_dir) / "gspanel")
     if hasattr(driver.config, "resources_dir")
@@ -110,10 +120,37 @@ if not (LOCAL_DIR / "cache").exists():
     (LOCAL_DIR / "cache").mkdir(parents=True, exist_ok=True)
 if not (LOCAL_DIR / "qq-uid.json").exists():
     (LOCAL_DIR / "qq-uid.json").write_text("{}", encoding="UTF-8")
+_client = Client(verify=False)
+CALC_RULES = _client.get("https://cdn.monsterx.cn/bot/gspanel/calc-rule.json").json()
+(LOCAL_DIR / "calc-rule.json").write_text(
+    json.dumps(CALC_RULES, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+CHAR_DATA = _client.get("https://cdn.monsterx.cn/bot/gspanel/char-data.json").json()
+(LOCAL_DIR / "char-data.json").write_text(
+    json.dumps(CHAR_DATA, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+CHAR_ALIAS = _client.get("https://cdn.monsterx.cn/bot/gspanel/char-alias.json").json()
+(LOCAL_DIR / "char-alias.json").write_text(
+    json.dumps(CHAR_ALIAS, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+HASH_TRANS = _client.get("https://cdn.monsterx.cn/bot/gspanel/hash-trans.json").json()
+(LOCAL_DIR / "hash-trans.json").write_text(
+    json.dumps(HASH_TRANS, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+_RELIC_APPEND = _client.get(
+    "https://cdn.monsterx.cn/bot/gspanel/ReliquaryAffixExcelConfigData.json"
+).json()
+RELIC_APPEND = {str(x["id"]): x["propType"] for x in _RELIC_APPEND}
+(LOCAL_DIR / "ReliquaryAffixExcelConfigData.json").write_text(
+    json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+PANEL_TPL = "panel-20221113"
 
 
-def kStr(prop: str) -> str:
+def kStr(prop: str, reverse: bool = False) -> str:
     """转换词条名称为简短形式"""
+    if reverse:
+        return prop.replace("充能", "元素充能").replace("物", "物理").replace("伤", "伤害")
     return (
         prop.replace("百分比", "")
         .replace("元素充能", "充能")
@@ -130,16 +167,48 @@ def vStr(prop: str, value: Union[int, float]) -> str:
         return str(round(value, 1)) + "%"
 
 
+async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
+    """
+    输入消息中的 UID 与角色名格式化，应具备处理 ``msg`` 为空、包含中文或数字的能力。
+    - 首个中文字符串捕获为角色名，若不包含则返回 ``all`` 请求角色面板列表数据
+    - 首个数字字符串捕获为 UID，若不包含则返回 ``uidHelper()`` 根据绑定配置查找的 UID
+
+    * ``param msg: str`` 输入消息，由 ``state["_prefix"]["command_arg"]`` 或 ``event.get_plaintext()`` 生成，可能包含 CQ 码
+    * ``param qq: str`` 输入消息触发 QQ
+    * ``param atqq: str = ""`` 输入消息中首个 at 的 QQ
+    - ``return: Tuple[str, str]``  UID、角色名
+    """
+    uid, char, tmp = "", "", ""
+    logger.info(msg)
+    group = findall(
+        r"[0-9]+|[\u4e00-\u9fa5]+|[a-z]+", sub(r"\[CQ:.*\]", "", msg), flags=IGNORECASE
+    )
+    for s in group:
+        if s.isdigit():
+            if len(s) == 9:
+                if not uid:
+                    uid = s
+            else:
+                # 0人，1斗，97忍
+                tmp = s
+        elif s.encode().isalpha():
+            # dio娜，abd
+            tmp = s.lower()
+        elif not s.isdigit() and not char:
+            char = tmp + s
+    uid = uid or await uidHelper(atqq or qq)
+    char = await aliasWho(char or tmp or "全部")
+    return uid, char
+
+
 async def fetchInitRes() -> None:
     """
-    插件初始化资源下载，通过阿里云 CDN 获取 HTML 模板资源文件、角色词条权重配置、角色图标数据、TextMap 中文翻译数据等
+    插件初始化资源下载，通过阿里云 CDN 获取 HTML 模板资源文件、角色词条权重配置、角色数据、TextMap 中文翻译数据等
     """
     logger.info("正在检查面板插件所需资源...")
     # 仅首次启用插件下载的文件
     initRes = [
-        "https://cdn.monsterx.cn/bot/gspanel/font/华文中宋.TTF",
         "https://cdn.monsterx.cn/bot/gspanel/font/HYWH-65W.ttf",
-        "https://cdn.monsterx.cn/bot/gspanel/font/NZBZ.ttf",
         "https://cdn.monsterx.cn/bot/gspanel/font/tttgbnumber.ttf",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/bg-anemo.jpg",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/bg-cryo.jpg",
@@ -148,8 +217,6 @@ async def fetchInitRes() -> None:
         "https://cdn.monsterx.cn/bot/gspanel/imgs/bg-geo.jpg",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/bg-hydro.jpg",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/bg-pyro.jpg",
-        "https://cdn.monsterx.cn/bot/gspanel/imgs/card-bg.png",
-        "https://cdn.monsterx.cn/bot/gspanel/imgs/star.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-anemo.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-cryo.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-dendro.png",
@@ -157,8 +224,8 @@ async def fetchInitRes() -> None:
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-geo.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-hydro.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-pyro.png",
-        "https://cdn.monsterx.cn/bot/gspanel/jinjia.css",
-        "https://cdn.monsterx.cn/bot/gspanel/jinjia.html",
+        f"https://cdn.monsterx.cn/bot/gspanel/{PANEL_TPL}.css",
+        f"https://cdn.monsterx.cn/bot/gspanel/{PANEL_TPL}.html",
     ]
     tasks = []
     for r in initRes:
@@ -166,32 +233,19 @@ async def fetchInitRes() -> None:
         tasks.append(download(r, local=("" if "." in d else d)))
     await asyncio.gather(*tasks)
     tasks.clear()
-    logger.debug("首次启用所需资源检查完毕..")
-    # 总是尝试更新的文件
-    urls = [
-        # "https://cdn.monsterx.cn/bot/gapanel/loc.json",  # 仅包含 zh-CN 语言
-        "https://cdn.monsterx.cn/bot/gspanel/calc-rule.json",
-        "https://cdn.monsterx.cn/bot/gspanel/char-alias.json",
-        "https://cdn.monsterx.cn/bot/gspanel/characters.json",
-        "https://cdn.monsterx.cn/bot/gspanel/trans.json",
-    ]
-    async with AsyncClient(verify=False) as client:
-        for url in urls:
-            tmp = (await client.get(url)).json()
-            (LOCAL_DIR / url.split("/")[-1]).write_text(
-                json.dumps(tmp, ensure_ascii=False, indent=2),
-                encoding="utf-8",
-            )
     logger.info("面板插件所需资源检查完毕！")
 
 
-async def download(url: str, local: Union[Path, str] = "") -> Union[Path, None]:
+async def download(
+    url: str, local: Union[Path, str] = "", retry: int = 3
+) -> Union[Path, None]:
     """
     一般文件下载，通常是即用即下的角色命座图片、技能图片、抽卡大图、圣遗物图片等
 
-    * ``param url: str`` 指定下载链接
-    * ``param local: Union[Path, str] = ""`` 指定本地目标路径，传入类型为 ``Path`` 时视为保存文件完整路径，传入类型为 ``str`` 时视为保存文件子文件夹名（默认下载至插件资源根目录）
-    - ``return: Union[Path, None]`` 本地文件地址，出错时返回空
+    * ``param url: str`` 下载链接
+    * ``param local: Union[Path, str] = ""`` 下载路径，传入类型为 ``Path`` 时视为保存文件完整路径，传入类型为 ``str`` 时视为保存文件子文件夹名（默认下载至插件资源根目录）
+    * ``param retry: int = 3`` 下载失败重试次数
+    - ``return: Union[Path, None]`` 本地文件路径，出错时返回空
     """
     if not url.startswith("http"):
         url = DOWNLOAD_MIRROR + url + ".png"
@@ -207,9 +261,8 @@ async def download(url: str, local: Union[Path, str] = "") -> Union[Path, None]:
     # 本地文件存在时便不再下载，JSON 文件除外
     if f.exists() and ".json" not in f.name:
         return f
-    client = AsyncClient()
-    retryCnt = 3
-    while retryCnt:
+    client, retry = AsyncClient(), 3
+    while retry:
         try:
             async with client.stream(
                 "GET", url, headers={"user-agent": "NoneBot-GsPanel"}
@@ -219,9 +272,10 @@ async def download(url: str, local: Union[Path, str] = "") -> Union[Path, None]:
                         fb.write(chunk)
             return f
         except Exception as e:
-            logger.error(f"面板资源 {f.name} 下载出错 {type(e)}：{e}")
-            retryCnt -= 1
-            await asyncio.sleep(2)
+            logger.error(f"面板资源 {f.name} 下载出错 {e.__class__.__name__}\n{format_exc()}")
+            retry -= 1
+            if retry:
+                await asyncio.sleep(2)
     return None
 
 
@@ -229,25 +283,25 @@ async def uidHelper(qq: Union[str, int], uid: str = "") -> str:
     """
     UID 助手，根据 QQ 获取对应原神 UID，也可传入 UID 更新指定 QQ 的绑定情况
 
-    * ``param qq: Union[str, int]`` 指定操作 QQ
-    * ``param uid: str = ""`` 指定 UID，默认不传入以查找该值，传入则视为绑定/更新
+    * ``param qq: Union[str, int]`` 操作 QQ
+    * ``param uid: str = ""`` 操作 UID，默认不传入以查找该值，传入则视为绑定/更新
     - ``return: str``指定 QQ 绑定的原神 UID，绑定/更新时返回操作结果
     """
-    uidCfg = json.loads((LOCAL_DIR / "qq-uid.json").read_text(encoding="utf-8"))
+    qq = str(qq)
+    cfgFile = LOCAL_DIR / "qq-uid.json"
+    uidCfg = json.loads(cfgFile.read_text(encoding="utf-8"))
     if uid:
-        already = bool(str(qq) in uidCfg)
-        uidCfg[str(qq)] = uid
-        (LOCAL_DIR / "qq-uid.json").write_text(
+        uidCfg[qq] = uid
+        cfgFile.write_text(
             json.dumps(uidCfg, ensure_ascii=False, indent=2), encoding="utf-8"
         )
-        return f"已{'更新' if already else '绑定'} QQ{qq} 的 UID 为 {uid}"
-    return uidCfg.get(str(qq), "")
+        return "已{} QQ{} 的 UID 为 {}".format("更新" if qq in uidCfg else "绑定", qq, uid)
+    return uidCfg.get(qq, "")
 
 
 async def aliasWho(input: str) -> str:
     """角色别名，未找到别名配置的原样返回"""
-    aliasData = json.loads((LOCAL_DIR / "char-alias.json").read_text(encoding="UTF-8"))
-    for char in aliasData:
-        if (input in char) or (input in aliasData[char]):
+    for char in CHAR_ALIAS:
+        if (input in char) or (input in CHAR_ALIAS[char]):
             return char
     return input

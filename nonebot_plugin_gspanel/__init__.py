@@ -1,6 +1,3 @@
-from re import findall, sub
-from typing import Tuple
-
 from nonebot import get_driver
 from nonebot.adapters import Message
 from nonebot.adapters.onebot.v11 import Bot
@@ -10,40 +7,19 @@ from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.plugin import on_command
 
-from .__utils__ import fetchInitRes, uidHelper, aliasWho, GSPANEL_ALIAS
+from .__utils__ import GSPANEL_ALIAS, fetchInitRes, formatInput, uidHelper
 from .data_source import getPanel
+from .data_updater import updateCache
 
 driver = get_driver()
 uidStart = ["1", "2", "5", "6", "7", "8", "9"]
-showPanel = on_command("panel", aliases=GSPANEL_ALIAS, priority=13)
-
-
-async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
-    """
-    输入消息中的 UID 与角色名格式化，应具备处理 ``msg`` 为空、包含中文或数字的能力。
-    - 首个中文字符串捕获为角色名，若不包含则返回 ``all`` 请求角色面板列表数据
-    - 首个数字字符串捕获为 UID，若不包含则返回 ``uidHelper()`` 根据绑定配置查找的 UID
-
-    * ``param msg: str`` 输入消息，由 ``state["_prefix"]["command_arg"]`` 或 ``event.get_plaintext()`` 生成，可能包含 CQ 码
-    * ``param qq: str`` 输入消息触发 QQ
-    * ``param atqq: str = ""`` 输入消息中首个 at 的 QQ
-    - ``return: Tuple[str, str]``  UID、角色名
-    """
-    uid, char = "", ""
-    group = findall(r"[0-9]+|[\u4e00-\u9fa5]+", sub(r"\[CQ:.*\]", "", msg))
-    for s in group:
-        if str(s).isdigit() and not uid:
-            uid = str(s)
-        elif not str(s).isdigit() and not char:
-            char = str(s)
-    uid = uid or await uidHelper(atqq or qq)
-    char = await aliasWho(char or "all")
-    return uid, char
+showPanel = on_command("panel", aliases=GSPANEL_ALIAS, priority=13, block=True)
 
 
 @driver.on_startup
 async def exStartup() -> None:
     await fetchInitRes()
+    await updateCache()
 
 
 @showPanel.handle()
