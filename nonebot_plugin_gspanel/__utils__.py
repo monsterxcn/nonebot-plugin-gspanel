@@ -140,11 +140,8 @@ HASH_TRANS = _client.get("https://cdn.monsterx.cn/bot/gspanel/hash-trans.json").
 (LOCAL_DIR / "hash-trans.json").write_text(
     json.dumps(HASH_TRANS, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-_RELIC_APPEND = _client.get(
-    "https://cdn.monsterx.cn/bot/gspanel/ReliquaryAffixExcelConfigData.json"
-).json()
-RELIC_APPEND = {str(x["id"]): x["propType"] for x in _RELIC_APPEND}
-(LOCAL_DIR / "ReliquaryAffixExcelConfigData.json").write_text(
+RELIC_APPEND = _client.get("https://cdn.monsterx.cn/bot/gspanel/relic-append.json").json()
+(LOCAL_DIR / "relic-append.json").write_text(
     json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
 )
 PANEL_TPL = "panel-0.2.3"
