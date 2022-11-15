@@ -480,9 +480,8 @@ async def simplDamageRes(damage: Dict) -> Dict:
             if "期望" in str(dmgDetail["value"]) or not dmgDetail.get("expect"):
                 dmgCrit, dmgExp = "-", str(dmgDetail["value"]).replace("期望", "")
             else:
-                dmgCrit, dmgExp = str(dmgDetail["value"]), str(
-                    dmgDetail["expect"]
-                ).replace("期望", "")
+                dmgCrit = str(dmgDetail["value"])
+                dmgExp = str(dmgDetail["expect"]).replace("期望", "")
             res["data"].append([dmgTitle, dmgCrit, dmgExp])
     for buff in damage["bonus"]:
         buffTitle, buffDetail = buff["intro"].split("：")

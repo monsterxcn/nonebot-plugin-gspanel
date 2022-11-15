@@ -4,6 +4,7 @@
 
 import asyncio
 import json
+from copy import deepcopy
 
 from nonebot.log import logger
 
@@ -37,11 +38,13 @@ async def updateCache() -> None:
                         uid, "/".join(a["name"] for _, a in wait4Dmg.items())
                     )
                 )
-                teyvatBody = await transToTeyvat([a for _, a in wait4Dmg.items()], uid)
+                teyvatBody = await transToTeyvat(
+                    deepcopy([a for _, a in wait4Dmg.items()]), uid
+                )
                 teyvatRaw = await queryDamageApi(teyvatBody)
-                if teyvatRaw.get("code", "999") != 200 or len(
+                if teyvatRaw.get("code", "x") != 200 or len(wait4Dmg) != len(
                     teyvatRaw.get("result", [])
-                ) != len(wait4Dmg):
+                ):
                     logger.error(
                         (
                             f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
@@ -69,20 +72,13 @@ async def updateCache() -> None:
                 continue
             newData.append(await transFromEnka(avatarData, now))
         # 补充角色伤害数据
-        teyvatBody = await transToTeyvat(newData, uid)
+        teyvatBody = await transToTeyvat(deepcopy(newData), uid)
         teyvatRaw = await queryDamageApi(teyvatBody)
-        if teyvatRaw.get("code", "999") != 200 or len(teyvatRaw.get("result", [])) != len(
-            newData
+        if teyvatRaw.get("code", "x") != 200 or len(newData) != len(
+            teyvatRaw.get("result", [])
         ):
-            errResult = LOCAL_DIR / f"伤害计算失败-{uid}.json"
-            errResult.write_text(
-                json.dumps(teyvatRaw, ensure_ascii=False, indent=2), encoding="utf-8"
-            )
             logger.error(
-                (
-                    f"UID{uid} 的 {len(newData)} 位角色旧版面板缓存迁移失败！"
-                    f"请检查 gspanel 文件夹下的文件 {errResult.name}"
-                )
+                f"UID{uid} 的 {len(newData)} 位角色伤害计算请求失败！\n>>>> [提瓦特返回] {teyvatRaw}"
             )
         else:
             for tvtIdx, tvtDmg in enumerate(teyvatRaw["result"]):

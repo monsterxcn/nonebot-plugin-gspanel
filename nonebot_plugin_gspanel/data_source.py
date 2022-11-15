@@ -1,5 +1,6 @@
 import asyncio
 import json
+from copy import deepcopy
 from time import time
 from traceback import format_exc
 from typing import Dict, Literal, Union
@@ -116,30 +117,41 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
                     logger.info("旅行者面板查询暂未支持！")
                     continue
                 tmp, gotDmg = await transFromEnka(newAvatar, now), False
+
                 if str(tmp["id"]) in avatarsCache:
                     # 保留旧的伤害计算数据
                     avatarsCache[str(tmp["id"])].pop("time")
                     cacheDmg = avatarsCache[str(tmp["id"])].pop("damage")
-                    if cacheDmg and avatarsCache[str(tmp["id"])] == {
+                    nowStat = {
                         k: v for k, v in tmp.items() if k not in ["damage", "time"]
-                    }:
+                    }
+                    if cacheDmg and avatarsCache[str(tmp["id"])] == nowStat:
                         logger.info(f"UID{uid} 的 {tmp['name']} 伤害计算结果无需刷新！")
                         tmp["damage"], gotDmg = cacheDmg, True
+                    else:
+                        logger.info(
+                            "UID{} 的 {} 数据发生变化：\n{}\n{}".format(
+                                uid, tmp["name"], avatarsCache[str(tmp["id"])], nowStat
+                            )
+                        )
                 avatarIdsNew.append(tmp["id"])
                 avatars.append(tmp)
                 if not gotDmg:
                     wait4Dmg[str(len(avatars) - 1)] = tmp
+
             if wait4Dmg:
                 logger.info(
                     "正在为 UID{} 的 {} 重新请求伤害计算接口".format(
                         uid, "/".join(f"[{aI}]{a['name']}" for aI, a in wait4Dmg.items())
                     )
                 )
-                teyvatBody = await transToTeyvat([a for _, a in wait4Dmg.items()], uid)
+                # 深拷贝避免转换对上下文中的 avatars 产生影响
+                wtf = deepcopy([a for _, a in wait4Dmg.items()])
+                teyvatBody = await transToTeyvat(wtf, uid)
                 teyvatRaw = await queryDamageApi(teyvatBody)
-                if teyvatRaw.get("code", "999") != 200 or len(
+                if teyvatRaw.get("code", "x") != 200 or len(wait4Dmg) != len(
                     teyvatRaw.get("result", [])
-                ) != len(wait4Dmg):
+                ):
                     logger.error(
                         (
                             f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
