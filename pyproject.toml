@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-gspanel"
-version = "0.2.3"
+version = "0.2.4"
 description = "Genshin player cards plugin for NoneBot2"
 authors = ["monsterxcn <monsterxcn@gmail.com>"]
 documentation = "https://github.com/monsterxcn/nonebot-plugin-gspanel#readme"

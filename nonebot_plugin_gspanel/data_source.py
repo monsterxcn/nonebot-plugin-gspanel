@@ -5,10 +5,11 @@ from traceback import format_exc
 from typing import Dict, Literal, Union
 
 from httpx import AsyncClient, HTTPError
-from nonebot.log import logger
 from nonebot_plugin_htmlrender import template_to_pic
 
-from .__utils__ import LOCAL_DIR, SCALE_FACTOR, PANEL_TPL, download
+from nonebot.log import logger
+
+from .__utils__ import LOCAL_DIR, PANEL_TPL, SCALE_FACTOR, download
 from .data_convert import simplDamageRes, simplFightProp, transFromEnka, transToTeyvat
 
 
@@ -109,12 +110,12 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
             return newData
         elif not newData.get("error"):
             avatarsCache = {str(x["id"]): x for x in cacheData.get("avatars", [])}
-            now, avatars, avatarIdsNew = int(time()), [], []
-            for idx, newAvatar in enumerate(newData["avatarInfoList"]):
+            now, wait4Dmg, avatars, avatarIdsNew = int(time()), {}, [], []
+            for newAvatar in newData["avatarInfoList"]:
                 if newAvatar["avatarId"] in [10000005, 10000007]:
                     logger.info("旅行者面板查询暂未支持！")
                     continue
-                tmp = await transFromEnka(newAvatar, now)
+                tmp, gotDmg = await transFromEnka(newAvatar, now), False
                 if str(tmp["id"]) in avatarsCache:
                     # 保留旧的伤害计算数据
                     avatarsCache[str(tmp["id"])].pop("time")
@@ -123,18 +124,33 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
                         k: v for k, v in tmp.items() if k not in ["damage", "time"]
                     }:
                         logger.info(f"UID{uid} 的 {tmp['name']} 伤害计算结果无需刷新！")
-                        tmp["damage"] = cacheDmg
-                        avatars.append(tmp)
-                        avatarIdsNew.append(tmp["id"])
-                        continue
-                logger.info(f"正在为 UID{uid} 的 {tmp['name']} 重新请求伤害计算接口")
-                teyvatBody = await transToTeyvat(tmp, uid)
-                teyvatRaw = await queryDamageApi(teyvatBody)
-                tmp["damage"] = await simplDamageRes(teyvatRaw)
-                avatars.append(tmp)
+                        tmp["damage"], gotDmg = cacheDmg, True
                 avatarIdsNew.append(tmp["id"])
-                if idx != len(newData["avatarInfoList"]) - 1:
-                    await asyncio.sleep(1)
+                avatars.append(tmp)
+                if not gotDmg:
+                    wait4Dmg[str(len(avatars) - 1)] = tmp
+            if wait4Dmg:
+                logger.info(
+                    "正在为 UID{} 的 {} 重新请求伤害计算接口".format(
+                        uid, "/".join(f"[{aI}]{a['name']}" for aI, a in wait4Dmg.items())
+                    )
+                )
+                teyvatBody = await transToTeyvat([a for _, a in wait4Dmg.items()], uid)
+                teyvatRaw = await queryDamageApi(teyvatBody)
+                if teyvatRaw.get("code", "999") != 200 or len(
+                    teyvatRaw.get("result", [])
+                ) != len(wait4Dmg):
+                    logger.error(
+                        (
+                            f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
+                            f"\n>>>> [提瓦特返回] {teyvatRaw}"
+                        )
+                    )
+                else:
+                    for dmgIdx, dmgData in enumerate(teyvatRaw.get("result", [])):
+                        aIdx = int(list(wait4Dmg.keys())[dmgIdx])
+                        avatars[aIdx]["damage"] = await simplDamageRes(dmgData)
+
             cacheData["avatars"] = [
                 *avatars,
                 *[

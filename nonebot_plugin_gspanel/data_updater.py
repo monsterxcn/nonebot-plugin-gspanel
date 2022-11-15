@@ -16,42 +16,81 @@ async def updateCache() -> None:
     for f in (LOCAL_DIR / "cache").iterdir():
         cache = json.loads(f.read_text(encoding="UTF-8"))
         if f.name.replace(".json", "").isdigit():
-            uid = f.name.replace(".json", "")
+            # 已经迁移的文件中部分数据格式升级
+            uid, wait4Dmg = f.name.replace(".json", ""), {}
             for aIdx, a in enumerate(cache["avatars"]):
-                if a["damage"]:
-                    continue
-                teyvatBody = await transToTeyvat(a, uid)
+                if not a["damage"]:
+                    wait4Dmg[str(aIdx)] = a
+                else:
+                    # 暴击伤害移动至期望伤害
+                    for dIdx, d in enumerate(a["damage"].get("data", [])):
+                        if str(d[1]).isdigit() and d[2] == "-":
+                            cache["avatars"][aIdx]["damage"]["data"][dIdx] = [
+                                d[0],
+                                d[2],
+                                d[1],
+                            ]
+            if wait4Dmg:
+                # 补充角色伤害数据
+                logger.info(
+                    "正在为 UID{} 的 {} 重新请求伤害计算接口".format(
+                        uid, "/".join(a["name"] for _, a in wait4Dmg.items())
+                    )
+                )
+                teyvatBody = await transToTeyvat([a for _, a in wait4Dmg.items()], uid)
                 teyvatRaw = await queryDamageApi(teyvatBody)
-                cache["avatars"][aIdx]["damage"] = await simplDamageRes(teyvatRaw)
-                if aIdx != len(cache["avatars"]) - 1:
-                    await asyncio.sleep(2)
+                if teyvatRaw.get("code", "999") != 200 or len(
+                    teyvatRaw.get("result", [])
+                ) != len(wait4Dmg):
+                    logger.error(
+                        (
+                            f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
+                            f"\n>>>> [提瓦特返回] {teyvatRaw}"
+                        )
+                    )
+                for dmgIdx, dmgData in enumerate(teyvatRaw.get("result", [])):
+                    aRealIdx = int(list(wait4Dmg.keys())[dmgIdx])
+                    cache["avatars"][aRealIdx]["damage"] = await simplDamageRes(dmgData)
             f.write_text(
                 json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8"
             )
             continue
+        # 旧版缓存文件，内容为 Enka.Network 返回
         uid = f.name.replace("__data.json", "")
-        newF = LOCAL_DIR / "cache" / f"{uid}.json"
-        if newF.exists():
-            continue
-        now, avatars = cache["time"], []
+        now, newData = cache["time"], []
         avatarInfoList = cache.get("avatarInfoList", [])
         if not avatarInfoList:
-            logger.error(f"UID{uid} 没有角色数据")
+            logger.error(f"UID{uid} 没有角色数据，清除旧版缓存")
+            f.unlink(missing_ok=True)
             continue
-        for idx, avatarData in enumerate(avatarInfoList):
+        for avatarData in avatarInfoList:
             if avatarData["avatarId"] in [10000005, 10000007]:
-                logger.info("旅行者面板查询暂未支持！")
+                logger.info(f"UID{uid} 面板中含有旅行者，跳过暂未支持的角色！")
                 continue
-            tmp = await transFromEnka(avatarData, now)
-            teyvatBody = await transToTeyvat(tmp, uid)
-            teyvatRaw = await queryDamageApi(teyvatBody)
-            tmp["damage"] = await simplDamageRes(teyvatRaw)
-            avatars.append(tmp)
-            if idx != len(cache["avatarInfoList"]) - 1:
-                await asyncio.sleep(2)
-        newCache = {"avatars": avatars, "next": now + 120}
-        newF.write_text(
+            newData.append(await transFromEnka(avatarData, now))
+        # 补充角色伤害数据
+        teyvatBody = await transToTeyvat(newData, uid)
+        teyvatRaw = await queryDamageApi(teyvatBody)
+        if teyvatRaw.get("code", "999") != 200 or len(teyvatRaw.get("result", [])) != len(
+            newData
+        ):
+            errResult = LOCAL_DIR / f"伤害计算失败-{uid}.json"
+            errResult.write_text(
+                json.dumps(teyvatRaw, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+            logger.error(
+                (
+                    f"UID{uid} 的 {len(newData)} 位角色旧版面板缓存迁移失败！"
+                    f"请检查 gspanel 文件夹下的文件 {errResult.name}"
+                )
+            )
+        else:
+            for tvtIdx, tvtDmg in enumerate(teyvatRaw["result"]):
+                newData[tvtIdx]["damage"] = await simplDamageRes(tvtDmg)
+        newCache = {"avatars": newData, "next": now + 120}
+        (LOCAL_DIR / "cache" / f"{uid}.json").write_text(
             json.dumps(newCache, ensure_ascii=False, indent=2), encoding="utf-8"
         )
         f.unlink(missing_ok=True)
         logger.info(f"UID{uid} 的角色面板缓存已迁移完毕！")
+        await asyncio.sleep(2)

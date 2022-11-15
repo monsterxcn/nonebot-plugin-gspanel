@@ -358,68 +358,69 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
     return res
 
 
-async def transToTeyvat(avatarData: Dict, uid: str) -> Dict:
+async def transToTeyvat(avatarsData: List[Dict], uid: str) -> Dict:
     """
     转换内部格式角色数据为 Teyvat Helper 请求格式
 
-    * ``param avatarData: Dict`` 内部格式角色数据，由 ``transFromEnka()`` 获取
+    * ``param avatarsData: List[Dict]`` 内部格式角色数据，由 ``transFromEnka()`` 获取
     * ``param uid: str`` 角色所属用户 UID
     - ``return: Dict`` Teyvat Helper 请求格式角色数据
     """
-    name = avatarData["name"]
-    cons = avatarData["cons"]
-    weapon = avatarData["weapon"]
-    baseProp = avatarData["baseProp"]
-    fightProp = avatarData["fightProp"]
-    skills = avatarData["skills"]
-    relics = avatarData["relics"]
-    relicSet = avatarData["relicSet"]
+    res = {"uid": uid, "role_data": []}
+    for avatarData in avatarsData:
+        name = avatarData["name"]
+        cons = avatarData["cons"]
+        weapon = avatarData["weapon"]
+        baseProp = avatarData["baseProp"]
+        fightProp = avatarData["fightProp"]
+        skills = avatarData["skills"]
+        relics = avatarData["relics"]
+        relicSet = avatarData["relicSet"]
 
-    # dataFix from https://github.com/yoimiya-kokomi/miao-plugin/blob/ac27075276154ef5a87a458697f6e5492bd323bd/components/profile-data/enka-data.js#L186
-    if name == "雷电将军":
-        _thunderDmg = fightProp["雷元素伤害加成"]
-        _recharge = fightProp["元素充能效率"]
-        fightProp["雷元素伤害加成"] = max(0, _thunderDmg - (_recharge - 100) * 0.4)
-    if name == "莫娜":
-        _waterDmg = fightProp["水元素伤害加成"]
-        _recharge = fightProp["元素充能效率"]
-        fightProp["水元素伤害加成"] = max(0, _waterDmg - _recharge * 0.2)
-    if name == "妮露" and cons == 6:
-        _count = float(fightProp["生命值"] / 1000)
-        _crit = fightProp["暴击率"]
-        _critDmg = fightProp["暴击伤害"]
-        fightProp["暴击率"] = max(5, _crit - min(30, _count * 0.6))
-        fightProp["暴击伤害"] = max(50, _critDmg - min(60, _count * 1.2))
-    if weapon["name"] in ["息灾", "波乱月白经津", "雾切之回光", "猎人之径"]:
-        for elem in ["火", "水", "雷", "风", "冰", "岩", "草"]:
-            _origin = fightProp[f"{elem}元素伤害加成"]
-            fightProp[f"{elem}元素伤害加成"] = max(
-                0, _origin - 12 - 12 * (weapon["affix"] - 1) / 4
-            )
-
-    # 圣遗物数据
-    artifacts = []
-    for a in relics:
-        tData = {
-            "artifacts_name": a["name"],
-            "artifacts_type": list(POS.values())[a["pos"] - 1],
-            "level": a["level"],
-            "maintips": kStr(a["main"]["prop"], reverse=True),
-            "mainvalue": a["main"]["value"],
-        }
-        tData.update(
-            {
-                f"tips{sIdx + 1}": "{}+{}".format(
-                    kStr(s["prop"], reverse=True), s["value"]
+        # dataFix from https://github.com/yoimiya-kokomi/miao-plugin/blob/ac27075276154ef5a87a458697f6e5492bd323bd/components/profile-data/enka-data.js#L186
+        if name == "雷电将军":
+            _thunderDmg = fightProp["雷元素伤害加成"]
+            _recharge = fightProp["元素充能效率"]
+            fightProp["雷元素伤害加成"] = max(0, _thunderDmg - (_recharge - 100) * 0.4)
+        if name == "莫娜":
+            _waterDmg = fightProp["水元素伤害加成"]
+            _recharge = fightProp["元素充能效率"]
+            fightProp["水元素伤害加成"] = max(0, _waterDmg - _recharge * 0.2)
+        if name == "妮露" and cons == 6:
+            _count = float(fightProp["生命值"] / 1000)
+            _crit = fightProp["暴击率"]
+            _critDmg = fightProp["暴击伤害"]
+            fightProp["暴击率"] = max(5, _crit - min(30, _count * 0.6))
+            fightProp["暴击伤害"] = max(50, _critDmg - min(60, _count * 1.2))
+        if weapon["name"] in ["息灾", "波乱月白经津", "雾切之回光", "猎人之径"]:
+            for elem in ["火", "水", "雷", "风", "冰", "岩", "草"]:
+                _origin = fightProp[f"{elem}元素伤害加成"]
+                fightProp[f"{elem}元素伤害加成"] = max(
+                    0, _origin - 12 - 12 * (weapon["affix"] - 1) / 4
                 )
-                for sIdx, s in enumerate(a["sub"])
-            }
-        )
-        artifacts.append(tData)
 
-    return {
-        "uid": uid,
-        "role_data": [
+        # 圣遗物数据
+        artifacts = []
+        for a in relics:
+            tData = {
+                "artifacts_name": a["name"],
+                "artifacts_type": list(POS.values())[a["pos"] - 1],
+                "level": a["level"],
+                "maintips": kStr(a["main"]["prop"], reverse=True),
+                "mainvalue": a["main"]["value"],
+            }
+            tData.update(
+                {
+                    f"tips{sIdx + 1}": "{}+{}".format(
+                        kStr(s["prop"], reverse=True), s["value"]
+                    )
+                    for sIdx, s in enumerate(a["sub"])
+                }
+            )
+            artifacts.append(tData)
+
+        # 单个角色最终结果
+        res["role_data"].append(
             {
                 "uid": uid,
                 "role": name,
@@ -457,20 +458,18 @@ async def transToTeyvat(avatarData: Dict, uid: str) -> Dict:
                 "ability3": skills["q"]["level"],
                 "artifacts_detail": artifacts,
             }
-        ],
-    }
+        )
+
+    return res
 
 
-async def simplDamageRes(raw: Dict) -> Dict:
+async def simplDamageRes(damage: Dict) -> Dict:
     """
     转换角色伤害计算请求数据为精简格式
 
-    * ``param raw: Dict`` 角色伤害计算请求数据，由 ``queryDamageApi()`` 获取
+    * ``param damage: Dict`` 角色伤害计算请求数据，由 ``queryDamageApi()["result"][int]`` 获取
     - ``return: Dict`` 精简格式伤害数据，出错时返回 ``{}``
     """
-    if not raw or raw.get("code", "999") != 200:
-        return {}
-    damage = raw["result"][0]
     res = {"level": damage["zdl_result"] or "NaN", "data": [], "buff": []}
     for key in ["damage_result_arr", "damage_result_arr2"]:
         for dmgDetail in damage[key]:
@@ -478,11 +477,11 @@ async def simplDamageRes(raw: Dict) -> Dict:
                 f"[{damage['zdl_result2']}]<br>" if key == "damage_result_arr2" else "",
                 dmgDetail["title"],
             )
-            if "期望" in str(dmgDetail["value"]):
+            if "期望" in str(dmgDetail["value"]) or not dmgDetail.get("expect"):
                 dmgCrit, dmgExp = "-", str(dmgDetail["value"]).replace("期望", "")
             else:
-                dmgCrit, dmgExp = str(dmgDetail["value"]), dmgDetail.get(
-                    "expect", "-"
+                dmgCrit, dmgExp = str(dmgDetail["value"]), str(
+                    dmgDetail["expect"]
                 ).replace("期望", "")
             res["data"].append([dmgTitle, dmgCrit, dmgExp])
     for buff in damage["bonus"]:
