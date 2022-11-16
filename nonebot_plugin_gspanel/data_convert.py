@@ -1,3 +1,4 @@
+import json
 from time import time
 from typing import Dict, List, Tuple
 
@@ -545,3 +546,116 @@ async def simplFightProp(
                 res[propTitle]["error"] = True
 
     return res
+
+
+async def simplTeamDamageRes(raw: Dict, rolesData: Dict) -> Dict:
+    """
+    转换队伍伤害计算请求数据为精简格式
+
+    * ``param raw: Dict`` 队伍伤害计算请求数据，由 ``queryDamageApi(*, "team")["result"]`` 获取
+    * ``param rolesData: Dict`` 角色数据，键为角色中文名，值为内部格式
+    - ``return: Dict`` 精简格式伤害数据。出错时返回 ``{"error": "错误信息"}``
+    """
+    s = (
+        str(raw["zdl_tips0"])
+        .replace("你的队伍", "")
+        .replace("秒内造成总伤害", "-")
+        .replace("，DPS为:", "")
+    )
+    tm, total = s.split("-")
+
+    pieData, pieColor = [], []
+    for x in raw["chart_data"]:
+        char, damage = x["name"].split("\n")
+        pieData.append({"char": char, "damage": float(damage.replace("W", ""))})
+        pieColor.append(x["label"]["color"])
+    pieData = sorted(pieData, key=lambda x: x["damage"], reverse=True)
+
+    avatars = {}
+    for role in raw["role_list"]:
+        panelData = rolesData[role["role"]]
+        avatars[role["role"]] = {
+            "rarity": role["role_star"],
+            "icon": panelData["icon"],
+            "name": role["role"],
+            "elem": panelData["element"],
+            "cons": role["role_class"],
+            "level": role["role_level"].replace("Lv", ""),
+            "weapon": {
+                "icon": panelData["weapon"]["icon"],
+                "level": panelData["weapon"]["level"],
+                "rarity": panelData["weapon"]["rarity"],
+                "affix": panelData["weapon"]["affix"],
+            },
+            "sets": {
+                [r for r in panelData["relics"] if r["setName"] == k][0]["icon"].split(
+                    "_"
+                )[-2]: (2 if v <= 2 else 4)
+                for k, v in panelData["relicSet"].items()
+                if (v >= 2) or ("之人" in k)
+            },
+            "cp": round(panelData["fightProp"]["暴击率"], 1),
+            "cd": round(panelData["fightProp"]["暴击伤害"], 1),
+            "key_prop": role["key_ability"],
+            "key_value": role["key_value"],
+            "skills": [
+                {"icon": skill["icon"], "style": skill["style"], "level": skill["level"]}
+                for _, skill in panelData["skills"].items()
+            ],
+        }
+
+    for rechargeData in raw["recharge_info"]:
+        name, tmp = rechargeData["recharge"].split("共获取同色球")
+        same, diff = tmp.split("个，异色球")
+        if len(diff.split("个，无色球")) == 2:
+            # 暂未排版无色球
+            diff = diff.split("个，无色球")[0]
+        avatars[name]["recharge"] = {
+            "pct": rechargeData["rate"],
+            "same": round(float(same), 1),
+            "diff": round(float(diff.replace("个", "")), 1),
+        }
+
+    damages = []
+    for step in raw["advice"]:
+        if not step.get("content"):
+            logger.error(f"奇怪的伤害：{step}")
+            continue
+        # content: "4.2s 雷神e协同，暴击:3016,不暴击:1565,期望:2343"
+        t, s = step["content"].split(" ")
+        if len(s.split("，")) == 1:
+            # "3.89s 万叶q染色为:雷"
+            a = s.split("，")[0]
+            d = ["-", "-", "-"]
+        else:
+            a, dmgs = s.split("，")
+            if len(dmgs.split(",")) == 1:
+                d = ["-", "-", dmgs.split(",")[0].split("：")[-1]]
+            else:
+                d = [dd.split(":")[-1] for dd in dmgs.split(",")]
+        damages.append([t.replace("s", ""), a.upper(), *d])
+
+    buffs = []
+    for buff in raw["buff"]:
+        if not buff.get("content"):
+            logger.error(f"奇怪的 Buff：{buff}")
+            continue
+        # buff: "1.5s 风套-怪物雷抗减少-40%"
+        t, tmp = buff["content"].split(" ", 1)
+        b, bd = tmp.split("-", 1)
+        buffs.append([t.replace("s", ""), b.upper(), bd.upper()])
+
+    return {
+        "uid": raw["uid"],
+        "elem": rolesData[pieData[0]["char"]]["element"],
+        "rank": raw["zdl_tips2"],
+        "dps": raw["zdl_result"],
+        "tm": tm,
+        "total": total,
+        "pie_data": json.dumps(pieData, ensure_ascii=False),
+        "pie_color": json.dumps(pieColor),
+        "avatars": avatars,
+        "actions": raw["combo_intro"].split(","),
+        "damages": damages,
+        "buffs": buffs,
+    }

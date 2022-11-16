@@ -145,7 +145,7 @@ RELIC_APPEND = _client.get("https://cdn.monsterx.cn/bot/gspanel/relic-append.jso
 (LOCAL_DIR / "relic-append.json").write_text(
     json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-PANEL_TPL = "panel-0.2.3"
+TPL_VERSION = "0.2.5"
 
 
 def kStr(prop: str, reverse: bool = False) -> str:
@@ -224,8 +224,11 @@ async def fetchInitRes() -> None:
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-geo.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-hydro.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-pyro.png",
-        f"https://cdn.monsterx.cn/bot/gspanel/{PANEL_TPL}.css",
-        f"https://cdn.monsterx.cn/bot/gspanel/{PANEL_TPL}.html",
+        "https://cdn.monsterx.cn/bot/gspanel/g2plot.min.js",
+        f"https://cdn.monsterx.cn/bot/gspanel/team-{TPL_VERSION}.css",
+        f"https://cdn.monsterx.cn/bot/gspanel/team-{TPL_VERSION}.html",
+        f"https://cdn.monsterx.cn/bot/gspanel/panel-{TPL_VERSION}.css",
+        f"https://cdn.monsterx.cn/bot/gspanel/panel-{TPL_VERSION}.html",
     ]
     tasks = []
     for r in initRes:

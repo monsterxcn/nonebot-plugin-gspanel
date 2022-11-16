@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./team-{{ css }}.css">
+</head>
+<body>
+    <div id="tcontainer" class="{{ data['elem'] }}">
+        <div class="TopLeftPanel">
+            <div class="UID">{{ data["uid"] }}</div>
+            <div class="rank">
+                <div class="title">{{ data["rank"] }}</div>
+                <div class="dps">{{ data["dps"] }}</div>
+                <div class="time">{{ data["tm"] }}</div>
+                <div class="total">{{ data["total"] }}</div>
+            </div>
+            <div id="pie"></div>
+        </div>
+        <div class="Avatars">
+            {% for _, a in data["avatars"].items() %}
+            <div class="avatar">
+                <img class="char r{{ a['rarity'] }}" src="./{{ a['name'] }}/{{ a['icon'] }}.png">
+                <div class="char-con c{{ a['cons'] }}"></div>
+                <div class="char-lvl">{{ a["level"] }}</div>
+                <img class="weapon r{{ a['weapon']['rarity'] }}" src="./weapon/{{ a['weapon']['icon'] }}.png">
+                <div class="weapon-aff a{{ a['weapon']['affix'] }}"></div>
+                <div class="weapon-lvl">{{ a['weapon']['level'] }}</div>
+                <div class="arti">
+                    {% for sId, sCnt in a["sets"].items() %}
+                    <img class="arti s{{ sCnt }}" src="./artifacts/UI_RelicIcon_{{ sId }}_4.png" height="100%">
+                    {% endfor %}
+                </div>
+                <div class="detail">
+                    <div class="cp">{{ a["cp"] }}%</div>
+                    <div class="cd">{{ a["cd"] }}%</div>
+                    <div class="prop">
+                        <div class="value">{{ a["key_value"] }}</div>
+                        <div class="name">{{ a["key_prop"] }}</div>
+                    </div>
+                    <div class="recharge">{{ a["recharge"]["pct"] }}</div>
+                    <div class="same">{{ a["recharge"]["same"] }}</div>
+                    <div class="diff">{{ a["recharge"]["diff"] }}</div>
+                    <div class="talent {{ a['elem'] }}">
+                        {% for skill in a["skills"] %}
+                        <div>
+                            <img src="./{{ a['name'] }}/{{ skill['icon'] }}.png">
+                            <span class="{{ skill['style'] }}">{{ skill["level"] }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="Actions">
+            <div class="title"></div>
+            <div class="act">
+                {% for action in data["actions"] %}
+                <div>{{ action }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <ul class="Damages">
+            <li class="title"></li>
+            <li class="head">
+                <!-- use css to fill this -->
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </li>
+            {% for damage in data["damages"] %}
+            <li class="dmg">
+                <div>{{ damage[0] }}</div>
+                <div>{{ damage[1] }}</div>
+                <div>{{ damage[2] }}</div>
+                <div>{{ damage[3] }}</div>
+                <div>{{ damage[4] }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        <ul class="Buffs">
+            <li class="title"></li>
+            {% for buff in data["buffs"] %}
+            <li class="buff">
+                <div>{{ buff[0] }}</div>
+                <div>{{ buff[1] }}</div>
+                <div>{{ buff[2] }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="copyright"></div>
+    </div>
+    <script type="text/javascript" src="./g2plot.min.js"></script>
+    <script>
+        const { Pie } = G2Plot;
+        const data = JSON.parse(`{{ data["pie_data"] }}`);
+        const piePlot = new Pie("pie", {
+            renderer: "svg",
+            animation: false,
+            data: data,
+            padding: [-10, 0, 20, 0],
+            angleField: "damage",
+            colorField: "char",
+            radius: 0.8,
+            color: JSON.parse(`{{ data["pie_color"] }}`),
+            label: {
+                type: "inner",
+                autoRotate: false,
+                style: {
+                    textAlign: "center",
+                    fill: "#000",
+                    fontSize: 20,
+                    fontFamily: "PanelNumFont",
+                },
+                formatter: ({ char, damage, percent }) => {
+                    percent = (percent * 100).toFixed(0);
+                    return percent > 6 ? `${char}\n${damage}W` : "";
+                },
+            },
+            legend: false,
+        });
+        piePlot.render();
+    </script>
+</body>
+</html>

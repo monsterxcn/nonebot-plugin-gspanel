@@ -8,12 +8,13 @@ from nonebot.params import CommandArg
 from nonebot.plugin import on_command
 
 from .__utils__ import GSPANEL_ALIAS, fetchInitRes, formatInput, uidHelper
-from .data_source import getPanel
+from .data_source import getPanel, getTeam
 from .data_updater import updateCache
 
 driver = get_driver()
 uidStart = ["1", "2", "5", "6", "7", "8", "9"]
 showPanel = on_command("panel", aliases=GSPANEL_ALIAS, priority=13, block=True)
+showTeam = on_command("teamdmg", aliases={"队伍伤害"}, priority=13, block=True)
 
 driver.on_startup(fetchInitRes)
 driver.on_bot_connect(updateCache)
@@ -49,3 +50,29 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
         await showPanel.finish(MessageSegment.text(rt))
     elif isinstance(rt, bytes):
         await showPanel.finish(MessageSegment.image(rt))
+
+
+@showTeam.handle()
+async def x_x(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
+    qq = str(event.get_user_id())
+    argsMsg = " ".join(seg.data["text"] for seg in arg["text"])
+    # 提取消息中的 at 作为操作目标 QQ
+    opqq = event.message["at"][0].data["qq"] if event.message.get("at") else ""
+    # 尝试从输入中理解 UID、角色名
+    uid, chars = "", []
+    for seg in argsMsg.split():
+        uid, char = await formatInput(seg, qq, opqq)
+        logger.info(f"从 QQ{qq} 的输入「{seg}」中识别到 UID[{uid}] CHAR[{char}]")
+        if not uid.isdigit() or uid[0] not in uidStart or len(uid) > 9:
+            await showTeam.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
+        if char != "全部":
+            chars.append(char)
+    if not uid:
+        uid, _ = await formatInput("", qq, opqq)
+        if not uid:
+            await showTeam.finish(f"要查询队伍伤害的 UID 捏？")
+    rt = await getTeam(uid, chars)
+    if isinstance(rt, str):
+        await showTeam.finish(MessageSegment.text(rt))
+    elif isinstance(rt, bytes):
+        await showTeam.finish(MessageSegment.image(rt))

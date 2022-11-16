@@ -3,15 +3,21 @@ import json
 from copy import deepcopy
 from time import time
 from traceback import format_exc
-from typing import Dict, Literal, Union
+from typing import Dict, List, Literal, Union
 
 from httpx import AsyncClient, HTTPError
 from nonebot_plugin_htmlrender import template_to_pic
 
 from nonebot.log import logger
 
-from .__utils__ import LOCAL_DIR, PANEL_TPL, SCALE_FACTOR, download
-from .data_convert import simplDamageRes, simplFightProp, transFromEnka, transToTeyvat
+from .__utils__ import LOCAL_DIR, TPL_VERSION, SCALE_FACTOR, download
+from .data_convert import (
+    simplDamageRes,
+    simplFightProp,
+    simplTeamDamageRes,
+    transFromEnka,
+    transToTeyvat,
+)
 
 
 async def queryPanelApi(uid: str, source: Literal["enka", "mgg"] = "enka") -> Dict:
@@ -54,17 +60,22 @@ async def queryPanelApi(uid: str, source: Literal["enka", "mgg"] = "enka") -> Di
     return resJson
 
 
-async def queryDamageApi(body: Dict) -> Dict:
+async def queryDamageApi(body: Dict, mode: Literal["single", "team"] = "single") -> Dict:
     """
     角色伤害计算数据请求（提瓦特小助手）
 
     * ``param body: Dict`` 查询角色数据
+    * ``param mode: Literal["single", "team"] = "single"`` 查询接口类型，默认请求角色伤害接口，传入 ``"team"`` 请求队伍伤害接口
     - ``return: Dict`` 查询结果，出错时返回 ``{}``
     """
+    apiMap = {
+        "single": "https://api.lelaer.com/ys/getDamageResult.php",
+        "team": "https://api.lelaer.com/ys/getTeamResult.php",
+    }
     async with AsyncClient() as client:
         try:
             res = await client.post(
-                "https://api.lelaer.com/ys/getDamageResult.php",
+                apiMap[mode],
                 json=body,
                 headers={
                     "referer": "https://servicewechat.com/",
@@ -178,13 +189,7 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
 
     # 获取所需角色数据
     if char == "全部":
-        return {
-            "error": "成功获取了 UID{} 的{}等 {} 位角色数据！".format(
-                uid,
-                "、".join(a["name"] for a in cacheData["avatars"]),
-                len(cacheData["avatars"]),
-            )
-        }
+        return cacheData
     searchRes = [x for x in cacheData["avatars"] if x["name"] == char]
     return (
         {
@@ -209,6 +214,10 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
     data = await getAvatarData(uid, char)
     if data.get("error"):
         return data["error"]
+    if char == "全部":
+        return "成功获取了 UID{} 的{}等 {} 位角色数据！".format(
+            uid, "、".join(a["name"] for a in data["avatars"]), len(data["avatars"])
+        )
 
     # 图标下载任务
     dlTasks = [
@@ -229,8 +238,87 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
     htmlBase = str(LOCAL_DIR.resolve())
     return await template_to_pic(
         template_path=htmlBase,
-        template_name=f"{PANEL_TPL}.html",
-        templates={"css": PANEL_TPL, "uid": uid, "data": data},
+        template_name=f"panel-{TPL_VERSION}.html",
+        templates={"css": TPL_VERSION, "uid": uid, "data": data},
+        pages={
+            "device_scale_factor": SCALE_FACTOR,
+            "viewport": {"width": 600, "height": 300},
+            "base_url": f"file://{htmlBase}",
+        },
+        wait=2,
+    )
+
+
+async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
+    """
+    队伍伤害消息生成入口
+
+    * ``param uid: str`` 查询用户 UID
+    * ``param chars: List[str] = []`` 查询角色，为空默认数据中前四个
+    - ``return: Union[bytes, str]`` 查询结果。一般返回图片字节，出错时返回错误信息字符串
+    """
+    # 获取面板数据
+    data = await getAvatarData(uid, "全部")
+    if data.get("error"):
+        return data["error"]
+
+    if chars:
+        extract = [a for a in data["avatars"] if a["name"] in chars]
+        if len(extract) != len(chars):
+            gotThis = [a["name"] for a in extract]
+            return "UID{} 的最新数据中未发现{}！".format(
+                uid, "、".join(c for c in chars if c not in gotThis)
+            )
+    elif len(data["avatars"]) >= 4:
+        extract = data["avatars"][:4]
+        logger.info(
+            "UID{} 未指定队伍，自动选择面板中前 4 位进行计算：{} ...".format(
+                uid, "、".join(a["name"] for a in extract)
+            )
+        )
+    else:
+        return f"UID{uid} 的面板数据甚至不足以组成一支队伍呢！"
+
+    # 图片下载任务
+    for tmp in extract:
+        dlTasks = [
+            download(tmp["icon"], local=tmp["name"]),
+            *[
+                download(sData["icon"], local=tmp["name"])
+                for _, sData in tmp["skills"].items()
+            ],
+            download(tmp["weapon"]["icon"], local="weapon"),
+            *[
+                download(
+                    f"UI_RelicIcon_{relicData['icon'].split('_')[-2]}_4",
+                    local="artifacts",
+                )
+                for relicData in tmp["relics"]
+            ],
+        ]
+        await asyncio.gather(*dlTasks)
+        dlTasks.clear()
+
+    teyvatBody = await transToTeyvat(deepcopy(extract), uid)
+    teyvatRaw = await queryDamageApi(teyvatBody, "team")
+    if teyvatRaw.get("code", "x") != 200 or not teyvatRaw.get("result"):
+        logger.error(
+            (f"UID{uid} 的 {len(extract)} 位角色队伍伤害计算请求失败！" f"\n>>>> [提瓦特返回] {teyvatRaw}")
+        )
+        return f"UID{uid} 队伍伤害计算请求失败！"
+    try:
+        data = await simplTeamDamageRes(
+            teyvatRaw["result"], {a["name"]: a for a in extract}
+        )
+    except Exception as e:
+        logger.error("队伍伤害数据解析出错 {}\n{}".format(e.__class__.__name__, format_exc()))
+        return f"[{e.__class__.__name__}] 队伍伤害数据解析出错咯"
+
+    htmlBase = str(LOCAL_DIR.resolve())
+    return await template_to_pic(
+        template_path=htmlBase,
+        template_name=f"team-{TPL_VERSION}.html",
+        templates={"css": TPL_VERSION, "data": data},
         pages={
             "device_scale_factor": SCALE_FACTOR,
             "viewport": {"width": 600, "height": 300},
