@@ -18,7 +18,7 @@
 </p></br>
 
 
-| ![刻晴](https://user-images.githubusercontent.com/22407052/201661930-f9ecdfe0-e278-4641-a012-cf090da6b6c7.PNG) | ![琴](https://user-images.githubusercontent.com/22407052/201662130-2b3bdcd3-acaa-4b59-9c88-3e50fa1887f3.PNG) | ![妮露](https://user-images.githubusercontent.com/22407052/201667744-decfdf25-c889-4a65-bbe0-94e194fe8d82.PNG) |
+| ![琴](https://user-images.githubusercontent.com/22407052/201662130-2b3bdcd3-acaa-4b59-9c88-3e50fa1887f3.PNG) | ![刻晴](https://user-images.githubusercontent.com/22407052/201661930-f9ecdfe0-e278-4641-a012-cf090da6b6c7.PNG) | ![妮露](https://user-images.githubusercontent.com/22407052/201667744-decfdf25-c889-4a65-bbe0-94e194fe8d82.PNG) |
 |:--:|:--:|:--:|
 
 
@@ -58,7 +58,7 @@ python3 -m pip install nonebot-plugin-gspanel
    | `gspanel_alias` | 否 | `["面板"]` | 插件响应词别名，多个别名按 `["面面", "板板"]` 格式填写 |
    | `gspanel_scale` | 否 | `1.0` | 浏览器缩放比例，此值越大返回图片的分辨率越高 |
    | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
-   | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`https://cdn.monsterx.cn/genshin/`（插件作者）<br>`http://file.microgg.cn/ui/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划） |
+   | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`http://file.microgg.cn/ui/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划）<br>`https://cdn.monsterx.cn/genshin/`（插件作者） |
    
  - 插件图片生成采用 [@kexue-z/nonebot-plugin-htmlrender](https://github.com/kexue-z/nonebot-plugin-htmlrender)，若插件自动安装运行 Chromium 所需的额外依赖失败，请参考 [@SK-415/HarukaBot](https://haruka-bot.sk415.icu/faq.html#playwright-%E4%BE%9D%E8%B5%96%E4%B8%8D%E5%85%A8) 给出的以下解决方案：
    
@@ -68,6 +68,9 @@ python3 -m pip install nonebot-plugin-gspanel
 
 
 ## 命令说明
+
+
+### 角色面板
 
 
 插件响应以 `panel` / `面板` 开头的消息，下面仅以 `面板` 为例：
@@ -96,6 +99,28 @@ python3 -m pip install nonebot-plugin-gspanel
 
 
 *\*所有指令都可以用空格将关键词分割开来，如果你喜欢的话。*
+
+
+### 队伍伤害
+
+
+插件响应以 `teamdmg` / `队伍伤害` 开头的消息，下面仅以 `队伍伤害` 为例：
+
+
+ - `队伍伤害` / `队伍伤害100123456` / `队伍伤害@某人`
+   
+   查找指定 UID 角色展柜中前四个角色组成的队伍伤害。
+   
+   当仅发送 `队伍伤害` 时将尝试使用发送此指令的 QQ 绑定的 UID；附带 9 位数字时尝试使用该 UID；附带 `@某人` 时将尝试使用指定 QQ 绑定的 UID。
+   
+ - `队伍伤害 雷神 九条 万叶 班尼特` / `队伍伤害雷神 九条 万叶 班尼特@某人`
+   
+   查找雷电将军、九条裟罗、枫原万叶、班尼特组成的队伍伤害。注意角色名之间必须使用空格分开。
+   
+   为此形式的命令指定 UID 方式与上面相同。
+
+
+*\*队伍伤害为 **实验性功能**，计算结果可能存在问题。欢迎附带详细日志提交 issue 帮助改进此功能。*
 
 
 ## 特别鸣谢
