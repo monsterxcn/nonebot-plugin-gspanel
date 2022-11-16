@@ -151,7 +151,7 @@ PANEL_TPL = "panel-0.2.3"
 def kStr(prop: str, reverse: bool = False) -> str:
     """转换词条名称为简短形式"""
     if reverse:
-        return prop.replace("充能", "元素充能").replace("物", "物理").replace("伤", "伤害")
+        return prop.replace("充能", "元素充能").replace("伤加成", "元素伤害加成").replace("物理元素", "物理")
     return (
         prop.replace("百分比", "")
         .replace("元素充能", "充能")
