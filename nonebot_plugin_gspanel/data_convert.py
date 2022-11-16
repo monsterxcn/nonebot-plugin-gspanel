@@ -217,7 +217,7 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
         "element": ELEM[charData["Element"]],  # 中文单字
         "cons": len(avatarInfo.get("talentIdList", [])),  # type: int
         "fetter": avatarInfo["fetterInfo"]["expLevel"],  # type: int
-        "level": avatarInfo["propMap"]["4001"]["val"],  # type: int
+        "level": int(avatarInfo["propMap"]["4001"]["val"]),  # type: int
         "icon": charData["iconName"],
         "gachaAvatarImg": charData["Costumes"][str(avatarInfo["costumeId"])]["art"]
         if avatarInfo.get("costumeId")
@@ -425,7 +425,7 @@ async def transToTeyvat(avatarsData: List[Dict], uid: str) -> Dict:
                 "uid": uid,
                 "role": name,
                 "role_class": cons,
-                "level": avatarData["level"],
+                "level": int(avatarData["level"]),
                 "weapon": weapon["name"],
                 "weapon_level": weapon["level"],
                 "weapon_class": f"精炼{weapon['affix']}阶",

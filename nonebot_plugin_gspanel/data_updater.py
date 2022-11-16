@@ -20,6 +20,7 @@ async def updateCache() -> None:
             # 已经迁移的文件中部分数据格式升级
             uid, wait4Dmg = f.name.replace(".json", ""), {}
             for aIdx, a in enumerate(cache["avatars"]):
+                cache["avatars"][aIdx]["level"] = int(a["level"])
                 if not a["damage"]:
                     wait4Dmg[str(aIdx)] = a
                 else:
