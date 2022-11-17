@@ -450,7 +450,7 @@ async def transToTeyvat(avatarsData: List[Dict], uid: str) -> Dict:
                 "grass_dmg": f"{round(fightProp['草元素伤害加成'], 1)}%",
                 "physical_dmg": f"{round(fightProp['物理伤害加成'], 1)}%",
                 "artifacts": "+".join(
-                    f"{k}{v if v in [2, 4] else (2 if v == 3 else 4)}"
+                    f"{k}{4 if v >= 4 else (2 if v >= 2 else 1)}"
                     for k, v in relicSet.items()
                     if (v >= 2) or ("之人" in k)
                 ),
@@ -590,9 +590,9 @@ async def simplTeamDamageRes(raw: Dict, rolesData: Dict) -> Dict:
             "sets": {
                 [r for r in panelData["relics"] if r["setName"] == k][0]["icon"].split(
                     "_"
-                )[-2]: (2 if v <= 2 else 4)
+                )[-2]: (2 if v < 4 else 4)
                 for k, v in panelData["relicSet"].items()
-                if (v >= 2) or ("之人" in k)
+                if v >= 2  # 暂未排版 祭X之人 单件套装
             },
             "cp": round(panelData["fightProp"]["暴击率"], 1),
             "cd": round(panelData["fightProp"]["暴击伤害"], 1),
