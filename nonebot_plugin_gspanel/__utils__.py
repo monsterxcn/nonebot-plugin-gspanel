@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from re import IGNORECASE, findall, sub
 from traceback import format_exc
-from typing import Set, Tuple, Union
+from typing import List, Set, Tuple, Union
 
 from httpx import AsyncClient, Client
 
@@ -137,6 +137,10 @@ CHAR_ALIAS = _client.get("https://cdn.monsterx.cn/bot/gspanel/char-alias.json").
 (LOCAL_DIR / "char-alias.json").write_text(
     json.dumps(CHAR_ALIAS, ensure_ascii=False, indent=2), encoding="utf-8"
 )
+TEAM_ALIAS = _client.get("https://cdn.monsterx.cn/bot/gspanel/team-alias.json").json()
+(LOCAL_DIR / "team-alias.json").write_text(
+    json.dumps(TEAM_ALIAS, ensure_ascii=False, indent=2), encoding="utf-8"
+)
 HASH_TRANS = _client.get("https://cdn.monsterx.cn/bot/gspanel/hash-trans.json").json()
 (LOCAL_DIR / "hash-trans.json").write_text(
     json.dumps(HASH_TRANS, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -199,6 +203,27 @@ async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
     uid = uid or await uidHelper(atqq or qq)
     char = await aliasWho(char or tmp or "全部")
     return uid, char
+
+
+async def formatTeam(msg: str, qq: str, atqq: str = "") -> Tuple[str, List]:
+    """
+    输入消息中的 UID 与队伍角色名格式化
+
+    * ``param msg: str`` 输入消息，由 ``MessageSegment.data["text"]`` 拼接组成
+    * ``param qq: str`` 输入消息触发 QQ
+    * ``param atqq: str = ""`` 输入消息中首个 at 的 QQ
+    - ``return: Tuple[str, List]``  UID、队伍角色名
+    """
+    uid, chars = "", []
+    for seg in msg.split():
+        uid, char = await formatInput(seg, qq, atqq)
+        if char != "全部" and char not in chars:
+            logger.info(f"从 QQ{qq} 的输入「{seg}」中识别到 UID[{uid}] CHAR[{char}]")
+            chars.append(char)
+    if len(chars) == 1:
+        searchTeam = await aliasTeam(msg)
+        chars = searchTeam if isinstance(searchTeam, List) else chars
+    return uid, chars
 
 
 async def fetchInitRes() -> None:
@@ -307,4 +332,12 @@ async def aliasWho(input: str) -> str:
     for char in CHAR_ALIAS:
         if (input in char) or (input in CHAR_ALIAS[char]):
             return char
+    return input
+
+
+async def aliasTeam(input: str) -> Union[str, List]:
+    """队伍别名，未找到别名配置的原样返回"""
+    for team in TEAM_ALIAS:
+        if (input == team) or (input in TEAM_ALIAS[team].get("alias", [])):
+            return TEAM_ALIAS[team]["chars"]  # type: List
     return input

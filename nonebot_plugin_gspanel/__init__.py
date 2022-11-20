@@ -7,7 +7,7 @@ from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.plugin import on_command
 
-from .__utils__ import GSPANEL_ALIAS, fetchInitRes, formatInput, uidHelper
+from .__utils__ import GSPANEL_ALIAS, fetchInitRes, formatInput, formatTeam, uidHelper
 from .data_source import getPanel, getTeam
 from .data_updater import updateCache
 
@@ -28,23 +28,25 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
     opqq = event.message["at"][0].data["qq"] if event.message.get("at") else ""
     # 输入以「绑定」开头，识别为绑定操作
     if argsMsg.startswith("绑定"):
-        args = [a.strip() for a in argsMsg[2:].split(" ") if a.strip().isdigit()]
+        args = [a for a in argsMsg[2:].split() if a.isdigit()]
         if len(args) == 1:
             uid, opqq = args[0], opqq or qq
         elif len(args) == 2:
             uid, opqq = args[0], (opqq or args[1])
         else:
-            await showPanel.finish("面板绑定参数格式错误！")
+            await showPanel.finish("面板绑定参数格式错误！", at_sender=True)
         if opqq != qq and qq not in bot.config.superusers:
-            await showPanel.finish(f"没有权限操作 QQ{qq} 的绑定状态！")
-        elif uid[0] not in uidStart or len(uid) > 9:
-            await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
+            await showPanel.finish(f"没有权限操作 QQ{qq} 的绑定状态！", at_sender=True)
+        elif uid[0] not in uidStart or len(uid) != 9:
+            await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
         await showPanel.finish(await uidHelper(opqq, uid))
     # 尝试从输入中理解 UID、角色名
     uid, char = await formatInput(argsMsg, qq, opqq)
-    logger.info(f"可能需要查找 UID{uid} 的「{char}」角色面板..")
-    if not uid.isdigit() or uid[0] not in uidStart or len(uid) > 9:
-        await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
+    if not uid:
+        await showTeam.finish(f"要查询角色面板的 UID 捏？", at_sender=True)
+    elif not uid.isdigit() or uid[0] not in uidStart or len(uid) != 9:
+        await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
+    logger.info(f"正在查找 UID{uid} 的「{char}」角色面板..")
     rt = await getPanel(uid, char)
     if isinstance(rt, str):
         await showPanel.finish(MessageSegment.text(rt))
@@ -59,18 +61,14 @@ async def x_x(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     # 提取消息中的 at 作为操作目标 QQ
     opqq = event.message["at"][0].data["qq"] if event.message.get("at") else ""
     # 尝试从输入中理解 UID、角色名
-    uid, chars = "", []
-    for seg in argsMsg.split():
-        uid, char = await formatInput(seg, qq, opqq)
-        logger.info(f"从 QQ{qq} 的输入「{seg}」中识别到 UID[{uid}] CHAR[{char}]")
-        if not uid.isdigit() or uid[0] not in uidStart or len(uid) > 9:
-            await showTeam.finish(f"UID 是「{uid}」吗？好像不对劲呢..")
-        if char != "全部":
-            chars.append(char)
+    uid, chars = await formatTeam(argsMsg, qq, opqq)
     if not uid:
-        uid, _ = await formatInput("", qq, opqq)
-        if not uid:
-            await showTeam.finish(f"要查询队伍伤害的 UID 捏？")
+        await showTeam.finish(f"要查询队伍伤害的 UID 捏？", at_sender=True)
+    elif not uid.isdigit() or uid[0] not in uidStart or len(uid) != 9:
+        await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
+    if not chars:
+        logger.info(f"QQ{qq} 的输入「{argsMsg}」似乎未指定队伍角色！")
+    logger.info(f"正在查找 UID{uid} 的「{'/'.join(chars) or '展柜前 4 角色'}」队伍伤害面板..")
     rt = await getTeam(uid, chars)
     if isinstance(rt, str):
         await showTeam.finish(MessageSegment.text(rt))
