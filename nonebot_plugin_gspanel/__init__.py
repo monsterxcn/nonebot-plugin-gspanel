@@ -23,7 +23,7 @@ driver.on_bot_connect(updateCache)
 @showPanel.handle()
 async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     qq = str(event.get_user_id())
-    argsMsg = str(arg)
+    argsMsg = " ".join(seg.data["text"] for seg in arg["text"])
     # 提取消息中的 at 作为操作目标 QQ
     opqq = event.message["at"][0].data["qq"] if event.message.get("at") else ""
     # 输入以「绑定」开头，识别为绑定操作
