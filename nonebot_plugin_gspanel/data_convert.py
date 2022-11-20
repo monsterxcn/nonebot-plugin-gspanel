@@ -570,6 +570,12 @@ async def simplTeamDamageRes(raw: Dict, rolesData: Dict) -> Dict:
         pieData.append({"char": char, "damage": float(damage.replace("W", ""))})
         pieColor.append(x["label"]["color"])
     pieData = sorted(pieData, key=lambda x: x["damage"], reverse=True)
+    # 寻找伤害最高的角色元素属性，跳过绽放等伤害来源
+    elem = [
+        rolesData[_source["char"]]["element"]
+        for _source in pieData
+        if rolesData.get(_source["char"])
+    ][0]
 
     avatars = {}
     for role in raw["role_list"]:
@@ -647,7 +653,7 @@ async def simplTeamDamageRes(raw: Dict, rolesData: Dict) -> Dict:
 
     return {
         "uid": raw["uid"],
-        "elem": rolesData[pieData[0]["char"]]["element"],
+        "elem": elem,
         "rank": raw["zdl_tips2"],
         "dps": raw["zdl_result"],
         "tm": tm,
