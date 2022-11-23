@@ -231,7 +231,8 @@ async def formatTeam(msg: str, qq: str, atqq: str = "") -> Tuple[str, List]:
     """
     uid, chars = "", []
     for seg in msg.split():
-        uid, char = await formatInput(seg, qq, atqq)
+        _uid, char = await formatInput(seg, qq, atqq)
+        uid = uid or _uid
         if char != "全部" and char not in chars:
             logger.info(f"从 QQ{qq} 的输入「{seg}」中识别到 UID[{uid}] CHAR[{char}]")
             chars.append(char)
