@@ -34,7 +34,7 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
         elif len(args) == 2:
             uid, opqq = args[0], (opqq or args[1])
         else:
-            await showPanel.finish("面板绑定参数格式错误！", at_sender=True)
+            await showPanel.finish("绑定参数格式错误！", at_sender=True)
         if opqq != qq and qq not in bot.config.superusers:
             await showPanel.finish(f"没有权限操作 QQ{qq} 的绑定状态！", at_sender=True)
         elif uid[0] not in uidStart or len(uid) != 9:
