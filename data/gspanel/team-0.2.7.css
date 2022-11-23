@@ -644,8 +644,22 @@ ul.Buffs>li.title {
     align-items: center;
 }
 
+div.Actions>div.title::after,
+ul.Damages>li.title::after,
+ul.Buffs>li.title::after {
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.68;
+    color: var(--ambrLight);
+    padding-left: 20px;
+}
+
 div.Actions>div.title::before {
     content: "操作手法";
+}
+
+div.Actions>div.title::after {
+    content: "默认手法可能并非最优，如需自定义操作手法请使用微信小程序";
 }
 
 div.Actions>div.act {
@@ -703,8 +717,20 @@ ul.Buffs>li>div {
     justify-content: center;
 }
 
+ul.Damages>li:nth-child(2),
+ul.Damages>li>div:nth-child(1),
+ul.Damages>li>div:nth-child(2),
+ul.Buffs>li>div:nth-child(1),
+ul.Buffs>li>div:nth-child(2) {
+    color: #ffffff;
+}
+
 ul.Damages>li.title::before {
     content: "伤害过程";
+}
+
+ul.Damages>li.title::after {
+    content: "伤害以 90 级怪物为基准，最终输出总伤和 DPS 为 1.25 倍期望伤害（实战对群）";
 }
 
 ul.Damages>li>div:not(:last-child),
@@ -756,6 +782,10 @@ ul.Damages>li.head>div:nth-child(5)::after {
 
 ul.Buffs>li.title::before {
     content: "Buff 情况";
+}
+
+ul.Buffs>li.title::after {
+    content: "部分 Buff 描述可能异常但通常影响较小，若伤害偏差超过 10% 可认为计算错误";
 }
 
 ul.Buffs>li:not(.title)>div:nth-child(2) {

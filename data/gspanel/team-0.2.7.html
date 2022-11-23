@@ -63,6 +63,16 @@
                 {% endfor %}
             </div>
         </div>
+        <ul class="Buffs">
+            <li class="title"></li>
+            {% for buff in data["buffs"] %}
+            <li class="buff">
+                <div>{{ buff[0] }}</div>
+                <div>{{ buff[1] }}</div>
+                <div>{{ buff[2] }}</div>
+            </li>
+            {% endfor %}
+        </ul>
         <ul class="Damages">
             <li class="title"></li>
             <li class="head">
@@ -80,16 +90,6 @@
                 <div>{{ damage[2] }}</div>
                 <div>{{ damage[3] }}</div>
                 <div>{{ damage[4] }}</div>
-            </li>
-            {% endfor %}
-        </ul>
-        <ul class="Buffs">
-            <li class="title"></li>
-            {% for buff in data["buffs"] %}
-            <li class="buff">
-                <div>{{ buff[0] }}</div>
-                <div>{{ buff[1] }}</div>
-                <div>{{ buff[2] }}</div>
             </li>
             {% endfor %}
         </ul>
