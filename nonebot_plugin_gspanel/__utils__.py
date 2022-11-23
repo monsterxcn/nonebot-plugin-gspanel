@@ -221,7 +221,7 @@ async def formatTeam(msg: str, qq: str, atqq: str = "") -> Tuple[str, List]:
             logger.info(f"从 QQ{qq} 的输入「{seg}」中识别到 UID[{uid}] CHAR[{char}]")
             chars.append(char)
     if len(chars) == 1:
-        searchTeam = await aliasTeam(msg)
+        searchTeam = await aliasTeam(chars[0])
         chars = searchTeam if isinstance(searchTeam, List) else chars
     return uid, chars
 
