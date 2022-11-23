@@ -149,7 +149,7 @@ RELIC_APPEND = _client.get("https://cdn.monsterx.cn/bot/gspanel/relic-append.jso
 (LOCAL_DIR / "relic-append.json").write_text(
     json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-TPL_VERSION = "0.2.5"
+TPL_VERSION = "0.2.7"
 
 
 def kStr(prop: str, reverse: bool = False) -> str:
