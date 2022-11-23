@@ -485,7 +485,10 @@ async def simplDamageRes(damage: Dict) -> Dict:
                 dmgExp = str(dmgDetail["expect"]).replace("期望", "")
             res["data"].append([dmgTitle, dmgCrit, dmgExp])
     for buff in damage["bonus"]:
-        buffTitle, buffDetail = buff["intro"].split("：")
+        # damage["bonus"]: {"0": {}, "2": {}, ...}
+        # damage["bonus"]: [{}, {}, ...]
+        intro = damage["bonus"][buff]["intro"] if isinstance(buff, str) else buff["intro"]
+        buffTitle, buffDetail = intro.split("：")
         if buffTitle not in ["注", "备注"]:
             res["buff"].append([buffTitle, buffDetail])
     return res
