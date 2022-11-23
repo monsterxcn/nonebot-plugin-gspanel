@@ -17,6 +17,7 @@ from .__utils__ import (
     RELIC_APPEND,
     SKILL,
     SUB_AFFIXS,
+    getServer,
     kStr,
     vStr,
 )
@@ -368,6 +369,9 @@ async def transToTeyvat(avatarsData: List[Dict], uid: str) -> Dict:
     - ``return: Dict`` Teyvat Helper 请求格式角色数据
     """
     res = {"uid": uid, "role_data": []}
+    if uid[0] not in ["1", "2"]:
+        res["server"] = getServer(uid)
+
     for avatarData in avatarsData:
         name = avatarData["name"]
         cons = avatarData["cons"]

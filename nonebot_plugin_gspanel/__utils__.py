@@ -172,6 +172,21 @@ def vStr(prop: str, value: Union[int, float]) -> str:
         return str(round(value, 1)) + "%"
 
 
+def getServer(uid: str) -> str:
+    """获取指定 UID 所属服务器，返回如 ``cn_gf01``"""
+    if uid[0] == "5":
+        return "cn_qd01"
+    elif uid[0] == "6":
+        return "os_usa"
+    elif uid[0] == "7":
+        return "os_euro"
+    elif uid[0] == "8":
+        return "os_asia"
+    elif uid[0] == "9":
+        return "os_cht"
+    return "cn_gf01"
+
+
 async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
     """
     输入消息中的 UID 与角色名格式化，应具备处理 ``msg`` 为空、包含中文或数字的能力。
