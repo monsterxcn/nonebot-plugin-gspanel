@@ -30,7 +30,7 @@
 
 ```bash
 # 从 nb_cli 安装
-python3 -m nb plugin install nonebot-plugin-gspanel
+python3 -m nb_cli plugin install nonebot-plugin-gspanel
 
 # 或从 PyPI 安装
 python3 -m pip install nonebot-plugin-gspanel
