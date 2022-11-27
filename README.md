@@ -37,6 +37,16 @@ python3 -m pip install nonebot-plugin-gspanel
 ```
 
 
+> **[@realhuhu/py-plugin](https://github.com/realhuhu/py-plugin) 插件用户须知**
+> 
+> Yunzai 用户安装 py-plugin 插件后可以兼容运行本插件！安装步骤如下：
+> 
+> 1. 仔细阅读 [README.md](https://github.com/realhuhu/py-plugin#21-%E5%AE%89%E8%A3%85) 配置 Yunzai Bot 的 Python 运行环境
+> 2. 向 Yunzai Bot 发送 QQ 消息 `#py下载插件nonebot-plugin-gspanel` 安装本插件
+> 3. [建议] 将下方使用须知第 4 条中交待的所有环境变量写入 py-plugin 的配置文件 config.yaml 中（注意格式）
+> 4. [建议] 将环境变量 `gspanel_alias` 定义为 `面板` 以外的关键词，避免此插件的功能与 Yunzai 相关功能同时触发
+
+
 ## 使用须知
 
 
