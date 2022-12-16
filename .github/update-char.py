@@ -6,6 +6,7 @@ def read(fn: str):
     return json.loads(Path(f"./{fn}").read_text(encoding="UTF-8"))
 
 
+AvatarDetail = read("Avatar.json")
 TextMapCHS = read("TextMapCHS.json")
 Avatar = read("AvatarExcelConfigData.json")
 AvatarSkillRaw = read("AvatarSkillExcelConfigData.json")
@@ -16,6 +17,7 @@ Weapons = read("WeaponExcelConfigData.json")
 Reliquary = read("ReliquaryExcelConfigData.json")
 ReliquarySet = read("EquipAffixExcelConfigData.json")
 
+AvatarDetail = {i["Id"]: i for i in AvatarDetail}
 AvatarSkill = {i["id"]: i for i in AvatarSkillRaw}
 AvatarSkillDepot = {i["id"]: i for i in AvatarSkillDepotRaw}
 AvatarTalent = {i["talentId"]: i for i in AvatarTalentRaw}
@@ -74,6 +76,7 @@ def gnrtCharJson():
             "Element": AvatarSkill[depot["energySkill"]]["costElemType"],
             "Name": str(avatarData["iconName"]).split("_")[-1],
             "NameCN": TextMapCHS.get(str(hs), "未知"),
+            "Slogan": AvatarDetail[avatarID]["FetterInfo"]["Title"],
             "NameTextMapHash": hs,
             "QualityType": avatarData["qualityType"],
             "iconName": avatarData["iconName"],
@@ -114,7 +117,7 @@ def gnrtCharJson():
                 if costume.get("sideIconName")
             }
 
-    Path("./characters.json").write_text(
+    Path("./char-data.json").write_text(
         json.dumps(AvatarDictionary, ensure_ascii=False, indent=2), encoding="UTF-8"
     )
 
@@ -138,7 +141,7 @@ def gnrtTransJson():
         if TextMapCHS.get(hs):
             TranslateDictionary[hs] = TextMapCHS[hs]
 
-    Path("./trans.json").write_text(
+    Path("./hash-trans.json").write_text(
         json.dumps(TranslateDictionary, ensure_ascii=False, indent=2), encoding="UTF-8"
     )
 

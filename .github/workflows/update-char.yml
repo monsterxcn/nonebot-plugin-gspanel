@@ -19,15 +19,16 @@ jobs:
       - name: Update files
         run: |
           cd .github
-          wget -q https://github.com/Dimbreath/GenshinData/raw/master/TextMap/TextMapCHS.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarTalentExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarCostumeExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/WeaponExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/ReliquaryExcelConfigData.json
-          wget -q https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/EquipAffixExcelConfigData.json
+          wget -q https://raw.githubusercontent.com/DGP-Studio/Snap.Metadata/main/Output/Avatar.json
+          wget -q https://genshin-data.uigf.org/d/latest/TextMap/TextMapCHS.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarSkillExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarTalentExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarCostumeExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/WeaponExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/ReliquaryExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/EquipAffixExcelConfigData.json
           python update-char.py
           mv -f characters.json ../data/gspanel/characters.json
           mv -f trans.json ../data/gspanel/trans.json
