@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/monsterxcn/nonebot-plugin-gspanel/actions">
-    <img src="https://img.shields.io/github/workflow/status/monsterxcn/nonebot-plugin-gspanel/Build%20distributions?style=flat-square" alt="actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/monsterxcn/nonebot-plugin-gspanel/publish.yml?branch=main&style=flat-square" alt="actions">
   </a>
   <a href="https://raw.githubusercontent.com/monsterxcn/nonebot-plugin-gspanel/master/LICENSE">
     <img src="https://img.shields.io/github/license/monsterxcn/nonebot-plugin-gspanel?style=flat-square" alt="license">
@@ -37,25 +37,7 @@ python3 -m pip install nonebot-plugin-gspanel
 ```
 
 
-> **[@realhuhu/py-plugin](https://github.com/realhuhu/py-plugin) 插件用户安装方法**
-> 
-> Yunzai 用户安装 py-plugin 插件后可以兼容运行此插件！安装步骤如下：
-> 
-> 1. 仔细阅读 [README.md](https://github.com/realhuhu/py-plugin#21-%E5%AE%89%E8%A3%85) 配置 Yunzai Bot 的 Python 运行环境
-> 2. 向 Yunzai Bot 发送 QQ 消息 `#py下载插件nonebot-plugin-gspanel` 安装此插件
-> 3. [建议] 将下方使用须知第 4 条中交待的所有环境变量写入 py-plugin 的配置文件 config.yaml 中（注意格式）
-> 4. [建议] 将环境变量 `gspanel_alias` 定义为 `面板` 以外的触发词，避免此插件与 Yunzai 相关功能同时触发
-> 
-> py-plugin 的配置文件 config.yaml 中 **务必手动添加** 此插件的一些配置：
-> 
-> ```yaml
-> gspanel_alias:
->   - 想要的面板触发词
->   - 支持多个触发词
-> gspanel_scale: 1.0
-> resources_dir: /path/to/data  # Windows 要将反斜杠替换为 /
-> resources_mirror: https://enka.network/ui/
-> ```
+> Yunzai [@realhuhu/py-plugin](https://github.com/realhuhu/py-plugin) 插件用户安装方法请查看 [#17](https://github.com/monsterxcn/nonebot-plugin-gspanel/issues/17)，插件不保证完全可用，请尽量自行解决相关问题。
 
 
 ## 使用须知
@@ -86,6 +68,8 @@ python3 -m pip install nonebot-plugin-gspanel
    + Ubuntu：`python3 -m playwright install-deps`
    + CentOS（仅供参考）：`yum install -y atk at-spi2-atk cups-libs libxkbcommon libXcomposite libXdamage libXrandr mesa-libgbm gtk3`
    + 其他非 Ubuntu 系统：[@microsoft/playwright/issues](https://github.com/microsoft/playwright/issues)
+   
+   其他 Playwright 相关问题也请尽量自行解决，或者前往 [@kexue-z/nonebot-plugin-htmlrender/issues](https://github.com/kexue-z/nonebot-plugin-htmlrender) / [@microsoft/playwright/issues](https://github.com/microsoft/playwright/issues) 搜索提问。~~你硬要问我的话，大概也只能得到一句「哇嘎拉乃哟」~~
 
 
 ## 命令说明
@@ -97,26 +81,22 @@ python3 -m pip install nonebot-plugin-gspanel
 插件响应以 `panel` / `面板` 开头的消息，下面仅以 `面板` 为例：
 
 
-*\*如果定义了环境变量 `gspanel_alias` 则以环境变量定义的命令别名为准，默认情况下该环境变量会使插件响应 `面板` 开头的消息。*
+*\* 如果定义了环境变量 `gspanel_alias` 则以环境变量定义的命令别名为准，默认情况下该环境变量会使插件响应 `面板` 开头的消息。*
 
 
- - `面板绑定100123456`
+ - `面板绑定100123456` / `面板绑定100123456 @某人` / `面板绑定2334556789 100123456`
    
    绑定 UID `100123456` 至发送此指令的 QQ，QQ 已被绑定过则会更新绑定的 UID。
    
-   Bot 管理员可以通过在此指令后附带 `@某人` 或 `2334556789` 的方式将 UID `100123456` 绑定至指定的 QQ。
+   Bot 管理员可以通过在此指令后紧跟 `2334556789` 或附带 `@某人` 的方式将 UID `100123456` 绑定至指定的 QQ。
    
- - `面板100123456`
+ - `面板` / `面板@某人` / `面板100123456`
    
-   查找 UID `100123456` 角色展柜中展示的所有角色（文本）。
+   查找 QQ 绑定的 UID / UID `100123456` 角色展柜中展示的所有角色（文本）。
    
-   仅发送 `面板` 时将尝试使用发送此指令的 QQ 绑定的 UID；发送 `面板@某人` 时将尝试使用指定 QQ 绑定的 UID。
+ - `面板夜兰` / `面板夜兰@某人` / `面板夜兰100123456` / `面板100123456夜兰`
    
- - `面板夜兰100123456` / `面板100123456夜兰`
-   
-   查找 UID `100123456` 的夜兰面板（图片）。
-   
-   仅发送 `面板夜兰` 时将尝试使用发送此指令的 QQ 绑定的 UID；发送 `面板夜兰@某人` 时将尝试使用指定 QQ 绑定的 UID。
+   查找 QQ 绑定的 UID / UID `100123456` 的夜兰面板（图片）。
 
 
 *\* 所有指令都可以用空格将关键词分割开来，如果你喜欢的话。*
@@ -136,7 +116,7 @@ python3 -m pip install nonebot-plugin-gspanel
    
  - `队伍伤害雷九万班` / `队伍伤害 雷神 九条 万叶 班尼特` / `队伍伤害雷神 九条 万叶 班尼特@某人`
    
-   查找雷电将军、九条裟罗、枫原万叶、班尼特组成的队伍伤害。注意角色名之间必须使用空格分开。含有 **旅行者** 的配队暂时无法查询。
+   查找雷电将军、九条裟罗、枫原万叶、班尼特组成的队伍伤害。注意角色名之间必须使用空格分开。含有 **旅行者** 的配队暂时无法查询。队伍角色只要使用 `面板` 指令查询过或者正在展柜中摆放即可配队（即所有查询过的角色都有缓存，使用 `面板` 指令查看所有可用的角色）。
    
    为此形式的命令指定 UID 方式与上面相同。
    
@@ -149,4 +129,4 @@ python3 -m pip install nonebot-plugin-gspanel
 ## 特别鸣谢
 
 
-[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [Enka.Network](https://enka.network/) | [Miniprogram Teyvat Helper](#)
+[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [@UIGF-org/UIGF-API](https://github.com/UIGF-org/UIGF-API) | [Enka.Network](https://enka.network/) | [Miniprogram Teyvat Helper](#)
