@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="nonebot-plugin-gspanel",
-    version="0.2.8",
+    version="0.2.9",
     author="monsterxcn",
     author_email="monsterxcn@gmail.com",
     description="Genshin player cards plugin for NoneBot2",

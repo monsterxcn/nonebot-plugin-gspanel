@@ -6,11 +6,14 @@ from traceback import format_exc
 from typing import Dict, List, Literal, Union
 
 from httpx import AsyncClient, HTTPError
-from nonebot_plugin_htmlrender import template_to_pic
 
+from nonebot import require
 from nonebot.log import logger
 
-from .__utils__ import LOCAL_DIR, TPL_VERSION, SCALE_FACTOR, download
+require("nonebot_plugin_htmlrender")
+from nonebot_plugin_htmlrender import template_to_pic
+
+from .__utils__ import LOCAL_DIR, SCALE_FACTOR, TPL_VERSION, download
 from .data_convert import (
     simplDamageRes,
     simplFightProp,
