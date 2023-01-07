@@ -2,7 +2,6 @@ import asyncio
 import json
 from copy import deepcopy
 from time import time
-from traceback import format_exc
 from typing import Dict, List, Literal, Union
 
 from httpx import AsyncClient, HTTPError
@@ -51,9 +50,9 @@ async def queryPanelApi(uid: str, source: Literal["enka", "mgg"] = "enka") -> Di
                 timeout=20.0,
             )
             resJson = res.json()
-    except (HTTPError, json.decoder.JSONDecodeError):
-        logger.error(f"面板数据接口无法访问或返回错误\n{format_exc()}")
-        return {"error": "暂时无法访问面板数据接口.."}
+    except (HTTPError, json.decoder.JSONDecodeError) as e:
+        logger.opt(exception=e).error("面板数据接口无法访问或返回错误")
+        return {"error": f"[{e.__class__.__name__}] 暂时无法访问面板数据接口.."}
     if not resJson.get("playerInfo"):
         return {"error": f"UID{uid} 返回信息不全，接口可能正在维护.."}
     if not resJson.get("avatarInfoList"):
@@ -88,15 +87,15 @@ async def queryDamageApi(body: Dict, mode: Literal["single", "team"] = "single")
                         "XWEB/4375 MMWEBSDK/20221011 Mobile Safari/537.36 MMWEBID/4357 "
                         "MicroMessenger/8.0.30.2244(0x28001E44) WeChat/arm64 Weixin GPVersion/1 "
                         "NetType/WIFI Language/zh_CN ABI/arm64 MiniProgramEnv/android"
-                    )
+                    ),
                 },
             )
             return res.json()
-        except (HTTPError, json.decoder.JSONDecodeError):
-            logger.error(f"提瓦特小助手接口无法访问或返回错误\n{format_exc()}")
+        except (HTTPError, json.decoder.JSONDecodeError) as e:
+            logger.opt(exception=e).error("提瓦特小助手接口无法访问或返回错误")
             return {}
         except Exception as e:
-            logger.error(f"提瓦特小助手接口错误：{e.__class__.__name__}\n{format_exc()}")
+            logger.opt(exception=e).error("提瓦特小助手接口错误")
             return {}
 
 
@@ -308,13 +307,13 @@ async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
         logger.error(
             (f"UID{uid} 的 {len(extract)} 位角色队伍伤害计算请求失败！" f"\n>>>> [提瓦特返回] {teyvatRaw}")
         )
-        return f"UID{uid} 队伍伤害计算请求失败！"
+        return f"UID{uid} 队伍伤害计算失败，接口可能发生变动！" if teyvatRaw else "队伍伤害计算小程序状态异常！"
     try:
         data = await simplTeamDamageRes(
             teyvatRaw["result"], {a["name"]: a for a in extract}
         )
     except Exception as e:
-        logger.error("队伍伤害数据解析出错 {}\n{}".format(e.__class__.__name__, format_exc()))
+        logger.opt(exception=e).error("队伍伤害数据解析出错")
         return f"[{e.__class__.__name__}] 队伍伤害数据解析出错咯"
 
     htmlBase = str(LOCAL_DIR.resolve())

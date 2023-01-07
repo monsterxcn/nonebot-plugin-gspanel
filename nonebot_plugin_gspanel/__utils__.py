@@ -2,7 +2,6 @@ import asyncio
 import json
 from pathlib import Path
 from re import IGNORECASE, findall, sub
-from traceback import format_exc
 from typing import List, Set, Tuple, Union
 
 from httpx import AsyncClient, Client
@@ -318,10 +317,11 @@ async def download(
                         fb.write(chunk)
             return f
         except Exception as e:
-            logger.error(f"面板资源 {f.name} 下载出错 {e.__class__.__name__}\n{format_exc()}")
             retry -= 1
             if retry:
                 await asyncio.sleep(2)
+            else:
+                logger.opt(exception=e).error(f"面板资源 {f.name} 下载出错")
     return None
 
 
