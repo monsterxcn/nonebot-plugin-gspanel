@@ -64,11 +64,11 @@ async def queryPanelApi(uid: str, source: Literal["enka", "mgg"] = "enka") -> Di
                 else:
                     logger.info(f"从 {root} 获取面板失败，正在自动切换镜像重试...")
     if not resJson.get("playerInfo"):
-        return {"error": f"UID{uid} 返回信息不全，接口可能正在维护.."}
+        return {"error": f"玩家 {uid} 返回信息不全，接口可能正在维护.."}
     if not resJson.get("avatarInfoList"):
-        return {"error": f"UID{uid} 的角色展柜详细数据已隐藏！"}
+        return {"error": f"玩家 {uid} 的角色展柜详细数据已隐藏！"}
     if not resJson["playerInfo"].get("showAvatarInfoList"):
-        return {"error": f"UID{uid} 的角色展柜内还没有角色哦！"}
+        return {"error": f"玩家 {uid} 的角色展柜内还没有角色哦！"}
     return resJson
 
 
@@ -205,7 +205,7 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
     searchRes = [x for x in cacheData["avatars"] if x["name"] == char]
     return (
         {
-            "error": "UID{} 游戏内展柜中的 {} 位角色中没有 {}！".format(
+            "error": "玩家 {} 游戏内展柜中的 {} 位角色中没有 {}！".format(
                 uid, len(cacheData["avatars"]), char
             )
         }
@@ -278,7 +278,7 @@ async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
         extract = [a for a in data["avatars"] if a["name"] in chars]
         if len(extract) != len(chars):
             gotThis = [a["name"] for a in extract]
-            return "UID{} 的最新数据中未发现{}！".format(
+            return "玩家 {} 的最新数据中未发现{}！".format(
                 uid, "、".join(c for c in chars if c not in gotThis)
             )
     elif len(data["avatars"]) >= 4:
@@ -289,7 +289,7 @@ async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
             )
         )
     else:
-        return f"UID{uid} 的面板数据甚至不足以组成一支队伍呢！"
+        return f"玩家 {uid} 的面板数据甚至不足以组成一支队伍呢！"
 
     # 图片下载任务
     for tmp in extract:
@@ -317,7 +317,7 @@ async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
         logger.error(
             (f"UID{uid} 的 {len(extract)} 位角色队伍伤害计算请求失败！" f"\n>>>> [提瓦特返回] {teyvatRaw}")
         )
-        return f"UID{uid} 队伍伤害计算失败，接口可能发生变动！" if teyvatRaw else "队伍伤害计算小程序状态异常！"
+        return f"玩家 {uid} 队伍伤害计算失败，接口可能发生变动！" if teyvatRaw else "啊哦，队伍伤害计算小程序状态异常！"
     try:
         data = await simplTeamDamageRes(
             teyvatRaw["result"], {a["name"]: a for a in extract}

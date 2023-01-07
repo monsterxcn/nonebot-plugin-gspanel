@@ -72,12 +72,12 @@ async def getRelicConfig(char: str, base: Dict = {}) -> Tuple[Dict, Dict, Dict]:
             avalMainAffix = {
                 k: v for k, v in affixWeight.items() if k in MAIN_AFFIXS[str(posIdx)]
             }
-            logger.debug(
-                "{} 的主词条推荐顺序为：\n{}".format(
-                    list(POS.values())[posIdx - 1],
-                    " / ".join(f"{k}[{v}]" for k, v in avalMainAffix.items()),
-                )
-            )
+            # logger.debug(
+            #     "{} 的主词条推荐顺序为：\n{}".format(
+            #         list(POS.values())[posIdx - 1],
+            #         " / ".join(f"{k}[{v}]" for k, v in avalMainAffix.items()),
+            #     )
+            # )
             mainAffix = list(avalMainAffix)[0]
             maxMark[str(posIdx)]["main"] = affixWeight[mainAffix]
             maxMark[str(posIdx)]["total"] = affixWeight[mainAffix] * 2
