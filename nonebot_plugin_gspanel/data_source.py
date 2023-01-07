@@ -30,29 +30,39 @@ async def queryPanelApi(uid: str, source: Literal["enka", "mgg"] = "enka") -> Di
     * ``param source: Literal["enka", "mgg"] = "enka"`` 查询接口
     - ``return: Dict`` 查询结果，出错时返回 ``{"error": "错误信息"}``
     """
-    root = "https://enka.network" if source == "enka" else "https://enka.minigg.cn"
-    try:
-        async with AsyncClient() as client:
-            res = await client.get(
-                url=f"{root}/u/{uid}/__data.json",
-                headers={
-                    "Accept": "application/json",
-                    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7",
-                    "Cache-Control": "no-cache",
-                    "Cookie": "locale=zh-CN",
-                    "Referer": "https://enka.network/",
-                    "User-Agent": (
-                        "Mozilla/5.0 (Linux; Android 12; Nexus 5) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/102.0.0.0 Mobile Safari/537.36"
-                    ),
-                },
-                timeout=20.0,
-            )
-            resJson = res.json()
-    except (HTTPError, json.decoder.JSONDecodeError) as e:
-        logger.opt(exception=e).error("面板数据接口无法访问或返回错误")
-        return {"error": f"[{e.__class__.__name__}] 暂时无法访问面板数据接口.."}
+    enkaMirrors = [
+        "https://enka.network",
+        "https://enka.minigg.cn",
+        "https://enka.microgg.cn",
+    ]
+    async with AsyncClient() as client:
+        resJson = {}
+        for idx, root in enumerate(enkaMirrors):
+            try:
+                res = await client.get(
+                    url=f"{root}/u/{uid}/__data.json",
+                    headers={
+                        "Accept": "application/json",
+                        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7",
+                        "Cache-Control": "no-cache",
+                        "Cookie": "locale=zh-CN",
+                        "Referer": "https://enka.network/",
+                        "User-Agent": (
+                            "Mozilla/5.0 (Linux; Android 12; Nexus 5) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/102.0.0.0 Mobile Safari/537.36"
+                        ),
+                    },
+                    timeout=20.0,
+                )
+                resJson = res.json()
+                break
+            except (HTTPError, json.decoder.JSONDecodeError) as e:
+                if idx == len(enkaMirrors) - 1:
+                    logger.opt(exception=e).error("面板数据接口无法访问或返回错误")
+                    return {"error": f"[{e.__class__.__name__}] 暂时无法访问面板数据接口.."}
+                else:
+                    logger.info(f"从 {root} 获取面板失败，正在自动切换镜像重试...")
     if not resJson.get("playerInfo"):
         return {"error": f"UID{uid} 返回信息不全，接口可能正在维护.."}
     if not resJson.get("avatarInfoList"):

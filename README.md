@@ -25,7 +25,7 @@
 ## 安装方法
 
 
-如果你正在使用 2.0.0.beta1 以上版本 NoneBot，推荐使用以下命令安装：
+如果你正在使用 2.0.0.beta1 以上版本 NoneBot2，推荐使用以下命令安装：
 
 
 ```bash
@@ -129,4 +129,4 @@ python3 -m pip install nonebot-plugin-gspanel
 ## 特别鸣谢
 
 
-[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [@UIGF-org/UIGF-API](https://github.com/UIGF-org/UIGF-API) | [Enka.Network](https://enka.network/) | [Miniprogram Teyvat Helper](#)
+[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [@UIGF-org/UIGF-API](https://github.com/UIGF-org/UIGF-API) | [Enka.Network](https://enka.network/) | [Miniprogram Teyvat Helper](#) | [@MiniGrayGay](https://github.com/MiniGrayGay)
