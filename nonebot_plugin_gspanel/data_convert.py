@@ -87,12 +87,12 @@ async def getRelicConfig(char: str, base: Dict = {}) -> Tuple[Dict, Dict, Dict]:
             for k, v in affixWeight.items()
             if k in SUB_AFFIXS and k != mainAffix and affixWeight.get(k)
         }
-        logger.debug(
-            "{} 的副词条推荐顺序为：\n{}".format(
-                list(POS.values())[posIdx - 1],
-                " / ".join(f"{k}[{v}]" for k, v in maxSubAffixs.items()),
-            )
-        )
+        # logger.debug(
+        #     "{} 的副词条推荐顺序为：\n{}".format(
+        #         list(POS.values())[posIdx - 1],
+        #         " / ".join(f"{k}[{v}]" for k, v in maxSubAffixs.items()),
+        #     )
+        # )
         # 副词条中评分权重最高的词条得分大幅提升
         maxMark[str(posIdx)]["total"] += sum(
             affixWeight[k] * (1 if kIdx else 6)
@@ -175,15 +175,15 @@ async def calcRelicMark(
     realAppendPropIdList: List[int] = (
         relicData["_appendPropIdList"][-(relicLevel // 4) :] if (relicLevel // 4) else []
     )
-    logger.debug(
-        "{} 强化记录：\n{}".format(
-            list(POS.values())[int(posIdx) - 1],
-            " / ".join(
-                PROP.get(RELIC_APPEND[str(x)], RELIC_APPEND[str(x)])
-                for x in realAppendPropIdList
-            ),
-        )
-    )
+    # logger.debug(
+    #     "{} 强化记录：\n{}".format(
+    #         list(POS.values())[int(posIdx) - 1],
+    #         " / ".join(
+    #             PROP.get(RELIC_APPEND[str(x)], RELIC_APPEND[str(x)])
+    #             for x in realAppendPropIdList
+    #         ),
+    #     )
+    # )
     notHit = len(
         [
             x
