@@ -98,7 +98,7 @@ async def getRelicConfig(char: str, base: Dict = {}) -> Tuple[Dict, Dict, Dict]:
             affixWeight[k] * (1 if kIdx else 6)
             for kIdx, k in enumerate(list(maxSubAffixs)[0:4])
         )
-    logger.info(
+    logger.debug(
         (
             "「{}」圣遗物评分依据："
             "\n\t词条评分权重 affixWeight\n\t{}"

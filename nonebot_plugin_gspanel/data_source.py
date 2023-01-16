@@ -152,8 +152,8 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
                         logger.info(f"UID{uid} 的 {tmp['name']} 伤害计算结果无需刷新！")
                         tmp["damage"], gotDmg = cacheDmg, True
                     else:
-                        logger.info(
-                            "UID{} 的 {} 数据发生变化：\n{}\n{}".format(
+                        logger.debug(
+                            "UID{} 的 {} 数据变化细则：\n{}\n{}".format(
                                 uid, tmp["name"], avatarsCache[str(tmp["id"])], nowStat
                             )
                         )
