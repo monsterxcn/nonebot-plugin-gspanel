@@ -1,14 +1,13 @@
-import asyncio
 import json
+import asyncio
 from pathlib import Path
-from re import IGNORECASE, findall, sub
-from typing import List, Set, Tuple, Union
-
-from httpx import AsyncClient, Client
+from re import IGNORECASE, sub, findall
+from typing import Set, List, Tuple, Union
 
 from nonebot import get_driver
-from nonebot.drivers import Driver
 from nonebot.log import logger
+from nonebot.drivers import Driver
+from httpx import Client, AsyncClient
 
 GROW_VALUE = {  # 理论最高档（4档）词条成长值
     "暴击率": 3.89,
@@ -110,7 +109,9 @@ LOCAL_DIR = (
     else (Path() / "data" / "gspanel")
 )
 SCALE_FACTOR = (
-    float(driver.config.gspanel_scale) if hasattr(driver.config, "gspanel_scale") else 1.0
+    float(driver.config.gspanel_scale)
+    if hasattr(driver.config, "gspanel_scale")
+    else 1.0
 )
 DOWNLOAD_MIRROR = (
     str(driver.config.resources_mirror)
@@ -144,7 +145,9 @@ HASH_TRANS = _client.get("https://cdn.monsterx.cn/bot/gspanel/hash-trans.json").
 (LOCAL_DIR / "hash-trans.json").write_text(
     json.dumps(HASH_TRANS, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-RELIC_APPEND = _client.get("https://cdn.monsterx.cn/bot/gspanel/relic-append.json").json()
+RELIC_APPEND = _client.get(
+    "https://cdn.monsterx.cn/bot/gspanel/relic-append.json"
+).json()
 (LOCAL_DIR / "relic-append.json").write_text(
     json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
 )
@@ -196,7 +199,7 @@ async def formatInput(msg: str, qq: str, atqq: str = "") -> Tuple[str, str]:
     * ``param qq: str`` 输入消息触发 QQ
     * ``param atqq: str = ""`` 输入消息中首个 at 的 QQ
     - ``return: Tuple[str, str]``  UID、角色名
-    """
+    """  # noqa: E501
     uid, char, tmp = "", "", ""
     group = findall(
         r"[0-9]+|[\u4e00-\u9fa5]+|[a-z]+", sub(r"\[CQ:.*\]", "", msg), flags=IGNORECASE
@@ -291,7 +294,7 @@ async def download(
     * ``param local: Union[Path, str] = ""`` 下载路径，传入类型为 ``Path`` 时视为保存文件完整路径，传入类型为 ``str`` 时视为保存文件子文件夹名（默认下载至插件资源根目录）
     * ``param retry: int = 3`` 下载失败重试次数
     - ``return: Union[Path, None]`` 本地文件路径，出错时返回空
-    """
+    """  # noqa: E501
     if not url.startswith("http"):
         url = DOWNLOAD_MIRROR + url + ".png"
     if not isinstance(local, Path):
@@ -357,5 +360,5 @@ async def aliasTeam(input: str) -> Union[str, List]:
     """队伍别名，未找到别名配置的原样返回"""
     for team in TEAM_ALIAS:
         if (input == team) or (input in TEAM_ALIAS[team].get("alias", [])):
-            return TEAM_ALIAS[team]["chars"]  # type: List
+            return TEAM_ALIAS[team]["chars"]
     return input

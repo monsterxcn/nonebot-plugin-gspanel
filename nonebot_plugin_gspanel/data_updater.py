@@ -2,15 +2,15 @@
 迁移缓存的面板数据，将在未来某个版本删除
 """
 
-import asyncio
 import json
+import asyncio
 from copy import deepcopy
 
 from nonebot.log import logger
 
 from .__utils__ import LOCAL_DIR
-from .data_convert import simplDamageRes, transFromEnka, transToTeyvat
 from .data_source import queryDamageApi
+from .data_convert import transFromEnka, transToTeyvat, simplDamageRes
 
 
 async def updateCache() -> None:
@@ -47,10 +47,8 @@ async def updateCache() -> None:
                     teyvatRaw.get("result", [])
                 ):
                     logger.error(
-                        (
-                            f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
-                            f"\n>>>> [提瓦特返回] {teyvatRaw}"
-                        )
+                        f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
+                        f"\n>>>> [提瓦特返回] {teyvatRaw}"
                     )
                 for dmgIdx, dmgData in enumerate(teyvatRaw.get("result", [])):
                     aRealIdx = int(list(wait4Dmg.keys())[dmgIdx])

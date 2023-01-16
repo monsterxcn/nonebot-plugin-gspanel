@@ -6,15 +6,26 @@
 
 <p align="center">
   <a href="https://github.com/monsterxcn/nonebot-plugin-gspanel/actions">
-    <img src="https://img.shields.io/github/actions/workflow/status/monsterxcn/nonebot-plugin-gspanel/publish.yml?branch=main&style=flat-square" alt="actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/monsterxcn/nonebot-plugin-gspanel/publish.yml?branch=main" alt="actions" />
   </a>
   <a href="https://raw.githubusercontent.com/monsterxcn/nonebot-plugin-gspanel/master/LICENSE">
-    <img src="https://img.shields.io/github/license/monsterxcn/nonebot-plugin-gspanel?style=flat-square" alt="license">
+    <img src="https://img.shields.io/github/license/monsterxcn/nonebot-plugin-gspanel" alt="license" />
   </a>
   <a href="https://pypi.python.org/pypi/nonebot-plugin-gspanel">
-    <img src="https://img.shields.io/pypi/v/nonebot-plugin-gspanel?style=flat-square" alt="pypi">
+    <img src="https://img.shields.io/pypi/v/nonebot-plugin-gspanel" alt="pypi" />
   </a>
-  <img src="https://img.shields.io/badge/python-3.8+-blue?style=flat-square" alt="python"><br />
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/python-3.8+-blue" alt="python" />
+  </a><br />
+  <a href="https://github.com/psf/black">
+    <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black" />
+  </a>
+  <a href="https://pycqa.github.io/isort">
+    <img src="https://img.shields.io/badge/%20imports-isort-%231674b1?&labelColor=ef8336" alt="Imports: isort" />
+  </a>
+  <a href="https://results.pre-commit.ci/latest/github/monsterxcn/nonebot-plugin-gspanel/main">
+    <img src="https://results.pre-commit.ci/badge/github/monsterxcn/nonebot-plugin-gspanel/main.svg" alt="pre-commit" />
+  </a>
 </p></br>
 
 

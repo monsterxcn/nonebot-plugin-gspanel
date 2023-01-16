@@ -5,21 +5,21 @@ from typing import Dict, List, Tuple
 from nonebot.log import logger
 
 from .__utils__ import (
-    CALC_RULES,
-    CHAR_DATA,
+    POS,
     ELEM,
+    PROP,
+    SKILL,
+    RANK_MAP,
+    CHAR_DATA,
+    CALC_RULES,
     GROW_VALUE,
     HASH_TRANS,
-    MAIN_AFFIXS,
-    POS,
-    PROP,
-    RANK_MAP,
-    RELIC_APPEND,
-    SKILL,
     SUB_AFFIXS,
-    getServer,
+    MAIN_AFFIXS,
+    RELIC_APPEND,
     kStr,
     vStr,
+    getServer,
 )
 
 
@@ -30,7 +30,7 @@ async def getRelicConfig(char: str, base: Dict = {}) -> Tuple[Dict, Dict, Dict]:
     * ``param char: str`` 角色名
     * ``param base: Dict = {}`` 角色的基础数值，可由 Enka 返回获得，格式为 ``{"生命值": 1, "攻击力": 1, "防御力": 1}``
     - ``return: Tuple[Dict, Dict, Dict]`` 词条评分权重、词条数值原始权重、各位置圣遗物最高得分
-    """
+    """  # noqa: E501
     affixWeight = CALC_RULES.get(char, {"攻击力百分比": 75, "暴击率": 100, "暴击伤害": 100})
     # 词条评分权重的 key 排序影响最优主词条选择
     # 通过特定排序使同等权重时生命攻击防御固定值词条优先级最低
@@ -173,7 +173,9 @@ async def calcRelicMark(
     calcTotal = _total * calcMainPct * calcTotalPct / 10000
     # 强化歪次数
     realAppendPropIdList: List[int] = (
-        relicData["_appendPropIdList"][-(relicLevel // 4) :] if (relicLevel // 4) else []
+        relicData["_appendPropIdList"][-(relicLevel // 4) :]
+        if (relicLevel // 4)
+        else []
     )
     # logger.debug(
     #     "{} 强化记录：\n{}".format(
@@ -196,7 +198,9 @@ async def calcRelicMark(
         "total": calcTotal,
         "nohit": notHit,
         "main": round(calcMain, 1),
-        "sub": [{"style": subRes[0], "goal": round(subRes[1], 1)} for subRes in calcSubs],
+        "sub": [
+            {"style": subRes[0], "goal": round(subRes[1], 1)} for subRes in calcSubs
+        ],
         "main_pct": round(calcMainPct, 1),
         "total_pct": round(calcTotalPct, 1),
     }
@@ -212,24 +216,24 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
     """
     charData = CHAR_DATA[str(avatarInfo["avatarId"])]
     res = {
-        "id": avatarInfo["avatarId"],  # type: int
+        "id": avatarInfo["avatarId"],
         "rarity": 5 if "QUALITY_ORANGE" in charData["QualityType"] else 4,
         "name": charData["NameCN"],
         "slogan": charData["Slogan"],
         "element": ELEM[charData["Element"]],  # 中文单字
-        "cons": len(avatarInfo.get("talentIdList", [])),  # type: int
-        "fetter": avatarInfo["fetterInfo"]["expLevel"],  # type: int
-        "level": int(avatarInfo["propMap"]["4001"]["val"]),  # type: int
+        "cons": len(avatarInfo.get("talentIdList", [])),  # int
+        "fetter": avatarInfo["fetterInfo"]["expLevel"],  # int
+        "level": int(avatarInfo["propMap"]["4001"]["val"]),  # int
         "icon": charData["iconName"],
         "gachaAvatarImg": charData["Costumes"][str(avatarInfo["costumeId"])]["art"]
         if avatarInfo.get("costumeId")
         else charData["iconName"].replace("UI_AvatarIcon_", "UI_Gacha_AvatarImg_"),
-        "baseProp": {  # type: float
+        "baseProp": {  # float
             "生命值": avatarInfo["fightPropMap"]["1"],
             "攻击力": avatarInfo["fightPropMap"]["4"],
             "防御力": avatarInfo["fightPropMap"]["7"],
         },
-        "fightProp": {  # type: float
+        "fightProp": {  # float
             "生命值": avatarInfo["fightPropMap"]["2000"],
             # "攻击力": avatarInfo["fightPropMap"]["2001"],
             "攻击力": avatarInfo["fightPropMap"]["4"]
@@ -296,15 +300,19 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
             weaponSubValue = equip["flat"]["weaponStats"][-1]["statValue"]
             res["weapon"] = {
                 "id": equip["itemId"],
-                "rarity": equip["flat"]["rankLevel"],  # type: int
+                "rarity": equip["flat"]["rankLevel"],  # int
                 "name": HASH_TRANS.get(equip["flat"]["nameTextMapHash"], "缺少翻译"),
-                "affix": list(equip["weapon"].get("affixMap", {"_": 0}).values())[0] + 1,
-                "level": equip["weapon"]["level"],  # type: int
+                "affix": list(equip["weapon"].get("affixMap", {"_": 0}).values())[0]
+                + 1,
+                "level": equip["weapon"]["level"],  # int
                 "icon": equip["flat"]["icon"],
-                "main": equip["flat"]["weaponStats"][0]["statValue"],  # type: int
+                "main": equip["flat"]["weaponStats"][0]["statValue"],  # int
                 "sub": {
                     "prop": PROP[weaponSub].replace("百分比", ""),
-                    "value": f"{weaponSubValue}{'' if weaponSub.endswith('ELEMENT_MASTERY') else '%'}",
+                    "value": "{}{}".format(
+                        weaponSubValue,
+                        "" if weaponSub.endswith("ELEMENT_MASTERY") else "%",
+                    ),
                 }
                 if weaponSub != "FIGHT_PROP_BASE_ATTACK"
                 else {},
@@ -382,7 +390,7 @@ async def transToTeyvat(avatarsData: List[Dict], uid: str) -> Dict:
         relics = avatarData["relics"]
         relicSet = avatarData["relicSet"]
 
-        # dataFix from https://github.com/yoimiya-kokomi/miao-plugin/blob/ac27075276154ef5a87a458697f6e5492bd323bd/components/profile-data/enka-data.js#L186
+        # dataFix from https://github.com/yoimiya-kokomi/miao-plugin/blob/ac27075276154ef5a87a458697f6e5492bd323bd/components/profile-data/enka-data.js#L186  # noqa: E501
         if name == "雷电将军":
             _thunderDmg = fightProp["雷元素伤害加成"]
             _recharge = fightProp["元素充能效率"]
@@ -491,7 +499,9 @@ async def simplDamageRes(damage: Dict) -> Dict:
     for buff in damage["bonus"]:
         # damage["bonus"]: {"0": {}, "2": {}, ...}
         # damage["bonus"]: [{}, {}, ...]
-        intro = damage["bonus"][buff]["intro"] if isinstance(buff, str) else buff["intro"]
+        intro = (
+            damage["bonus"][buff]["intro"] if isinstance(buff, str) else buff["intro"]
+        )
         buffTitle, buffDetail = intro.split("：")
         if buffTitle not in ["注", "备注"]:
             res["buff"].append([buffTitle, buffDetail])
@@ -612,7 +622,11 @@ async def simplTeamDamageRes(raw: Dict, rolesData: Dict) -> Dict:
             "key_prop": role["key_ability"],
             "key_value": role["key_value"],
             "skills": [
-                {"icon": skill["icon"], "style": skill["style"], "level": skill["level"]}
+                {
+                    "icon": skill["icon"],
+                    "style": skill["style"],
+                    "level": skill["level"],
+                }
                 for _, skill in panelData["skills"].items()
             ],
         }

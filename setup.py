@@ -1,11 +1,11 @@
 import setuptools
 
-with open("README.md", "r", encoding="utf-8") as fh:
+with open("README.md", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="nonebot-plugin-gspanel",
-    version="0.2.12",
+    version="0.2.13",
     author="monsterxcn",
     author_email="monsterxcn@gmail.com",
     description="Genshin player cards plugin for NoneBot2",

@@ -104,7 +104,11 @@ def gnrtCharJson():
                 if list(dict(i).values())[5] == avatarID and i.get("sideIconName")
             ]
             print(
-                f"角色 {TextMapCHS.get(str(hs), '未知')} 有 {len(costumes)} 件时装：{'/'.join(x['sideIconName'].split('_')[-1] for x in costumes)}"
+                "角色 {} 有 {} 件时装：{}".format(
+                    TextMapCHS.get(str(hs), "未知"),
+                    len(costumes),
+                    "/".join(x["sideIconName"].split("_")[-1] for x in costumes),
+                )
             )
             AvatarDictionary[avatarID]["Costumes"] = {
                 str(list(dict(costume).values())[0]): {

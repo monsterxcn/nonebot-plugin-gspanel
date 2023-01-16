@@ -1,4 +1,31 @@
 {
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportPrivateImportUsage": "warning"
+  },
+  "python.formatting.provider": "black",
+  "python.languageServer": "Pylance",
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true,
+      "source.fixAll": true
+    }
+  },
+  "editor.formatOnSave": true,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.venv/**": true,
+  },
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "python.analysis.diagnosticMode": "workspace",
+  "python.linting.flake8Enabled": true,
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.formatting.blackPath": "${workspaceFolder}/.venv/Scripts/black.exe",
+  "python.linting.flake8Path": "${workspaceFolder}/.venv/Scripts/flake8.exe",
+  "python.formatting.blackArgs": [
+    "--line-length=88"
+  ]
 }

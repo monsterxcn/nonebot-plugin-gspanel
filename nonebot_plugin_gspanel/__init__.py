@@ -1,23 +1,24 @@
 from nonebot import get_driver
+from nonebot.log import logger
 from nonebot.adapters import Message
+from nonebot.params import CommandArg
+from nonebot.plugin import on_command
 from nonebot.adapters.onebot.v11 import Bot
 from nonebot.adapters.onebot.v11.event import MessageEvent
 from nonebot.adapters.onebot.v11.message import MessageSegment
-from nonebot.log import logger
-from nonebot.params import CommandArg
-from nonebot.plugin import on_command
 
-from .__utils__ import GSPANEL_ALIAS, fetchInitRes, formatInput, formatTeam, uidHelper
-from .data_source import getPanel, getTeam
 from .data_updater import updateCache
+from .data_source import getTeam, getPanel
+from .__utils__ import GSPANEL_ALIAS, uidHelper, formatTeam, formatInput, fetchInitRes
 
 driver = get_driver()
-uidStart = ["1", "2", "5", "6", "7", "8", "9"]
+driver.on_startup(fetchInitRes)
+driver.on_bot_connect(updateCache)
+
 showPanel = on_command("panel", aliases=GSPANEL_ALIAS, priority=13, block=True)
 showTeam = on_command("teamdmg", aliases={"队伍伤害"}, priority=13, block=True)
 
-driver.on_startup(fetchInitRes)
-driver.on_bot_connect(updateCache)
+uidStart = ["1", "2", "5", "6", "7", "8", "9"]
 
 
 @showPanel.handle()
@@ -43,7 +44,7 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
     # 尝试从输入中理解 UID、角色名
     uid, char = await formatInput(argsMsg, qq, opqq)
     if not uid:
-        await showTeam.finish(f"要查询角色面板的 UID 捏？", at_sender=True)
+        await showTeam.finish("要查询角色面板的 UID 捏？", at_sender=True)
     elif not uid.isdigit() or uid[0] not in uidStart or len(uid) != 9:
         await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
     logger.info(f"正在查找 UID{uid} 的「{char}」角色面板..")
@@ -63,7 +64,7 @@ async def x_x(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     # 尝试从输入中理解 UID、角色名
     uid, chars = await formatTeam(argsMsg, qq, opqq)
     if not uid:
-        await showTeam.finish(f"要查询队伍伤害的 UID 捏？", at_sender=True)
+        await showTeam.finish("要查询队伍伤害的 UID 捏？", at_sender=True)
     elif not uid.isdigit() or uid[0] not in uidStart or len(uid) != 9:
         await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
     if not chars:

@@ -1,33 +1,31 @@
-import asyncio
 import json
-from copy import deepcopy
+import asyncio
 from time import time
-from typing import Dict, List, Literal, Union
-
-from httpx import AsyncClient, HTTPError
+from copy import deepcopy
+from typing import Dict, List, Union, Literal
 
 from nonebot import require
 from nonebot.log import logger
+from httpx import HTTPError, AsyncClient
 
-require("nonebot_plugin_htmlrender")
-from nonebot_plugin_htmlrender import template_to_pic
-
-from .__utils__ import LOCAL_DIR, SCALE_FACTOR, TPL_VERSION, download
+from .__utils__ import LOCAL_DIR, TPL_VERSION, SCALE_FACTOR, download
 from .data_convert import (
+    transFromEnka,
+    transToTeyvat,
     simplDamageRes,
     simplFightProp,
     simplTeamDamageRes,
-    transFromEnka,
-    transToTeyvat,
 )
 
+require("nonebot_plugin_htmlrender")
+from nonebot_plugin_htmlrender import template_to_pic  # noqa: E402
 
-async def queryPanelApi(uid: str, source: Literal["enka", "mgg"] = "enka") -> Dict:
+
+async def queryPanelApi(uid: str) -> Dict:
     """
     原神游戏内角色展柜数据请求
 
     * ``param uid: str`` 查询用户 UID
-    * ``param source: Literal["enka", "mgg"] = "enka"`` 查询接口
     - ``return: Dict`` 查询结果，出错时返回 ``{"error": "错误信息"}``
     """
     enkaMirrors = [
@@ -72,14 +70,16 @@ async def queryPanelApi(uid: str, source: Literal["enka", "mgg"] = "enka") -> Di
     return resJson
 
 
-async def queryDamageApi(body: Dict, mode: Literal["single", "team"] = "single") -> Dict:
+async def queryDamageApi(
+    body: Dict, mode: Literal["single", "team"] = "single"
+) -> Dict:
     """
     角色伤害计算数据请求（提瓦特小助手）
 
     * ``param body: Dict`` 查询角色数据
     * ``param mode: Literal["single", "team"] = "single"`` 查询接口类型，默认请求角色伤害接口，传入 ``"team"`` 请求队伍伤害接口
     - ``return: Dict`` 查询结果，出错时返回 ``{}``
-    """
+    """  # noqa: E501
     apiMap = {
         "single": "https://api.lelaer.com/ys/getDamageResult.php",
         "team": "https://api.lelaer.com/ys/getTeamResult.php",
@@ -90,22 +90,20 @@ async def queryDamageApi(body: Dict, mode: Literal["single", "team"] = "single")
                 apiMap[mode],
                 json=body,
                 headers={
-                    "referer": "https://servicewechat.com/wx2ac9dce11213c3a8/192/page-frame.html",
+                    "referer": "https://servicewechat.com/wx2ac9dce11213c3a8/192/page-frame.html",  # noqa: E501
                     "user-agent": (
-                        "Mozilla/5.0 (Linux; Android 12; SM-G977N Build/SP1A.210812.016; wv) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.99 "
-                        "XWEB/4375 MMWEBSDK/20221011 Mobile Safari/537.36 MMWEBID/4357 "
-                        "MicroMessenger/8.0.30.2244(0x28001E44) WeChat/arm64 Weixin GPVersion/1 "
-                        "NetType/WIFI Language/zh_CN ABI/arm64 MiniProgramEnv/android"
+                        "Mozilla/5.0 (Linux; Android 12; SM-G977N Build/SP1A.210812.016"
+                        "; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 "
+                        "Chrome/86.0.4240.99 XWEB/4375 MMWEBSDK/20221011 Mobile Safari"
+                        "/537.36 MMWEBID/4357 MicroMessenger/8.0.30.2244(0x28001E44) "
+                        "WeChat/arm64 Weixin GPVersion/1 NetType/WIFI Language/zh_CN "
+                        "ABI/arm64 MiniProgramEnv/android"
                     ),
                 },
             )
             return res.json()
         except (HTTPError, json.decoder.JSONDecodeError) as e:
             logger.opt(exception=e).error("提瓦特小助手接口无法访问或返回错误")
-            return {}
-        except Exception as e:
-            logger.opt(exception=e).error("提瓦特小助手接口错误")
             return {}
 
 
@@ -126,7 +124,7 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
         cacheData, nextQueryTime = {}, 0
 
     if int(time()) <= nextQueryTime:
-        logger.info("UID{} 的角色展柜数据刷新冷却还有 {} 秒！".format(uid, nextQueryTime - int(time())))
+        logger.info(f"UID{uid} 的角色展柜数据刷新冷却还有 {nextQueryTime - int(time())} 秒！")
     else:
         logger.info(f"UID{uid} 的角色展柜数据正在刷新！")
         newData = await queryPanelApi(uid)
@@ -165,7 +163,8 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
             if wait4Dmg:
                 logger.info(
                     "正在为 UID{} 的 {} 重新请求伤害计算接口".format(
-                        uid, "/".join(f"[{aI}]{a['name']}" for aI, a in wait4Dmg.items())
+                        uid,
+                        "/".join(f"[{aI}]{a['name']}" for aI, a in wait4Dmg.items()),
                     )
                 )
                 # 深拷贝避免转换对上下文中的 avatars 产生影响
@@ -176,10 +175,8 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
                     teyvatRaw.get("result", [])
                 ):
                     logger.error(
-                        (
-                            f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
-                            f"\n>>>> [提瓦特返回] {teyvatRaw}"
-                        )
+                        f"UID{uid} 的 {len(wait4Dmg)} 位角色伤害计算请求失败！"
+                        f"\n>>>> [提瓦特返回] {teyvatRaw}"
                     )
                 else:
                     for dmgIdx, dmgData in enumerate(teyvatRaw.get("result", [])):
@@ -238,7 +235,10 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
         *[download(sData["icon"], local=char) for _, sData in data["skills"].items()],
         *[download(conData["icon"], local=char) for conData in data["consts"]],
         download(data["weapon"]["icon"], local="weapon"),
-        *[download(relicData["icon"], local="artifacts") for relicData in data["relics"]],
+        *[
+            download(relicData["icon"], local="artifacts")
+            for relicData in data["relics"]
+        ],
     ]
     await asyncio.gather(*dlTasks)
     dlTasks.clear()
@@ -315,7 +315,7 @@ async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
     teyvatRaw = await queryDamageApi(teyvatBody, "team")
     if teyvatRaw.get("code", "x") != 200 or not teyvatRaw.get("result"):
         logger.error(
-            (f"UID{uid} 的 {len(extract)} 位角色队伍伤害计算请求失败！" f"\n>>>> [提瓦特返回] {teyvatRaw}")
+            f"UID{uid} 的 {len(extract)} 位角色队伍伤害计算请求失败！" f"\n>>>> [提瓦特返回] {teyvatRaw}"
         )
         return f"玩家 {uid} 队伍伤害计算失败，接口可能发生变动！" if teyvatRaw else "啊哦，队伍伤害计算小程序状态异常！"
     try:
