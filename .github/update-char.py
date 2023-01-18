@@ -15,6 +15,7 @@ AvatarTalentRaw = read("AvatarTalentExcelConfigData.json")
 AvatarCostumeRaw = read("AvatarCostumeExcelConfigData.json")
 Weapons = read("WeaponExcelConfigData.json")
 Reliquary = read("ReliquaryExcelConfigData.json")
+ReliquaryAffix = read("ReliquaryAffixExcelConfigData.json")
 ReliquarySet = read("EquipAffixExcelConfigData.json")
 
 AvatarDetail = {i["Id"]: i for i in AvatarDetail}
@@ -150,5 +151,13 @@ def gnrtTransJson():
     )
 
 
+def gnrtAppendJson() -> None:
+    PropDictionary = {str(x["id"]): x["propType"] for x in ReliquaryAffix}
+    Path("./relic-append.json").write_text(
+        json.dumps(PropDictionary, ensure_ascii=False, indent=2), encoding="UTF-8"
+    )
+
+
 gnrtCharJson()
 gnrtTransJson()
+gnrtAppendJson()

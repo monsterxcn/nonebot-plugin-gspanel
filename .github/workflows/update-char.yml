@@ -10,29 +10,31 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
-      
+
       - name: Setup python
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
-      
+
       - name: Update files
         run: |
           cd .github
-          wget -q https://raw.githubusercontent.com/DGP-Studio/Snap.Metadata/main/Output/Avatar.json
-          wget -q https://genshin-data.uigf.org/d/latest/TextMap/TextMapCHS.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarCostumeExcelConfigData.json
           wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarExcelConfigData.json
           wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarSkillExcelConfigData.json
           wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json
           wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarTalentExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarCostumeExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/WeaponExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/ReliquaryExcelConfigData.json
           wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/EquipAffixExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/ReliquaryExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/ReliquaryAffixExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/WeaponExcelConfigData.json
+          wget -q https://genshin-data.uigf.org/d/latest/TextMap/TextMapCHS.json
+          wget -q https://raw.githubusercontent.com/DGP-Studio/Snap.Metadata/main/Output/Avatar.json
           python update-char.py
-          mv -f characters.json ../data/gspanel/characters.json
-          mv -f trans.json ../data/gspanel/trans.json
-      
+          mv -f char-data.json ../data/gspanel/char-data.json
+          mv -f hash-trans.json ../data/gspanel/hash-trans.json
+          mv -f relic-append.json ../data/gspanel/relic-append.json
+
       - name: Upload files
         uses: tvrcgo/upload-to-oss@master
         with:
@@ -41,9 +43,10 @@ jobs:
           region: oss-cn-shanghai
           bucket: monsterx
           assets: |
-            data/gspanel/characters.json:/bot/gspanel/characters.json
-            data/gspanel/trans.json:/bot/gspanel/trans.json
-      
+            data/gspanel/char-data.json:/bot/gspanel/char-data.json
+            data/gspanel/hash-trans.json:/bot/gspanel/hash-trans.json
+            data/gspanel/relic-append.json:/bot/gspanel/relic-append.json
+
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
@@ -51,5 +54,6 @@ jobs:
           author_email: github-actions[bot]@users.noreply.github.com
           message: ':wrench: 自动更新游戏数据'
           add: |
-            'data/gspanel/characters.json'
-            'data/gspanel/trans.json'
+            'data/gspanel/char-data.json'
+            'data/gspanel/hash-trans.json'
+            'data/gspanel/relic-append.json'
