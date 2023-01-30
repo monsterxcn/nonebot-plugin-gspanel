@@ -23,6 +23,9 @@
   <a href="https://pycqa.github.io/isort">
     <img src="https://img.shields.io/badge/%20imports-isort-%231674b1?&labelColor=ef8336" alt="Imports: isort" />
   </a>
+  <a href="https://flake8.pycqa.org/">
+    <img src="https://img.shields.io/badge/lint-flake8-&labelColor=4c9c39" alt="Lint: flake8" />
+  </a>
   <a href="https://results.pre-commit.ci/latest/github/monsterxcn/nonebot-plugin-gspanel/main">
     <img src="https://results.pre-commit.ci/badge/github/monsterxcn/nonebot-plugin-gspanel/main.svg" alt="pre-commit" />
   </a>

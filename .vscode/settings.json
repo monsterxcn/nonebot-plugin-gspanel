@@ -27,5 +27,8 @@
   "python.linting.flake8Path": "${workspaceFolder}/.venv/Scripts/flake8.exe",
   "python.formatting.blackArgs": [
     "--line-length=88"
+  ],
+  "python.linting.flake8Args": [
+    "--ignore=W391,W292,W503,E203"
   ]
 }
