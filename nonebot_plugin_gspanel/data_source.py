@@ -38,7 +38,7 @@ async def queryPanelApi(uid: str) -> Dict:
         for idx, root in enumerate(enkaMirrors):
             try:
                 res = await client.get(
-                    url=f"{root}/u/{uid}/__data.json",
+                    url=f"{root}/api/uid/{uid}",
                     headers={
                         "Accept": "application/json",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7",
@@ -51,6 +51,7 @@ async def queryPanelApi(uid: str) -> Dict:
                             "Chrome/102.0.0.0 Mobile Safari/537.36"
                         ),
                     },
+                    follow_redirects=True,
                     timeout=20.0,
                 )
                 resJson = res.json()
