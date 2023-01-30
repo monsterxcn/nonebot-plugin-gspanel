@@ -3,6 +3,7 @@ import asyncio
 from time import time
 from copy import deepcopy
 from typing import Dict, List, Union, Literal
+from datetime import datetime, timezone, timedelta
 
 from nonebot import require
 from nonebot.log import logger
@@ -124,6 +125,8 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
     else:
         cacheData, nextQueryTime = {}, 0
 
+    refreshed = []
+
     if int(time()) <= nextQueryTime:
         logger.info(f"UID{uid} 的角色展柜数据刷新冷却还有 {nextQueryTime - int(time())} 秒！")
     else:
@@ -133,7 +136,7 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
             return newData
         elif not newData.get("error"):
             avatarsCache = {str(x["id"]): x for x in cacheData.get("avatars", [])}
-            now, wait4Dmg, avatars, avatarIdsNew = int(time()), {}, [], []
+            now, wait4Dmg, avatars = int(time()), {}, []
             for newAvatar in newData["avatarInfoList"]:
                 if newAvatar["avatarId"] in [10000005, 10000007]:
                     logger.info("旅行者面板查询暂未支持！")
@@ -156,18 +159,14 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
                                 uid, tmp["name"], avatarsCache[str(tmp["id"])], nowStat
                             )
                         )
-                avatarIdsNew.append(tmp["id"])
+                refreshed.append(tmp["id"])
                 avatars.append(tmp)
                 if not gotDmg:
                     wait4Dmg[str(len(avatars) - 1)] = tmp
 
             if wait4Dmg:
-                logger.info(
-                    "正在为 UID{} 的 {} 重新请求伤害计算接口".format(
-                        uid,
-                        "/".join(f"[{aI}]{a['name']}" for aI, a in wait4Dmg.items()),
-                    )
-                )
+                _names = "/".join(f"[{aI}]{a['name']}" for aI, a in wait4Dmg.items())
+                logger.info(f"正在为 UID{uid} 的 {_names} 重新请求伤害计算接口")
                 # 深拷贝避免转换对上下文中的 avatars 产生影响
                 wtf = deepcopy([a for _, a in wait4Dmg.items()])
                 teyvatBody = await transToTeyvat(wtf, uid)
@@ -189,7 +188,7 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
                 *[
                     aData
                     for _, aData in avatarsCache.items()
-                    if aData["id"] not in avatarIdsNew
+                    if aData["id"] not in refreshed
                 ],
             ]
             cacheData["next"] = now + newData["ttl"]
@@ -199,6 +198,13 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
 
     # 获取所需角色数据
     if char == "全部":
+        # 为本次更新的角色添加刷新标记
+        for aIdx, aData in enumerate(cacheData["avatars"]):
+            cacheData["avatars"][aIdx]["refreshed"] = aData["id"] in refreshed
+        # 添加刷新时间提示
+        tip, _time = ("refreshed", time()) if refreshed else ("waiting", nextQueryTime)
+        _datetime = datetime.fromtimestamp(_time, timezone(timedelta(hours=8)))
+        cacheData["timetips"] = [tip, _datetime.strftime("%Y-%m-%d %H:%M:%S")]
         return cacheData
     searchRes = [x for x in cacheData["avatars"] if x["name"] == char]
     return (
@@ -220,38 +226,47 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
     * ``param char: str = "全部"`` 查询角色
     - ``return: Union[bytes, str]`` 查询结果。一般返回图片字节，出错时返回错误信息字符串
     """
+    htmlBase = str(LOCAL_DIR.resolve())
+
     # 获取面板数据
     data = await getAvatarData(uid, char)
     if data.get("error"):
         return data["error"]
-    if char == "全部":
-        return "成功获取了 UID{} 的{}等 {} 位角色数据！".format(
-            uid, "、".join(a["name"] for a in data["avatars"]), len(data["avatars"])
-        )
+
+    mode = "list" if char == "全部" else "panel"
 
     # 图标下载任务
-    dlTasks = [
-        download(data["icon"], local=char),
-        download(data["gachaAvatarImg"], local=char),
-        *[download(sData["icon"], local=char) for _, sData in data["skills"].items()],
-        *[download(conData["icon"], local=char) for conData in data["consts"]],
-        download(data["weapon"]["icon"], local="weapon"),
-        *[
-            download(relicData["icon"], local="artifacts")
-            for relicData in data["relics"]
-        ],
-    ]
+    dlTasks = (
+        [
+            download(data["icon"], local=char),
+            download(data["gachaAvatarImg"], local=char),
+            *[
+                download(sData["icon"], local=char)
+                for _, sData in data["skills"].items()
+            ],
+            *[download(conData["icon"], local=char) for conData in data["consts"]],
+            download(data["weapon"]["icon"], local="weapon"),
+            *[
+                download(relicData["icon"], local="artifacts")
+                for relicData in data["relics"]
+            ],
+        ]
+        if mode == "panel"
+        else [download(role["icon"], local=role["name"]) for role in data["avatars"]]
+    )
     await asyncio.gather(*dlTasks)
     dlTasks.clear()
 
+    # 如果渲染角色面板，额外根据需要精简面板数据（缓存中仍保留全部数据）
+    if mode == "panel":
+        data["fightProp"] = await simplFightProp(
+            data["fightProp"], data["baseProp"], char, data["element"]
+        )
+
     # 渲染截图
-    data["fightProp"] = await simplFightProp(
-        data["fightProp"], data["baseProp"], char, data["element"]
-    )
-    htmlBase = str(LOCAL_DIR.resolve())
     return await template_to_pic(
         template_path=htmlBase,
-        template_name=f"panel-{TPL_VERSION}.html",
+        template_name=f"{mode}-{TPL_VERSION}.html",
         templates={"css": TPL_VERSION, "uid": uid, "data": data},
         pages={
             "device_scale_factor": SCALE_FACTOR,

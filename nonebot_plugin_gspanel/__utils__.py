@@ -274,6 +274,8 @@ async def fetchInitRes() -> None:
         f"https://cdn.monsterx.cn/bot/gspanel/team-{TPL_VERSION}.html",
         f"https://cdn.monsterx.cn/bot/gspanel/panel-{TPL_VERSION}.css",
         f"https://cdn.monsterx.cn/bot/gspanel/panel-{TPL_VERSION}.html",
+        f"https://cdn.monsterx.cn/bot/gspanel/list-{TPL_VERSION}.css",
+        f"https://cdn.monsterx.cn/bot/gspanel/list-{TPL_VERSION}.html",
     ]
     tasks = []
     for r in initRes:

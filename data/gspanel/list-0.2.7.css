@@ -1,0 +1,279 @@
+:root {
+  --charRarity5: rgba(200, 124, 36, 0.68);
+  --charRarity4: rgba(148, 112, 187, 0.68);
+  --charCons6: #ff5722;
+  --charCons5: #531ba9cf;
+  --charCons4: #3955b7;
+  --charCons3: #3e95b9;
+  --charCons2: #339d61;
+  --charCons1: #5cbac2;
+  --artiMark4: #FF5722;
+  --artiMark3: #FFE699;
+  --artiMark2: #D699FF;
+  --artiMark1: #FFFFFF;
+  --ambrLight: rgb(233, 229, 220);
+  --ambrDeep: rgb(74, 83, 102);
+  --listBg: #33333399;
+  --noteBg: #2e353e;
+  --timeSuccess: #90e800;
+  --timeWarning: #ff5652;
+}
+
+@font-face {
+  font-family: "PanelFont";
+  src: url(./font/HYWH-65W.ttf);
+  font-weight: 400;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "PanelNumFont";
+  src: url(./font/tttgbnumber.ttf);
+  font-weight: 400;
+  font-style: normal
+}
+
+body {
+  overflow: overlay;
+  margin: 0px;
+  width: 960px;
+}
+
+#lcontainer {
+  width: 960px;
+  font-family: "PanelFont";
+  background-position: center;
+  background-size: cover;
+}
+
+#lcontainer.火 {
+  background-image: url(./imgs/bg-pyro.jpg);
+}
+
+#lcontainer.水 {
+  background-image: url(./imgs/bg-hydro.jpg);
+}
+
+#lcontainer.风 {
+  background-image: url(./imgs/bg-anemo.jpg);
+}
+
+#lcontainer.雷 {
+  background-image: url(./imgs/bg-electro.jpg);
+}
+
+#lcontainer.草 {
+  background-image: url(./imgs/bg-dendro.jpg);
+}
+
+#lcontainer.冰 {
+  background-image: url(./imgs/bg-cryo.jpg);
+}
+
+#lcontainer.岩 {
+  background-image: url(./imgs/bg-geo.jpg);
+}
+
+div.Title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  padding-top: 1em;
+  text-shadow: 0 0 3px #d3bc8e, 2px 2px 4px rgb(0 0 0 / 70%);
+  color: #ffffff;
+}
+
+div.Title>div.UID::before {
+  content: "UID ";
+}
+
+div.Title>div.UID::after {
+  content: "";
+  padding-right: 2em;
+}
+
+div.Title>div.counter::before {
+  content: "查询可用角色 ";
+}
+
+div.Title>div.counter::after {
+  content: " 位";
+}
+
+div.List,
+div.Note {
+  margin: 20px 30px 0 30px;
+  background-color: #33333399;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0px 15px 15px rgb(0 0 0 / 40%);
+}
+
+div.List {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 5px;
+  gap: 10px;
+}
+
+div.List>div.avatar {
+  width: 100px;
+  text-align: center;
+}
+
+div.List>div.avatar:not(.refreshed) {
+  opacity: 0.5;
+}
+
+div.List>div.avatar>img {
+  width: 72px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0px 3px 3px #000;
+  background-color: var(--charRarity4);
+}
+
+div.List>div.avatar>img.r5 {
+  background-color: var(--charRarity5);
+}
+
+div.List>div.avatar>div {
+  color: var(--ambrLight);
+  background: var(--noteBg);
+  font-family: "PanelNumFont";
+  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 80px;
+  margin: -5px 10px 5px 10px;
+  padding-top: 5px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 5px rgb(0 0 0 / 40%);
+}
+
+div.List>div.avatar>div>div {
+  min-width: 80px;
+}
+
+div.List>div.avatar>div>div.lvl>span {
+  margin-left: 0.7em;
+  border-radius: 3px;
+  color: var(--ambrLight);
+  text-shadow: 0 0 3px var(--ambrDeep);
+}
+
+div.List>div.avatar>div>div.lvl>span.c1 {
+  padding: 2px 4px;
+  background-color: var(--charCons1);
+}
+
+div.List>div.avatar>div>div.lvl>span.c2 {
+  padding: 2px 4px;
+  background-color: var(--charCons2);
+}
+
+div.List>div.avatar>div>div.lvl>span.c3 {
+  padding: 2px 4px;
+  background-color: var(--charCons3);
+}
+
+div.List>div.avatar>div>div.lvl>span.c4 {
+  padding: 2px 4px;
+  background-color: var(--charCons4);
+}
+
+div.List>div.avatar>div>div.lvl>span.c5 {
+  padding: 2px 4px;
+  background-color: var(--charCons5);
+}
+
+div.List>div.avatar>div>div.lvl>span.c6 {
+  padding: 2px 4px;
+  background-color: var(--charCons6);
+}
+
+div.List>div.avatar>div>div.lvl::before {
+  content: "Lv";
+}
+
+div.List>div.avatar>div>div.lvl>span::before {
+  content: "C";
+}
+
+div.List>div.avatar>div>div.mark {
+  padding: 5px 0;
+  color: var(--artiMark1);
+}
+
+div.List>div.avatar>div>div.mark.NaN {
+  color: var(--ambrLight);
+  opacity: .5;
+}
+
+div.List>div.avatar>div>div.mark.A,
+div.List>div.avatar>div>div.mark.S {
+  color: var(--artiMark2);
+}
+
+div.List>div.avatar>div>div.mark.SS,
+div.List>div.avatar>div>div.mark.SSS {
+  color: var(--artiMark3);
+}
+
+div.List>div.avatar>div>div.mark.ACE,
+div.List>div.avatar>div>div.mark.ACE² {
+  color: var(--artiMark4);
+}
+
+div.Note {
+  height: 50px;
+  margin: 0 30px 20px 30px;
+  font-size: 18px;
+  opacity: .9;
+  color: var(--ambrLight);
+  background: var(--noteBg);
+  border-radius: 0 0 15px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.Note>div {
+  padding: 0 20px;
+}
+
+div.Note>div.detail::before {
+  content: "• 透明显示的角色为本地缓存，数据可能过时";
+}
+
+div.Note>div.time {
+  color: var(--timeSuccess);
+}
+
+div.Note>div.time::before {
+  content: "刷新完成时间 ";
+}
+
+div.Note>div.time.waiting {
+  color: var(--timeWarning);
+}
+
+div.Note>div.time.waiting::before {
+  content: "刷新可用时间 ";
+}
+
+div.copyright {
+  color: #ffffff;
+  opacity: 0.68;
+  text-shadow: 3px 5px 4px #333333ad;
+  font-size: 20px;
+  width: 960px;
+  text-align: center;
+  padding: 0 0 20px 0;
+}
+
+div.copyright::before {
+  content: "Data from Enka.Network × Powered by NoneBot2 × Inspired by Miao-Plugin";
+}

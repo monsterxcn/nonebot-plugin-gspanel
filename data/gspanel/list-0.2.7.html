@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./list-{{ css }}.css">
+    <title>Document</title>
+</head>
+
+<body>
+    {% set time = data.get("timetips", []) %}
+    {% set data = data.get("avatars", []) %}
+    <div id="lcontainer" class="{{ data[0]['element'] }}">
+        <div class="Title">
+            <div class="UID">{{ uid }}</div>
+            <div class="counter">{{ data | length }}</div>
+        </div>
+        <div class="List">
+            {% for avatar in data %}
+            <div class="avatar {{ 'refreshed' if avatar['refreshed'] else '' }}">
+                <img src="./{{ avatar['name'] }}/{{ avatar['icon'] }}.png" class="r{{ avatar['rarity'] }}">
+                <div>
+                    <div class="lvl">{{ avatar["level"] }}<span class="c{{ avatar['cons'] }}">{{ avatar["cons"]
+                            }}</span></div>
+                    <div class="mark {{ avatar['relicCalc']['rank'] }}">
+                        {{ avatar["relicCalc"]["rank"] }}
+                        &nbsp;
+                        {{ avatar["relicCalc"]["total"] }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="Note">
+            <div class="detail"></div>
+            <div class="time {{ time[0] }}">{{ time[1] }}</div>
+        </div>
+        <div class="copyright"></div>
+    </div>
+</body>
+
+</html>
