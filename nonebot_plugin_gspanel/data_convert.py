@@ -224,7 +224,9 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
         "cons": len(avatarInfo.get("talentIdList", [])),  # int
         "fetter": avatarInfo["fetterInfo"]["expLevel"],  # int
         "level": int(avatarInfo["propMap"]["4001"]["val"]),  # int
-        "icon": charData["iconName"],
+        "icon": charData["Costumes"][str(avatarInfo["costumeId"])]["icon"]
+        if avatarInfo.get("costumeId")
+        else charData["iconName"],
         "gachaAvatarImg": charData["Costumes"][str(avatarInfo["costumeId"])]["art"]
         if avatarInfo.get("costumeId")
         else charData["iconName"].replace("UI_AvatarIcon_", "UI_Gacha_AvatarImg_"),
