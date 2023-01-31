@@ -16,7 +16,8 @@
   --listBg: #33333399;
   --noteBg: #2e353e;
   --timeSuccess: #90e800;
-  --timeWarning: #ff5652;
+  --timeWarning: #ff7c37;
+  --timeError: #ff5652;
 }
 
 @font-face {
@@ -256,12 +257,20 @@ div.Note>div.time::before {
   content: "刷新完成时间 ";
 }
 
-div.Note>div.time.waiting {
+div.Note>div.time.warning {
   color: var(--timeWarning);
 }
 
-div.Note>div.time.waiting::before {
+div.Note>div.time.warning::before {
   content: "刷新可用时间 ";
+}
+
+div.Note>div.time.error {
+  color: var(--timeError);
+}
+
+div.Note>div.time.error::before {
+  content: "本次刷新失败 ";
 }
 
 div.copyright {

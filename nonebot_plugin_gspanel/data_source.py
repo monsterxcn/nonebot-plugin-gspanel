@@ -121,20 +121,25 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
     cache = LOCAL_DIR / "cache" / f"{uid}.json"
     if cache.exists():
         cacheData = json.loads(cache.read_text(encoding="utf-8"))
-        nextQueryTime = cacheData["next"]
+        nextQueryTime: int = cacheData["next"]
     else:
         cacheData, nextQueryTime = {}, 0
 
-    refreshed = []
+    refreshed, _tip, _time = [], "", 0
 
     if int(time()) <= nextQueryTime:
-        logger.info(f"UID{uid} 的角色展柜数据刷新冷却还有 {nextQueryTime - int(time())} 秒！")
+        _tip, _time = "warning", nextQueryTime
+        logger.info(f"UID{uid} 的角色展柜数据刷新冷却还有 {int(nextQueryTime - time())} 秒！")
     else:
         logger.info(f"UID{uid} 的角色展柜数据正在刷新！")
         newData = await queryPanelApi(uid)
+        _time = time()
+        # 没有缓存 & 本次刷新失败，返回错误信息
         if not cacheData and newData.get("error"):
             return newData
+        # 本次刷新成功，处理全部角色
         elif not newData.get("error"):
+            _tip = "success"
             avatarsCache = {str(x["id"]): x for x in cacheData.get("avatars", [])}
             now, wait4Dmg, avatars = int(time()), {}, []
             for newAvatar in newData["avatarInfoList"]:
@@ -195,16 +200,19 @@ async def getAvatarData(uid: str, char: str = "全部") -> Dict:
             cache.write_text(
                 json.dumps(cacheData, ensure_ascii=False, indent=2), encoding="utf-8"
             )
+        # 有缓存 & 本次刷新失败，打印错误信息
+        else:
+            _tip = "error"
+            logger.error(newData["error"])
 
     # 获取所需角色数据
     if char == "全部":
         # 为本次更新的角色添加刷新标记
         for aIdx, aData in enumerate(cacheData["avatars"]):
             cacheData["avatars"][aIdx]["refreshed"] = aData["id"] in refreshed
-        # 添加刷新时间提示
-        tip, _time = ("refreshed", time()) if refreshed else ("waiting", nextQueryTime)
+        # 格式化刷新时间
         _datetime = datetime.fromtimestamp(_time, timezone(timedelta(hours=8)))
-        cacheData["timetips"] = [tip, _datetime.strftime("%Y-%m-%d %H:%M:%S")]
+        cacheData["timetips"] = [_tip, _datetime.strftime("%Y-%m-%d %H:%M:%S")]
         return cacheData
     searchRes = [x for x in cacheData["avatars"] if x["name"] == char]
     return (
