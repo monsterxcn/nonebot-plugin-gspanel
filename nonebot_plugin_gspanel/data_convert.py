@@ -380,7 +380,7 @@ async def transToTeyvat(avatarsData: List[Dict], uid: str) -> Dict:
     """
     res = {"uid": uid, "role_data": []}
     if uid[0] not in ["1", "2"]:
-        res["server"] = getServer(uid)
+        res["server"] = getServer(uid, teyvat=True)
 
     for avatarData in avatarsData:
         name = avatarData["name"]

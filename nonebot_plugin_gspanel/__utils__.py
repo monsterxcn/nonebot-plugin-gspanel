@@ -174,18 +174,18 @@ def vStr(prop: str, value: Union[int, float]) -> str:
         return str(round(value, 1)) + "%"
 
 
-def getServer(uid: str) -> str:
+def getServer(uid: str, teyvat: bool = False) -> str:
     """获取指定 UID 所属服务器，返回如 ``cn_gf01``"""
     if uid[0] == "5":
         return "cn_qd01"
     elif uid[0] == "6":
-        return "os_usa"
+        return "us" if teyvat else "os_usa"
     elif uid[0] == "7":
-        return "os_euro"
+        return "eur" if teyvat else "os_euro"
     elif uid[0] == "8":
-        return "os_asia"
+        return "asia" if teyvat else "os_asia"
     elif uid[0] == "9":
-        return "os_cht"
+        return "hk" if teyvat else "os_cht"
     return "cn_gf01"
 
 
