@@ -102,6 +102,7 @@ async def queryDamageApi(
                         "ABI/arm64 MiniProgramEnv/android"
                     ),
                 },
+                timeout=20.0,
             )
             return res.json()
         except (HTTPError, json.decoder.JSONDecodeError) as e:
