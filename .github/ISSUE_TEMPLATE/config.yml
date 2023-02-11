@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 讨论
+    url: https://github.com/monsterxcn/nonebot-plugin-gspanel/discussions
+    about: 不适用于 Bug report & Feature request 的问题
+  - name: nonebot-plugin-htmlrender 问题
+    url: https://github.com/kexue-z/nonebot-plugin-htmlrender/issues?q=is%3Aissue
+    about: Playwright 截图渲染相关 htmlrender 插件上游问题
+  - name: py-plugin 问题
+    url: https://gitee.com/realhuhu/py-plugin/issues?state=all
+    about: Yunzai-Bot 用户 py-plugin 插件上游问题
