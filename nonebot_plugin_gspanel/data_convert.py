@@ -422,14 +422,19 @@ async def transToTeyvat(avatarsData: List[Dict], uid: str) -> Dict:
                 "artifacts_type": list(POS.values())[a["pos"] - 1],
                 "level": a["level"],
                 "maintips": kStr(a["main"]["prop"], reverse=True),
-                "mainvalue": a["main"]["value"],
+                "mainvalue": int(a["main"]["value"])
+                if str(a["main"]["value"]).isdigit()
+                else a["main"]["value"],
             }
             tData.update(
                 {
                     f"tips{sIdx + 1}": "{}+{}".format(
-                        kStr(s["prop"], reverse=True), s["value"]
+                        kStr(a["sub"][sIdx]["prop"], reverse=True)
+                        if sIdx < len(a["sub"])
+                        else "",
+                        a["sub"][sIdx]["value"] if sIdx < len(a["sub"]) else 0,
                     )
-                    for sIdx, s in enumerate(a["sub"])
+                    for sIdx in range(4)
                 }
             )
             artifacts.append(tData)

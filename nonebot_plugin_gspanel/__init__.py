@@ -44,7 +44,7 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
     # 尝试从输入中理解 UID、角色名
     uid, char = await formatInput(argsMsg, qq, opqq)
     if not uid:
-        await showTeam.finish("要查询角色面板的 UID 捏？", at_sender=True)
+        await showPanel.finish("要查询角色面板的 UID 捏？", at_sender=True)
     elif not uid.isdigit() or uid[0] not in uidStart or len(uid) != 9:
         await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
     logger.info(f"正在查找 UID{uid} 的「{char}」角色面板..")
@@ -66,7 +66,7 @@ async def x_x(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     if not uid:
         await showTeam.finish("要查询队伍伤害的 UID 捏？", at_sender=True)
     elif not uid.isdigit() or uid[0] not in uidStart or len(uid) != 9:
-        await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
+        await showTeam.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
     if not chars:
         logger.info(f"QQ{qq} 的输入「{argsMsg}」似乎未指定队伍角色！")
     logger.info(f"正在查找 UID{uid} 的「{'/'.join(chars) or '展柜前 4 角色'}」队伍伤害面板..")
