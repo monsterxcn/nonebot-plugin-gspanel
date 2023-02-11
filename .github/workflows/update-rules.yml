@@ -4,18 +4,18 @@ on:
     workflow_dispatch:
 
 jobs:
-  build:
+  update:
     name: Update rules
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
-      
+
       - name: Setup node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      
+
       - name: Update rules
         run: |
           cd .github
@@ -24,7 +24,7 @@ jobs:
           echo 'module.exports = { usefulAttr }' >> artis-mark.js
           node update-rules.js
           mv -f calc-rule.json ../data/gspanel/calc-rule.json
-      
+
       - name: Upload rules
         uses: tvrcgo/upload-to-oss@master
         with:
@@ -33,7 +33,7 @@ jobs:
           region: oss-cn-shanghai
           bucket: monsterx
           assets: data/gspanel/calc-rule.json:/bot/gspanel/calc-rule.json
-      
+
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
