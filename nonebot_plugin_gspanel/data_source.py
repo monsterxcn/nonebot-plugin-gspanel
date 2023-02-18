@@ -283,6 +283,8 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
             "base_url": f"file://{htmlBase}",
         },
         wait=2,
+        type="jpeg",
+        quality=100,
     )
 
 
@@ -362,4 +364,6 @@ async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
             "base_url": f"file://{htmlBase}",
         },
         wait=2,
+        type="jpeg",
+        quality=100,
     )
