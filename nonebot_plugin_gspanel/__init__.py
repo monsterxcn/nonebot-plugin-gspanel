@@ -22,7 +22,7 @@ uidStart = ["1", "2", "5", "6", "7", "8", "9"]
 
 
 @showPanel.handle()
-async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
+async def panel_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     qq = str(event.get_user_id())
     argsMsg = " ".join(seg.data["text"] for seg in arg["text"])
     # 提取消息中的 at 作为操作目标 QQ
@@ -56,11 +56,17 @@ async def giveMePower(bot: Bot, event: MessageEvent, arg: Message = CommandArg()
 
 
 @showTeam.handle()
-async def x_x(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
+async def team_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     qq = str(event.get_user_id())
     argsMsg = " ".join(seg.data["text"] for seg in arg["text"])
     # 提取消息中的 at 作为操作目标 QQ
     opqq = event.message["at"][0].data["qq"] if event.message.get("at") else ""
+    # 是否展示伤害过程，默认不显示
+    showDetail, keywords = False, ["详情", "过程", "全部", "全图"]
+    if any(argsMsg.startswith(word) for word in keywords):
+        showDetail = True
+        for word in keywords:
+            argsMsg = argsMsg.lstrip(word).strip()
     # 尝试从输入中理解 UID、角色名
     uid, chars = await formatTeam(argsMsg, qq, opqq)
     if not uid:
@@ -70,7 +76,7 @@ async def x_x(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     if not chars:
         logger.info(f"QQ{qq} 的输入「{argsMsg}」似乎未指定队伍角色！")
     logger.info(f"正在查找 UID{uid} 的「{'/'.join(chars) or '展柜前 4 角色'}」队伍伤害面板..")
-    rt = await getTeam(uid, chars)
+    rt = await getTeam(uid, chars, showDetail)
     if isinstance(rt, str):
         await showTeam.finish(MessageSegment.text(rt))
     elif isinstance(rt, bytes):

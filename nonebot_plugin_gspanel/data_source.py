@@ -288,12 +288,15 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
     )
 
 
-async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
+async def getTeam(
+    uid: str, chars: List[str] = [], showDetail: bool = False
+) -> Union[bytes, str]:
     """
     队伍伤害消息生成入口
 
     * ``param uid: str`` 查询用户 UID
     * ``param chars: List[str] = []`` 查询角色，为空默认数据中前四个
+    * ``param showDetail: bool = False`` 查询结果是否展示伤害过程。默认不展示
     - ``return: Union[bytes, str]`` 查询结果。一般返回图片字节，出错时返回错误信息字符串
     """
     # 获取面板数据
@@ -357,7 +360,7 @@ async def getTeam(uid: str, chars: List[str] = []) -> Union[bytes, str]:
     return await template_to_pic(
         template_path=htmlBase,
         template_name=f"team-{TPL_VERSION}.html",
-        templates={"css": TPL_VERSION, "data": data},
+        templates={"css": TPL_VERSION, "data": data, "detail": showDetail},
         pages={
             "device_scale_factor": SCALE_FACTOR,
             "viewport": {"width": 600, "height": 300},
