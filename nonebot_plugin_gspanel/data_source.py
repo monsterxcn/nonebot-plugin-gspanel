@@ -9,7 +9,8 @@ from nonebot import require
 from nonebot.log import logger
 from httpx import HTTPError, AsyncClient
 
-from .__utils__ import LOCAL_DIR, TPL_VERSION, SCALE_FACTOR, download
+from .__utils__ import LOCAL_DIR, SCALE_FACTOR, download
+from .__version__ import CHAR_TPL_VER, LIST_TPL_VER, TEAM_TPL_VER
 from .data_convert import (
     transFromEnka,
     transToTeyvat,
@@ -242,7 +243,7 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
     if data.get("error"):
         return data["error"]
 
-    mode = "list" if char == "全部" else "panel"
+    mode, tplVer = ("list", LIST_TPL_VER) if char == "全部" else ("panel", CHAR_TPL_VER)
 
     # 图标下载任务
     dlTasks = (
@@ -275,8 +276,8 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
     # 渲染截图
     return await template_to_pic(
         template_path=htmlBase,
-        template_name=f"{mode}-{TPL_VERSION}.html",
-        templates={"css": TPL_VERSION, "uid": uid, "data": data},
+        template_name=f"{mode}-{tplVer}.html",
+        templates={"css": tplVer, "uid": uid, "data": data},
         pages={
             "device_scale_factor": SCALE_FACTOR,
             "viewport": {"width": 600, "height": 300},
@@ -359,8 +360,8 @@ async def getTeam(
     htmlBase = str(LOCAL_DIR.resolve())
     return await template_to_pic(
         template_path=htmlBase,
-        template_name=f"team-{TPL_VERSION}.html",
-        templates={"css": TPL_VERSION, "data": data, "detail": showDetail},
+        template_name=f"team-{TEAM_TPL_VER}.html",
+        templates={"css": TEAM_TPL_VER, "data": data, "detail": showDetail},
         pages={
             "device_scale_factor": SCALE_FACTOR,
             "viewport": {"width": 600, "height": 300},

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="./team-{{ css }}.css">
 </head>
+
 <body>
     <div id="tcontainer" class="{{ data['elem'] }}">
         <div class="TopLeftPanel">
@@ -73,6 +75,7 @@
             </li>
             {% endfor %}
         </ul>
+        {% if detail %}
         <ul class="Damages">
             <li class="title"></li>
             <li class="head">
@@ -93,6 +96,7 @@
             </li>
             {% endfor %}
         </ul>
+        {% endif %}
         <div class="copyright"></div>
     </div>
     <script type="text/javascript" src="./g2plot.min.js"></script>
@@ -127,4 +131,5 @@
         piePlot.render();
     </script>
 </body>
+
 </html>
