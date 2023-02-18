@@ -111,7 +111,7 @@ LOCAL_DIR = (
 SCALE_FACTOR = (
     float(driver.config.gspanel_scale)
     if hasattr(driver.config, "gspanel_scale")
-    else 1.0
+    else 1.5
 )
 DOWNLOAD_MIRROR = (
     str(driver.config.resources_mirror)
