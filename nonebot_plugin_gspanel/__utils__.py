@@ -9,6 +9,8 @@ from nonebot.log import logger
 from nonebot.drivers import Driver
 from httpx import Client, AsyncClient
 
+from .__version__ import CHAR_TPL_VER, LIST_TPL_VER, TEAM_TPL_VER
+
 GROW_VALUE = {  # 理论最高档（4档）词条成长值
     "暴击率": 3.89,
     "暴击伤害": 7.77,
@@ -151,7 +153,6 @@ RELIC_APPEND = _client.get(
 (LOCAL_DIR / "relic-append.json").write_text(
     json.dumps(RELIC_APPEND, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-TPL_VERSION = "0.2.7"
 
 
 def kStr(prop: str, reverse: bool = False) -> str:
@@ -270,12 +271,12 @@ async def fetchInitRes() -> None:
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-hydro.png",
         "https://cdn.monsterx.cn/bot/gspanel/imgs/talent-pyro.png",
         "https://cdn.monsterx.cn/bot/gspanel/g2plot.min.js",
-        f"https://cdn.monsterx.cn/bot/gspanel/team-{TPL_VERSION}.css",
-        f"https://cdn.monsterx.cn/bot/gspanel/team-{TPL_VERSION}.html",
-        f"https://cdn.monsterx.cn/bot/gspanel/panel-{TPL_VERSION}.css",
-        f"https://cdn.monsterx.cn/bot/gspanel/panel-{TPL_VERSION}.html",
-        f"https://cdn.monsterx.cn/bot/gspanel/list-{TPL_VERSION}.css",
-        f"https://cdn.monsterx.cn/bot/gspanel/list-{TPL_VERSION}.html",
+        f"https://cdn.monsterx.cn/bot/gspanel/team-{TEAM_TPL_VER}.css",
+        f"https://cdn.monsterx.cn/bot/gspanel/team-{TEAM_TPL_VER}.html",
+        f"https://cdn.monsterx.cn/bot/gspanel/panel-{CHAR_TPL_VER}.css",
+        f"https://cdn.monsterx.cn/bot/gspanel/panel-{CHAR_TPL_VER}.html",
+        f"https://cdn.monsterx.cn/bot/gspanel/list-{LIST_TPL_VER}.css",
+        f"https://cdn.monsterx.cn/bot/gspanel/list-{LIST_TPL_VER}.html",
     ]
     tasks = []
     for r in initRes:
