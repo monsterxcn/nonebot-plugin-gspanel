@@ -32,12 +32,16 @@ async def queryPanelApi(uid: str) -> Dict:
     """
     enkaMirrors = [
         "https://enka.network",
-        "https://enka.minigg.cn",
-        "https://enka.microgg.cn",
+        "https://profile.microgg.cn",
     ]
+    # B 服优先从 MicroGG API 尝试
+    if int(uid[0]) == 5:
+        enkaMirrors.reverse()
+
     async with AsyncClient() as client:
         resJson = {}
         for idx, root in enumerate(enkaMirrors):
+            apiName = "MicroGG API" if "microgg" in root else "Enka API"
             try:
                 res = await client.get(
                     url=f"{root}/api/uid/{uid}",
@@ -56,14 +60,37 @@ async def queryPanelApi(uid: str) -> Dict:
                     follow_redirects=True,
                     timeout=20.0,
                 )
+
+                # 400 = Wrong UID format
+                # 404 = Player does not exist (MHY server said that)
+                # 424 = Game maintenance / everything is broken after the game update
+                # 429 = Rate-limited (either by my server or by MHY server)
+                # 500 = General server error
+                # 503 = I screwed up massively
+                errorMsg = {
+                    "400": f"玩家 {uid} UID 格式错误！",
+                    "404": f"玩家 {uid} 不存在！",
+                    "424": f"{apiName} 正在维护中！",
+                    "429": f"{apiName} 访问过于频繁！",
+                    "500": f"{apiName} 服务器普通故障！",
+                    "503": f"{apiName} 服务器严重错误！",
+                }
+                status = str(res.status_code)
+                if status in ["400", "404"]:
+                    return {"error": errorMsg[status]}
+                elif status in errorMsg:
+                    if idx == len(enkaMirrors) - 1:
+                        return {"error": errorMsg[status]}
+                    logger.error(errorMsg[status])
+                    continue
+
                 resJson = res.json()
                 break
             except (HTTPError, json.decoder.JSONDecodeError) as e:
                 if idx == len(enkaMirrors) - 1:
                     logger.opt(exception=e).error("面板数据接口无法访问或返回错误")
                     return {"error": f"[{e.__class__.__name__}] 暂时无法访问面板数据接口.."}
-                else:
-                    logger.info(f"从 {root} 获取面板失败，正在自动切换镜像重试...")
+                logger.info(f"从 {apiName} 获取面板失败，正在自动切换镜像重试...")
     if not resJson.get("playerInfo"):
         return {"error": f"玩家 {uid} 返回信息不全，接口可能正在维护.."}
     if not resJson.get("avatarInfoList"):
