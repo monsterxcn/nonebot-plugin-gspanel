@@ -32,7 +32,7 @@ async def queryPanelApi(uid: str) -> Dict:
     """
     enkaMirrors = [
         "https://enka.network",
-        "https://profile.microgg.cn",
+        "http://profile.microgg.cn",
     ]
     # B 服优先从 MicroGG API 尝试
     if int(uid[0]) == 5:
