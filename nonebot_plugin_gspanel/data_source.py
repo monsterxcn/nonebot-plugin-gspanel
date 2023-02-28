@@ -51,11 +51,7 @@ async def queryPanelApi(uid: str) -> Dict:
                         "Cache-Control": "no-cache",
                         "Cookie": "locale=zh-CN",
                         "Referer": "https://enka.network/",
-                        "User-Agent": (
-                            "Mozilla/5.0 (Linux; Android 12; Nexus 5) "
-                            "AppleWebKit/537.36 (KHTML, like Gecko) "
-                            "Chrome/102.0.0.0 Mobile Safari/537.36"
-                        ),
+                        "User-Agent": "GsPanel/0.2",
                     },
                     follow_redirects=True,
                     timeout=20.0,

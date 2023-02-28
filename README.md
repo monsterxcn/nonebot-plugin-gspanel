@@ -28,14 +28,11 @@
 
 ```bash
 # 从 nb_cli 安装
-python3 -m nb_cli plugin install nonebot-plugin-gspanel
-
-# 或从 PyPI 安装
-python3 -m pip install nonebot-plugin-gspanel
+nb plugin install nonebot-plugin-gspanel
 ```
 
 
-> Yunzai [@realhuhu/py-plugin](https://github.com/realhuhu/py-plugin) 插件用户安装方法请查看 [#17](https://github.com/monsterxcn/nonebot-plugin-gspanel/issues/17)，插件不保证完全可用，请尽量自行解决相关问题。
+> Yunzai [@realhuhu/py-plugin](https://github.com/realhuhu/py-plugin) 插件用户安装方法请查看 [#38](https://github.com/monsterxcn/nonebot-plugin-gspanel/discussions/38)，插件不保证完全可用，请尽量自行解决相关问题。
 
 
 ## 使用须知
@@ -57,9 +54,9 @@ python3 -m pip install nonebot-plugin-gspanel
    | 环境变量 | 必需 | 默认 | 说明 |
    |:-------|:----:|:-----|:----|
    | `gspanel_alias` | 否 | `["面板"]` | 插件响应词别名，多个别名按 `["面面", "板板"]` 格式填写 |
-   | `gspanel_scale` | 否 | `1.0` | 浏览器缩放比例，此值越大返回图片的分辨率越高 |
+   | `gspanel_scale` | 否 | `1.5` | 浏览器缩放比例，此值越大返回图片的分辨率越高 |
    | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
-   | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`http://file.microgg.cn/ui/`（小灰灰）<br>`https://api.ambr.top/assets/UI/`（安柏计划）<br>`https://cdn.monsterx.cn/genshin/`（插件作者） |
+   | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`https://api.ambr.top/assets/UI/`（安柏计划）<br>`https://cdn.monsterx.cn/genshin/`（插件作者） |
    
  - 插件图片生成采用 [@kexue-z/nonebot-plugin-htmlrender](https://github.com/kexue-z/nonebot-plugin-htmlrender)，若插件自动安装运行 Chromium 所需的额外依赖失败，请参考 [@SK-415/HarukaBot](https://haruka-bot.sk415.icu/faq.html#playwright-%E4%BE%9D%E8%B5%96%E4%B8%8D%E5%85%A8) 给出的以下解决方案：
    
@@ -120,7 +117,7 @@ python3 -m pip install nonebot-plugin-gspanel
    
    为此形式的命令指定 UID 方式与上面相同。
    
-   队伍别名支持可能不全请见谅，如果有十分流行的配队未能支持请提出 issue 耐心等待适配。
+   队伍别名支持可能不全请见谅，如果有十分流行的配队未能支持请前往 [discussions](https://github.com/monsterxcn/nonebot-plugin-gspanel/discussions) 提出。
 
 
 *\* 队伍伤害为 **实验性功能**，计算结果可能存在问题。欢迎附带详细日志提交 issue 帮助改进此功能。*
@@ -129,4 +126,4 @@ python3 -m pip install nonebot-plugin-gspanel
 ## 特别鸣谢
 
 
-[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [@UIGF-org/UIGF-API](https://github.com/UIGF-org/UIGF-API) | [Enka.Network](https://enka.network/) | [Miniprogram Teyvat Helper](#) | [@MiniGrayGay](https://github.com/MiniGrayGay)
+[@nonebot/nonebot2](https://github.com/nonebot/nonebot2/) | [@Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [@yoimiya-kokomi/miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) | [@kexue-z/nonebot-plugin-htmlrender](https://github.com/kexue-z/nonebot-plugin-htmlrender) | [@UIGF-org/UIGF-API](https://github.com/UIGF-org/UIGF-API) | [@DGP-Studio/Snap.Metadata](https://github.com/DGP-Studio/Snap.Metadata) | [Enka.Network](https://enka.network/) | [Miniprogram Teyvat Helper](#) | [@MiniGrayGay](https://github.com/MiniGrayGay)
