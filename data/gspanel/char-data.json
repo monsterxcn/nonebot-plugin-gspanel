@@ -2448,5 +2448,81 @@
       "10782": 7832,
       "10785": 7839
     }
+  },
+  "10000079": {
+    "Element": "Fire",
+    "Name": "Dehya",
+    "NameCN": "迪希雅",
+    "Slogan": "炽鬃之狮",
+    "NameTextMapHash": 2360533154,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Dehya",
+    "SideIconName": "UI_AvatarIcon_Side_Dehya",
+    "Base": {
+      "hpBase": 1220.2496337890625,
+      "attackBase": 20.66819953918457,
+      "defenseBase": 48.88111114501953
+    },
+    "Consts": [
+      "UI_Talent_S_Dehya_01",
+      "UI_Talent_S_Dehya_02",
+      "UI_Talent_U_Dehya_01",
+      "UI_Talent_S_Dehya_03",
+      "UI_Talent_U_Dehya_02",
+      "UI_Talent_S_Dehya_04"
+    ],
+    "SkillOrder": [
+      10791,
+      10792,
+      10795
+    ],
+    "Skills": {
+      "10791": "Skill_A_04",
+      "10792": "Skill_S_Dehya_01",
+      "10795": "Skill_E_Dehya_01"
+    },
+    "ProudMap": {
+      "10791": 7931,
+      "10792": 7932,
+      "10795": 7939
+    }
+  },
+  "10000080": {
+    "Element": "Ice",
+    "Name": "Mika",
+    "NameCN": "米卡",
+    "Slogan": "晴霜的标绘",
+    "NameTextMapHash": 231911858,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Mika",
+    "SideIconName": "UI_AvatarIcon_Side_Mika",
+    "Base": {
+      "hpBase": 1048.5596923828125,
+      "attackBase": 18.698400497436523,
+      "defenseBase": 59.80012512207031
+    },
+    "Consts": [
+      "UI_Talent_S_Mika_01",
+      "UI_Talent_S_Mika_02",
+      "UI_Talent_U_Mika_01",
+      "UI_Talent_S_Mika_03",
+      "UI_Talent_U_Mika_02",
+      "UI_Talent_S_Mika_04"
+    ],
+    "SkillOrder": [
+      10801,
+      10802,
+      10805
+    ],
+    "Skills": {
+      "10801": "Skill_A_03",
+      "10802": "Skill_S_Mika_01",
+      "10805": "Skill_E_Mika_01"
+    },
+    "ProudMap": {
+      "10801": 8031,
+      "10802": 8032,
+      "10805": 8039
+    }
   }
 }
