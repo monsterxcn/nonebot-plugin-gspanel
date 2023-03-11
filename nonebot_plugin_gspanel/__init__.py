@@ -8,8 +8,8 @@ from nonebot.adapters.onebot.v11.event import MessageEvent
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
 from .data_updater import updateCache
-from .data_source import getTeam, getPanel
-from .__utils__ import GSPANEL_ALIAS, uidHelper, formatTeam, formatInput, fetchInitRes
+from .data_source import getTeam, getPanel, getTextPanel
+from .__utils__ import GSPANEL_ALIAS, GSPANEL_TEXT_MODE, uidHelper, formatTeam, formatInput, fetchInitRes
 
 driver = get_driver()
 driver.on_startup(fetchInitRes)
@@ -48,11 +48,32 @@ async def panel_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg(
     elif not uid.isdigit() or uid[0] not in uidStart or len(uid) != 9:
         await showPanel.finish(f"UID 是「{uid}」吗？好像不对劲呢..", at_sender=True)
     logger.info(f"正在查找 UID{uid} 的「{char}」角色面板..")
-    rt = await getPanel(uid, char)
-    if isinstance(rt, str):
-        await showPanel.finish(MessageSegment.text(rt))
-    elif isinstance(rt, bytes):
-        await showPanel.finish(MessageSegment.image(rt))
+    if GSPANEL_TEXT_MODE:
+        rt = await getTextPanel(uid, char)
+        messages = []
+        for m in rt:
+            messages.append(
+                {
+                    "type": "node",
+                    "data": {
+                        "name": "原神角色面板信息",
+                        "uin": (await bot.get_login_info())["user_id"],
+                        "content": m,
+                    },
+                })
+        try:
+            await bot.send_group_forward_msg(
+                messages=messages, group_id=event.get_session_id().split("_")[1]
+            )
+            await showPanel.finish()
+        except:
+            await showPanel.finish("纯文本模式暂不支持私聊使用……")
+    else:
+        rt = await getPanel(uid, char)
+        if isinstance(rt, str):
+            await showPanel.finish(MessageSegment.text(rt))
+        elif isinstance(rt, bytes):
+            await showPanel.finish(MessageSegment.image(rt))
 
 
 @showTeam.handle()

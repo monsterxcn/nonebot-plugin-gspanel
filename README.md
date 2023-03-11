@@ -51,11 +51,12 @@ nb plugin install nonebot-plugin-gspanel
    
  - 一般来说，插件安装完成后无需设置环境变量，只需重启 Bot 即可开始使用。你也可以在 NoneBot2 当前使用的 `.env` 文件中添加下表给出的环境变量，对插件进行更多配置。环境变量修改后需要重启 Bot 才能生效。
    
-   | 环境变量 | 必需 | 默认 | 说明 |
-   |:-------|:----:|:-----|:----|
-   | `gspanel_alias` | 否 | `["面板"]` | 插件响应词别名，多个别名按 `["面面", "板板"]` 格式填写 |
-   | `gspanel_scale` | 否 | `1.5` | 浏览器缩放比例，此值越大返回图片的分辨率越高 |
-   | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径 |
+   | 环境变量 | 必需 | 默认 | 说明                                                                                                                                           |
+   |:-------|:----:|:---------------------------------------------------------------------------------------------------------------------------------------------|:----|
+   | `gspanel_alias` | 否 | `["面板"]` | 插件响应词别名，多个别名按 `["面面", "板板"]` 格式填写                                                                                                            |
+   | `gspanel_text_mode` | 否 | `False` | 是否启用纯文本模式（暂时只支持角色面板）                                                                                                                         |
+   | `gspanel_scale` | 否 | `1.5` | 浏览器缩放比例，此值越大返回图片的分辨率越高                                                                                                                       |
+   | `resources_dir` | 否 | `/path/to/bot/data/` | 插件数据缓存目录的父文件夹，包含 `gspanel` 文件夹的上级文件夹路径                                                                                                       |
    | `resources_mirror` | 否 | `https://enka.network/ui/` | 素材图片下载镜像，需提供 `UI_Talent_S_Nilou_01.png` 形式的图片地址，可选镜像：<br>`https://api.ambr.top/assets/UI/`（安柏计划）<br>`https://cdn.monsterx.cn/genshin/`（插件作者） |
    
  - 插件图片生成采用 [@kexue-z/nonebot-plugin-htmlrender](https://github.com/kexue-z/nonebot-plugin-htmlrender)，若插件自动安装运行 Chromium 所需的额外依赖失败，请参考 [@SK-415/HarukaBot](https://haruka-bot.sk415.icu/faq.html#playwright-%E4%BE%9D%E8%B5%96%E4%B8%8D%E5%85%A8) 给出的以下解决方案：

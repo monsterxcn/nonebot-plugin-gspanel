@@ -105,6 +105,11 @@ GSPANEL_ALIAS: Set[Union[str, Tuple[str, ...]]] = (
     if hasattr(driver.config, "gspanel_alias")
     else {"面板"}
 )
+GSPANEL_TEXT_MODE: bool = (
+    set(driver.config.gspanel_text_mode)
+    if hasattr(driver.config, "gspanel_text_mode")
+    else False
+)
 LOCAL_DIR = (
     (Path(driver.config.resources_dir) / "gspanel")
     if hasattr(driver.config, "resources_dir")
