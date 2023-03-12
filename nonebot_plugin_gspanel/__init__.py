@@ -90,6 +90,8 @@ async def panel_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg(
 
 @showTeam.handle()
 async def team_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
+    if GSPANEL_TEXT_MODE: # 以后再做
+        await showTeam.finish("纯文本模式下，暂不支持队伍伤害查询功能")
     qq = str(event.get_user_id())
     argsMsg = " ".join(seg.data["text"] for seg in arg["text"])
     # 提取消息中的 at 作为操作目标 QQ
