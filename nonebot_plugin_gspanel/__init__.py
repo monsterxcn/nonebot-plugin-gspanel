@@ -61,13 +61,15 @@ async def panel_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg(
                         "content": m,
                     },
                 })
-        try:
+        try: #群聊
             await bot.send_group_forward_msg(
                 messages=messages, group_id=event.get_session_id().split("_")[1]
             )
-            await showPanel.finish()
-        except:
-            await showPanel.finish("纯文本模式暂不支持私聊使用……")
+        except IndexError: #私聊
+            await bot.send_private_forward_msg(
+                messages=messages, user_id=event.get_user_id()
+            )
+        await showPanel.finish()
     else:
         rt = await getPanel(uid, char)
         if isinstance(rt, str):
