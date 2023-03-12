@@ -9,8 +9,8 @@ from nonebot import require
 from nonebot.log import logger
 from httpx import HTTPError, AsyncClient
 
-from .__utils__ import LOCAL_DIR, GSPANEL_TEXT_MODE, SCALE_FACTOR, download
 from .__version__ import CHAR_TPL_VER, LIST_TPL_VER, TEAM_TPL_VER
+from .__utils__ import LOCAL_DIR, SCALE_FACTOR, GSPANEL_TEXT_MODE, download
 from .data_convert import (
     transFromEnka,
     transToTeyvat,
@@ -332,7 +332,7 @@ async def getTextPanel(uid: str, char: str = "全部") -> List[str]:
     if char == "全部":
         panellist = f"玩家 {uid} 的可查询角色：（带*的为本地缓存）\n"
         for i in data["avatars"]:
-            if not i['refreshed']:
+            if not i["refreshed"]:
                 panellist += "*"
             panellist += f"{i['name']} "
         return [panellist]
