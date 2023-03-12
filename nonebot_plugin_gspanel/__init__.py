@@ -50,6 +50,8 @@ async def panel_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg(
     logger.info(f"正在查找 UID{uid} 的「{char}」角色面板..")
     if GSPANEL_TEXT_MODE:
         rt = await getTextPanel(uid, char)
+        if len(rt) == 1:
+            await showPanel.finish(rt[0])
         messages = []
         for m in rt:
             messages.append(

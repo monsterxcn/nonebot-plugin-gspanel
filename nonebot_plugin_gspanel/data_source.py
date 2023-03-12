@@ -342,7 +342,7 @@ async def getTextPanel(uid: str, char: str = "全部") -> List[str]:
     # 生成文本
     panellist=list()
     panellist.append(f"【玩家信息】"
-                     f"UID：{data['uid']}")
+                     f"UID：{uid}")
     panellist.append(f"【基础面板】"
                      f"{'★'*data['rarity']}"
                      f"{data['slogan']}·{data['name']}({data['element']})"
