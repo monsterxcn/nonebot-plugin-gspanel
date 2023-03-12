@@ -311,6 +311,7 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
         quality=100,
     )
 
+
 async def getTextPanel(uid: str, char: str = "全部") -> List[str]:
     """
     原神游戏内角色展柜消息生成入口（文字形式）
@@ -329,7 +330,7 @@ async def getTextPanel(uid: str, char: str = "全部") -> List[str]:
 
     if char == "全部":
         panellist = f"玩家 {uid} 的可查询角色：\n"
-        for i in data['avatars']:
+        for i in data["avatars"]:
             panellist += f"{i['name']} "
         return [panellist]
 
@@ -340,34 +341,43 @@ async def getTextPanel(uid: str, char: str = "全部") -> List[str]:
         )
 
     # 生成文本
-    panellist=list()
-    panellist.append(f"【玩家信息】\n"
-                     f"UID：{uid}")
-    panellist.append(f"【基础面板】\n"
-                     f"{'★'*data['rarity']}\n"
-                     f"{data['slogan']}·{data['name']}({data['element']})\n"
-                     f"等级：Lv.{data['level']}\n"
-                     f"好感：{data['fetter']}")
-    for i in data['fightProp']:
-        if data['fightProp'][i] != 0:
-            panellist[-1] += f"\n[{data['fightProp'][i]['weight']}] {i}：{data['fightProp'][i]['value']}"
-    panellist.append(f"【天赋、命座信息】\n"
-                     f"命之座：{data['cons']}层\n"
-                     f"普通攻击：Lv.{data['skills']['a']['level']}\n"
-                     f"元素战技：Lv.{data['skills']['e']['level']}\n"
-                     f"元素爆发：Lv.{data['skills']['q']['level']}")
-    panellist.append(f"【武器信息】\n"
-                     f"{'★'*data['weapon']['rarity']}\n"
-                     f"{data['weapon']['name']}\n"
-                     f"等级：Lv.{data['weapon']['level']}\n"
-                     f"精炼{data['weapon']['affix']}阶\n"
-                     f"基础攻击力：{data['weapon']['main']}\n"
-                     f"{data['weapon']['sub']['prop']}：{data['weapon']['sub']['value']}")
-    panellist.append(f"【圣遗物总评】\n"
-                     f"圣遗物评级：{data['relicCalc']['rank']}\n"
-                     f"圣遗物评分：{data['relicCalc']['total']}")
-    for i in data['relics']:
-        match i['pos']:
+    panellist = list()
+    panellist.append(f"【玩家信息】\n" f"UID：{uid}")
+    panellist.append(
+        f"【基础面板】\n"
+        f"{'★'*data['rarity']}\n"
+        f"{data['slogan']}·{data['name']}({data['element']})\n"
+        f"等级：Lv.{data['level']}\n"
+        f"好感：{data['fetter']}"
+    )
+    for i in data["fightProp"]:
+        if data["fightProp"][i] != 0:
+            panellist[
+                -1
+            ] += f"\n[{data['fightProp'][i]['weight']}] {i}：{data['fightProp'][i]['value']}"
+    panellist.append(
+        f"【天赋、命座信息】\n"
+        f"命之座：{data['cons']}层\n"
+        f"普通攻击：Lv.{data['skills']['a']['level']}\n"
+        f"元素战技：Lv.{data['skills']['e']['level']}\n"
+        f"元素爆发：Lv.{data['skills']['q']['level']}"
+    )
+    panellist.append(
+        f"【武器信息】\n"
+        f"{'★'*data['weapon']['rarity']}\n"
+        f"{data['weapon']['name']}\n"
+        f"等级：Lv.{data['weapon']['level']}\n"
+        f"精炼{data['weapon']['affix']}阶\n"
+        f"基础攻击力：{data['weapon']['main']}\n"
+        f"{data['weapon']['sub']['prop']}：{data['weapon']['sub']['value']}"
+    )
+    panellist.append(
+        f"【圣遗物总评】\n"
+        f"圣遗物评级：{data['relicCalc']['rank']}\n"
+        f"圣遗物评分：{data['relicCalc']['total']}"
+    )
+    for i in data["relics"]:
+        match i["pos"]:
             case 1:
                 panellist.append("【圣遗物 · 生之花】")
             case 2:
@@ -378,22 +388,28 @@ async def getTextPanel(uid: str, char: str = "全部") -> List[str]:
                 panellist.append("【圣遗物 · 空之杯】")
             case 5:
                 panellist.append("【圣遗物 · 理之冠】")
-        panellist[-1] += f"\n{'★'*i['rarity']}\n" \
-                         f"{i['name']}\n" \
-                         f"{i['calc']['rank']} - {i['calc']['total']}\n" \
-                         f"等级：Lv.{i['level']}\n" \
-                         f"主词条：{i['main']['prop']} +{i['main']['value']} ({i['calc']['main']}分)"
-        for j in range(len(i['sub'])):
-            panellist[-1] += f"\n{i['sub'][j]['prop']} +{i['sub'][j]['value']} ({i['calc']['sub'][j]['goal']}分)"
-    panellist.append(f"【伤害计算】\n"
-                     f"评级：{data['damage']['level']}")
-    for i in data['damage']['data']:
+        panellist[-1] += (
+            f"\n{'★'*i['rarity']}\n"
+            f"{i['name']}\n"
+            f"{i['calc']['rank']} - {i['calc']['total']}\n"
+            f"等级：Lv.{i['level']}\n"
+            f"主词条：{i['main']['prop']} +{i['main']['value']} ({i['calc']['main']}分)"
+        )
+        for j in range(len(i["sub"])):
+            panellist[
+                -1
+            ] += f"\n{i['sub'][j]['prop']} +{i['sub'][j]['value']} ({i['calc']['sub'][j]['goal']}分)"
+    panellist.append(f"【伤害计算】\n" f"评级：{data['damage']['level']}")
+    for i in data["damage"]["data"]:
         panellist[-1] += f"\n{i[0]}：{i[1]}/{i[2]}"
     panellist.append("【Buff 列表】\n")
-    for i in data['damage']['buff']:
+    for i in data["damage"]["buff"]:
         panellist[-1] += f"\n{i[0]}：{i[1]}"
-    panellist.append("Data from Enka.Network × Powered by NoneBot2 × Inspired by Miao-Plugin")
+    panellist.append(
+        "Data from Enka.Network × Powered by NoneBot2 × Inspired by Miao-Plugin"
+    )
     return panellist
+
 
 async def getTeam(
     uid: str, chars: List[str] = [], showDetail: bool = False

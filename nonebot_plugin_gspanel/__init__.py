@@ -9,7 +9,14 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 
 from .data_updater import updateCache
 from .data_source import getTeam, getPanel, getTextPanel
-from .__utils__ import GSPANEL_ALIAS, GSPANEL_TEXT_MODE, uidHelper, formatTeam, formatInput, fetchInitRes
+from .__utils__ import (
+    GSPANEL_ALIAS,
+    GSPANEL_TEXT_MODE,
+    uidHelper,
+    formatTeam,
+    formatInput,
+    fetchInitRes,
+)
 
 driver = get_driver()
 driver.on_startup(fetchInitRes)
@@ -62,12 +69,13 @@ async def panel_handle(bot: Bot, event: MessageEvent, arg: Message = CommandArg(
                         "uin": (await bot.get_login_info())["user_id"],
                         "content": m,
                     },
-                })
-        try: #群聊
+                }
+            )
+        try:  # 群聊
             await bot.send_group_forward_msg(
                 messages=messages, group_id=event.get_session_id().split("_")[1]
             )
-        except IndexError: #私聊
+        except IndexError:  # 私聊
             await bot.send_private_forward_msg(
                 messages=messages, user_id=event.get_user_id()
             )
