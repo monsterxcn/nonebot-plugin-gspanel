@@ -3,9 +3,9 @@ from nonebot.log import logger
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
 from nonebot.adapters.onebot.v11 import Bot
+from nonebot.plugin import PluginMetadata, on_command
 from nonebot.adapters.onebot.v11.event import MessageEvent
 from nonebot.adapters.onebot.v11.message import MessageSegment
-from nonebot.plugin import PluginMetadata, on_command
 
 from .data_updater import updateCache
 from .data_source import getTeam, getPanel
@@ -37,7 +37,7 @@ __plugin_meta__ = PluginMetadata(
             {
                 "func": "绑定UID",
                 "trigger_method": "指令",
-                "trigger_condition": sample +'绑定123456789',
+                "trigger_condition": sample + "绑定123456789",
                 "brief_des": "绑定原神UID",
                 "detail_des": (
                     "绑定原神UID 100123456 至发送此指令的 QQ，QQ 已被绑定过则会更新绑定的 UID。\n"
@@ -64,11 +64,12 @@ __plugin_meta__ = PluginMetadata(
             {
                 "func": "单个角色面板",
                 "trigger_method": "指令",
-                "trigger_condition": sample +"夜兰",
+                "trigger_condition": sample + "夜兰",
                 "brief_des": "展示指定角色面板",
                 "detail_des": (
                     "查找 QQ 绑定的 UID / UID 100123456 的夜兰面板（图片）。\n"
-                    "指令示例：\n""- <ft color=(238,120,0)>" + sample + "夜兰</ft>\n"
+                    "指令示例：\n"
+                    "- <ft color=(238,120,0)>" + sample + "夜兰</ft>\n"
                     "- <ft color=(238,120,0)>" + sample + "夜兰@某人</ft>\n"
                     "- <ft color=(238,120,0)>" + sample + "夜兰100123456</ft>\n"
                     "- <ft color=(238,120,0)>" + sample + "100123456夜兰</ft>"
@@ -83,7 +84,8 @@ __plugin_meta__ = PluginMetadata(
                     "查找指定 UID 角色展柜中前四个角色组成的队伍伤害。\n"
                     "当仅发送 队伍伤害 时将尝试使用发送此指令的 QQ 绑定的 UID；附带 9 位"
                     "数字时尝试使用该 UID；附带 @某人 时将尝试使用指定 QQ 绑定的 UID。\n"
-                    "指令示例：\n""- <ft color=(238,120,0)>队伍伤害</ft>\n"
+                    "指令示例：\n"
+                    "- <ft color=(238,120,0)>队伍伤害</ft>\n"
                     "- <ft color=(238,120,0)>队伍伤害100123456</ft>\n"
                     "- <ft color=(238,120,0)>队伍伤害@某人</ft>"
                 ),
