@@ -2,11 +2,10 @@ from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
-from nonebot.plugin import on_command
 from nonebot.adapters.onebot.v11 import Bot
+from nonebot.plugin import PluginMetadata, on_command
 from nonebot.adapters.onebot.v11.event import MessageEvent
 from nonebot.adapters.onebot.v11.message import MessageSegment
-from nonebot.plugin import PluginMetadata
 
 from .data_updater import updateCache
 from .data_source import getTeam, getPanel
@@ -21,7 +20,7 @@ showTeam = on_command("teamdmg", aliases={"队伍伤害"}, priority=13, block=Tr
 
 uidStart = ["1", "2", "5", "6", "7", "8", "9"]
 
-sample=list(GSPANEL_ALIAS)[0]
+sample = list(GSPANEL_ALIAS)[0]
 
 __plugin_meta__ = PluginMetadata(
     name="GsPanel",
@@ -35,10 +34,16 @@ __plugin_meta__ = PluginMetadata(
             {
                 "func": "绑定UID",
                 "trigger_method": "指令",
-                "trigger_condition": sample+'绑定123456789',
+                "trigger_condition": sample + "绑定123456789",
                 "brief_des": "绑定原神UID",
                 "detail_des": (
-                    "绑定原神UID 100123456 至发送此指令的 QQ，QQ 已被绑定过则会更新绑定的 UID。\nBot 管理员可以通过在此指令后紧跟2334556789 或附带 @某人 的方式将 UID 100123456 绑定至指定的 QQ。指令示例：\n- <ft color=(238,120,0)>"+sample+"绑定100123456</ft>\n- <ft color=(238,120,0)>"+sample+"绑定100123456 @某人</ft>\n- <ft color=(238,120,0)>"+sample+"绑定2334556789 100123456</ft>"
+                    "绑定原神UID 100123456 至发送此指令的 QQ，QQ 已被绑定过则会更新绑定的 UID。\nBot 管理员可以通过在此指令后紧跟2334556789 或附带 @某人 的方式将 UID 100123456 绑定至指定的 QQ。指令示例：\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "绑定100123456</ft>\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "绑定100123456 @某人</ft>\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "绑定2334556789 100123456</ft>"
                 ),
             },
             {
@@ -47,16 +52,30 @@ __plugin_meta__ = PluginMetadata(
                 "trigger_condition": sample,
                 "brief_des": "展示角色展柜中所有角色",
                 "detail_des": (
-                    "查找 QQ 绑定的 UID / UID 100123456 角色展柜中展示的所有角色（图片）。\n指令示例：\n- <ft color=(238,120,0)>"+sample+"</ft>\n- <ft color=(238,120,0)>"+sample+"@某人</ft>\n- <ft color=(238,120,0)>"+sample+"100123456</ft>"
+                    "查找 QQ 绑定的 UID / UID 100123456 角色展柜中展示的所有角色（图片）。\n指令示例：\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "</ft>\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "@某人</ft>\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "100123456</ft>"
                 ),
             },
             {
                 "func": "单个角色面板",
                 "trigger_method": "指令",
-                "trigger_condition": sample+"夜兰",
+                "trigger_condition": sample + "夜兰",
                 "brief_des": "展示指定角色面板",
                 "detail_des": (
-                    "查找 QQ 绑定的 UID / UID 100123456 的夜兰面板（图片）。\n指令示例：\n- <ft color=(238,120,0)>"+sample+"夜兰</ft>\n- <ft color=(238,120,0)>"+sample+"夜兰@某人</ft>\n- <ft color=(238,120,0)>"+sample+"夜兰100123456</ft>\n- <ft color=(238,120,0)>"+sample+"100123456夜兰</ft>"
+                    "查找 QQ 绑定的 UID / UID 100123456 的夜兰面板（图片）。\n指令示例：\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "夜兰</ft>\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "夜兰@某人</ft>\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "夜兰100123456</ft>\n- <ft color=(238,120,0)>"
+                    + sample
+                    + "100123456夜兰</ft>"
                 ),
             },
             {
