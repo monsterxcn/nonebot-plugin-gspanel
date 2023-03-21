@@ -6,6 +6,7 @@ from nonebot.plugin import on_command
 from nonebot.adapters.onebot.v11 import Bot
 from nonebot.adapters.onebot.v11.event import MessageEvent
 from nonebot.adapters.onebot.v11.message import MessageSegment
+from nonebot.plugin import PluginMetadata
 
 from .data_updater import updateCache
 from .data_source import getTeam, getPanel
@@ -19,6 +20,75 @@ showPanel = on_command("panel", aliases=GSPANEL_ALIAS, priority=13, block=True)
 showTeam = on_command("teamdmg", aliases={"队伍伤害"}, priority=13, block=True)
 
 uidStart = ["1", "2", "5", "6", "7", "8", "9"]
+
+sample=list(GSPANEL_ALIAS)[0]
+
+__plugin_meta__ = PluginMetadata(
+    name="GsPanel",
+    description="展示原神游戏内角色展柜数据",
+    usage=(
+        "用于展示原神游戏内角色展柜数据的 NoneBot2 插件，支持队伍伤害计算。\n所有指令都可以用空格将关键词分割开来，如果你喜欢的话。\n队伍伤害为 实验性功能，计算结果可能存在问题。欢迎附带详细日志提交 issue 帮助改进此功能。\n项目地址：https://github.com/monsterxcn/nonebot-plugin-gspanel"
+    ),
+    extra={
+        "menu_template": "default",
+        "menu_data": [
+            {
+                "func": "绑定UID",
+                "trigger_method": "指令",
+                "trigger_condition": sample+'绑定123456789',
+                "brief_des": "绑定原神UID",
+                "detail_des": (
+                    "绑定原神UID 100123456 至发送此指令的 QQ，QQ 已被绑定过则会更新绑定的 UID。\nBot 管理员可以通过在此指令后紧跟2334556789 或附带 @某人 的方式将 UID 100123456 绑定至指定的 QQ。指令示例：\n- <ft color=(238,120,0)>"+sample+"绑定100123456</ft>\n- <ft color=(238,120,0)>"+sample+"绑定100123456 @某人</ft>\n- <ft color=(238,120,0)>"+sample+"绑定2334556789 100123456</ft>"
+                ),
+            },
+            {
+                "func": "全部角色面板",
+                "trigger_method": "指令",
+                "trigger_condition": sample,
+                "brief_des": "展示角色展柜中所有角色",
+                "detail_des": (
+                    "查找 QQ 绑定的 UID / UID 100123456 角色展柜中展示的所有角色（图片）。\n指令示例：\n- <ft color=(238,120,0)>"+sample+"</ft>\n- <ft color=(238,120,0)>"+sample+"@某人</ft>\n- <ft color=(238,120,0)>"+sample+"100123456</ft>"
+                ),
+            },
+            {
+                "func": "单个角色面板",
+                "trigger_method": "指令",
+                "trigger_condition": sample+"夜兰",
+                "brief_des": "展示指定角色面板",
+                "detail_des": (
+                    "查找 QQ 绑定的 UID / UID 100123456 的夜兰面板（图片）。\n指令示例：\n- <ft color=(238,120,0)>"+sample+"夜兰</ft>\n- <ft color=(238,120,0)>"+sample+"夜兰@某人</ft>\n- <ft color=(238,120,0)>"+sample+"夜兰100123456</ft>\n- <ft color=(238,120,0)>"+sample+"100123456夜兰</ft>"
+                ),
+            },
+            {
+                "func": "队伍伤害(前四人)",
+                "trigger_method": "指令",
+                "trigger_condition": "队伍伤害",
+                "brief_des": "展柜第一排角色组成的队伍伤害。",
+                "detail_des": (
+                    "查找指定 UID 角色展柜中前四个角色组成的队伍伤害。\n当仅发送 队伍伤害 时将尝试使用发送此指令的 QQ 绑定的 UID；附带 9 位数字时尝试使用该 UID；附带 @某人 时将尝试使用指定 QQ 绑定的 UID。\n指令示例：\n- <ft color=(238,120,0)>队伍伤害</ft>\n- <ft color=(238,120,0)>队伍伤害100123456</ft>\n- <ft color=(238,120,0)>队伍伤害@某人</ft>"
+                ),
+            },
+            {
+                "func": "队伍伤害(详情)",
+                "trigger_method": "指令",
+                "trigger_condition": "队伍伤害详情",
+                "brief_des": "带伤害过程的队伍伤害图",
+                "detail_des": (
+                    "显示伤害过程表格，查看具体伤害过程。\n指令示例：\n- <ft color=(238,120,0)>队伍伤害详情</ft>\n- <ft color=(238,120,0)>队伍伤害过程</ft>\n- <ft color=(238,120,0)>队伍伤害全图</ft>"
+                ),
+            },
+            {
+                "func": "队伍伤害(指定队伍)",
+                "trigger_method": "指令",
+                "trigger_condition": "队伍伤害雷九万班",
+                "brief_des": "计算指定队伍的队伍伤害",
+                "detail_des": (
+                    "查找雷电将军、九条裟罗、枫原万叶、班尼特组成的队伍伤害。注意角色名之间必须使用空格分开。含有 旅行者 的配队暂时无法查询。队伍角色只要使用 面板 指令查询过或者正在展柜中摆放即可配队（即所有查询过的角色都有缓存，使用 面板 指令查看所有可用的角色）。\n为此形式的命令指定 UID 方式与上面相同。\n指令示例：\n- <ft color=(238,120,0)>队伍伤害雷九万班</ft>\n- <ft color=(238,120,0)>队伍伤害 雷神 九条 万叶 班尼特</ft>\n- <ft color=(238,120,0)>队伍伤害雷神 九条 万叶 班尼特@某人</ft>"
+                ),
+            },
+        ],
+    },
+)
 
 
 @showPanel.handle()
