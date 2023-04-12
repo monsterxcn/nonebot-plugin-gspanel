@@ -2524,5 +2524,81 @@
       "10802": 8032,
       "10805": 8039
     }
+  },
+  "10000081": {
+    "Element": "Grass",
+    "Name": "Kaveh",
+    "NameCN": "卡维",
+    "Slogan": "天穹之镜",
+    "NameTextMapHash": 466355514,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Kaveh",
+    "SideIconName": "UI_AvatarIcon_Side_Kaveh",
+    "Base": {
+      "hpBase": 1002.9700927734375,
+      "attackBase": 19.58880043029785,
+      "defenseBase": 62.9474983215332
+    },
+    "Consts": [
+      "UI_Talent_S_Kaveh_01",
+      "UI_Talent_S_Kaveh_02",
+      "UI_Talent_U_Kaveh_02",
+      "UI_Talent_S_Kaveh_03",
+      "UI_Talent_U_Kaveh_01",
+      "UI_Talent_S_Kaveh_04"
+    ],
+    "SkillOrder": [
+      10811,
+      10812,
+      10815
+    ],
+    "Skills": {
+      "10811": "Skill_A_04",
+      "10812": "Skill_S_Kaveh_01",
+      "10815": "Skill_E_Kaveh_01"
+    },
+    "ProudMap": {
+      "10811": 8131,
+      "10812": 8132,
+      "10815": 8139
+    }
+  },
+  "10000082": {
+    "Element": "Grass",
+    "Name": "Baizhuer",
+    "NameCN": "白术",
+    "Slogan": "遵生合和",
+    "NameTextMapHash": 2984815066,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Baizhuer",
+    "SideIconName": "UI_AvatarIcon_Side_Baizhuer",
+    "Base": {
+      "hpBase": 1039.1187744140625,
+      "attackBase": 14.989100456237793,
+      "defenseBase": 38.88949966430664
+    },
+    "Consts": [
+      "UI_Talent_S_Baizhuer_01",
+      "UI_Talent_S_Baizhuer_02",
+      "UI_Talent_U_Baizhuer_01",
+      "UI_Talent_S_Baizhuer_03",
+      "UI_Talent_U_Baizhuer_02",
+      "UI_Talent_S_Baizhuer_04"
+    ],
+    "SkillOrder": [
+      10821,
+      10822,
+      10825
+    ],
+    "Skills": {
+      "10821": "Skill_A_Catalyst_MD",
+      "10822": "Skill_S_Baizhuer_01",
+      "10825": "Skill_E_Baizhuer_01"
+    },
+    "ProudMap": {
+      "10821": 8231,
+      "10822": 8232,
+      "10825": 8239
+    }
   }
 }
