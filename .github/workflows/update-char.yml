@@ -19,16 +19,16 @@ jobs:
       - name: Update files
         run: |
           cd .github
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarCostumeExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarSkillExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/AvatarTalentExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/EquipAffixExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/ReliquaryExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/ReliquaryAffixExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/ExcelBinOutput/WeaponExcelConfigData.json
-          wget -q https://genshin-data.uigf.org/d/latest/TextMap/TextMapCHS.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/AvatarCostumeExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/AvatarExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/AvatarSkillExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/AvatarTalentExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/EquipAffixExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/ReliquaryExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/ReliquaryAffixExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/WeaponExcelConfigData.json
+          wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/TextMap/TextMapCHS.json
           wget -q https://raw.githubusercontent.com/DGP-Studio/Snap.Metadata/main/Output/CHS/Avatar.json
           python update-char.py
           mv -f char-data.json ../data/gspanel/char-data.json
