@@ -302,13 +302,13 @@ async def getPanel(uid: str, char: str = "全部") -> Union[bytes, str]:
         template_name=f"{mode}-{tplVer}.html",
         templates={"css": tplVer, "uid": uid, "data": data},
         pages={
-            "device_scale_factor": SCALE_FACTOR,
             "viewport": {"width": 600, "height": 300},
             "base_url": f"file://{htmlBase}",
         },
         wait=2,
         type="jpeg",
         quality=100,
+        device_scale_factor=SCALE_FACTOR,
     )
 
 
@@ -386,11 +386,11 @@ async def getTeam(
         template_name=f"team-{TEAM_TPL_VER}.html",
         templates={"css": TEAM_TPL_VER, "data": data, "detail": showDetail},
         pages={
-            "device_scale_factor": SCALE_FACTOR,
             "viewport": {"width": 600, "height": 300},
             "base_url": f"file://{htmlBase}",
         },
         wait=2,
         type="jpeg",
         quality=100,
+        device_scale_factor=SCALE_FACTOR,
     )
