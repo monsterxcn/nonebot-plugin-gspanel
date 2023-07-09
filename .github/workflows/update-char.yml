@@ -29,7 +29,7 @@ jobs:
           wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/ReliquaryAffixExcelConfigData.json
           wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/ExcelBinOutput/WeaponExcelConfigData.json
           wget -q $(echo 'aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlcg==' | base64 -d)/TextMap/TextMapCHS.json
-          wget -q https://raw.githubusercontent.com/DGP-Studio/Snap.Metadata/main/Output/CHS/Avatar.json
+          wget -q https://github.com/DGP-Studio/Snap.Metadata/raw/main/Genshin/CHS/Avatar.json
           python update-char.py
           mv -f char-data.json ../data/gspanel/char-data.json
           mv -f hash-trans.json ../data/gspanel/hash-trans.json
