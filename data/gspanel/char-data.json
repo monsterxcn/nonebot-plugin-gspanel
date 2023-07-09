@@ -225,6 +225,14 @@
       "10073": 1531,
       "10074": 1532,
       "10075": 1539
+    },
+    "Costumes": {
+      "201501": {
+        "sideIconName": "UI_AvatarIcon_Side_KaeyaCostumeDancer",
+        "icon": "UI_AvatarIcon_KaeyaCostumeDancer",
+        "art": "UI_Costume_KaeyaCostumeDancer",
+        "avatarId": 10000015
+      }
     }
   },
   "10000016": {
@@ -629,6 +637,14 @@
       "10291": 2931,
       "10292": 2932,
       "10295": 2939
+    },
+    "Costumes": {
+      "202901": {
+        "sideIconName": "UI_AvatarIcon_Side_KleeCostumeWitch",
+        "icon": "UI_AvatarIcon_KleeCostumeWitch",
+        "art": "UI_Costume_KleeCostumeWitch",
+        "avatarId": 10000029
+      }
     }
   },
   "10000030": {
@@ -1801,6 +1817,44 @@
       "10606": 6031,
       "10607": 6032,
       "10610": 6039
+    }
+  },
+  "10000061": {
+    "Element": "Grass",
+    "Name": "Momoka",
+    "NameCN": "绮良良",
+    "Slogan": "檐宇猫游",
+    "NameTextMapHash": 1456643042,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Momoka",
+    "SideIconName": "UI_AvatarIcon_Side_Momoka",
+    "Base": {
+      "hpBase": 1021.2059326171875,
+      "attackBase": 18.698400497436523,
+      "defenseBase": 45.779998779296875
+    },
+    "Consts": [
+      "UI_Talent_S_Momoka_01",
+      "UI_Talent_S_Momoka_02",
+      "UI_Talent_U_Momoka_01",
+      "UI_Talent_S_Momoka_04",
+      "UI_Talent_U_Momoka_02",
+      "UI_Talent_S_Momoka_03"
+    ],
+    "SkillOrder": [
+      10611,
+      10612,
+      10615
+    ],
+    "Skills": {
+      "10611": "Skill_A_01",
+      "10612": "Skill_S_Momoka_01",
+      "10615": "Skill_E_Momoka_01"
+    },
+    "ProudMap": {
+      "10611": 6131,
+      "10612": 6132,
+      "10615": 6139
     }
   },
   "10000062": {
