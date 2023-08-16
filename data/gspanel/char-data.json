@@ -2654,5 +2654,119 @@
       "10822": 8232,
       "10825": 8239
     }
+  },
+  "10000083": {
+    "Element": "Wind",
+    "Name": "Linette",
+    "NameCN": "琳妮特",
+    "Slogan": "丽影绮行",
+    "NameTextMapHash": 1225226258,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Linette",
+    "SideIconName": "UI_AvatarIcon_Side_Linette",
+    "Base": {
+      "hpBase": 1039.4417724609375,
+      "attackBase": 19.410720825195312,
+      "defenseBase": 59.68567657470703
+    },
+    "Consts": [
+      "UI_Talent_S_Linette_01",
+      "UI_Talent_S_Linette_02",
+      "UI_Talent_U_Linette_01",
+      "UI_Talent_S_Linette_03",
+      "UI_Talent_U_Linette_02",
+      "UI_Talent_S_Linette_04"
+    ],
+    "SkillOrder": [
+      10831,
+      10832,
+      10835
+    ],
+    "Skills": {
+      "10831": "Skill_A_01",
+      "10832": "Skill_S_Linette_01",
+      "10835": "Skill_E_Linette_01"
+    },
+    "ProudMap": {
+      "10831": 8331,
+      "10832": 8332,
+      "10835": 8339
+    }
+  },
+  "10000084": {
+    "Element": "Fire",
+    "Name": "Liney",
+    "NameCN": "林尼",
+    "Slogan": "惑光幻戏",
+    "NameTextMapHash": 2472444970,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Liney",
+    "SideIconName": "UI_AvatarIcon_Side_Liney",
+    "Base": {
+      "hpBase": 857.9879760742188,
+      "attackBase": 24.76460075378418,
+      "defenseBase": 41.88100051879883
+    },
+    "Consts": [
+      "UI_Talent_S_Liney_01",
+      "UI_Talent_S_Liney_03",
+      "UI_Talent_U_Liney_01",
+      "UI_Talent_S_Liney_02",
+      "UI_Talent_U_Liney_02",
+      "UI_Talent_S_Liney_04"
+    ],
+    "SkillOrder": [
+      10841,
+      10842,
+      10845
+    ],
+    "Skills": {
+      "10841": "Skill_A_02",
+      "10842": "Skill_S_Liney_01",
+      "10845": "Skill_E_Liney_01"
+    },
+    "ProudMap": {
+      "10841": 8431,
+      "10842": 8432,
+      "10845": 8439
+    }
+  },
+  "10000085": {
+    "Element": "Ice",
+    "Name": "Freminet",
+    "NameCN": "菲米尼",
+    "Slogan": "潜怀遐梦",
+    "NameTextMapHash": 4201964354,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Freminet",
+    "SideIconName": "UI_AvatarIcon_Side_Freminet",
+    "Base": {
+      "hpBase": 1012.0880126953125,
+      "attackBase": 21.369600296020508,
+      "defenseBase": 59.39955139160156
+    },
+    "Consts": [
+      "UI_Talent_S_Freminet_01",
+      "UI_Talent_S_Freminet_02",
+      "UI_Talent_U_Freminet_01",
+      "UI_Talent_S_Freminet_03",
+      "UI_Talent_U_Freminet_02",
+      "UI_Talent_S_Freminet_04"
+    ],
+    "SkillOrder": [
+      10851,
+      10852,
+      10855
+    ],
+    "Skills": {
+      "10851": "Skill_A_04",
+      "10852": "Skill_S_Freminet_01",
+      "10855": "Skill_E_Freminet_01"
+    },
+    "ProudMap": {
+      "10851": 8531,
+      "10852": 8532,
+      "10855": 8539
+    }
   }
 }
