@@ -2768,5 +2768,81 @@
       "10852": 8532,
       "10855": 8539
     }
+  },
+  "10000086": {
+    "Element": "Ice",
+    "Name": "Wriothesley",
+    "NameCN": "莱欧斯利",
+    "Slogan": "寂罪的密使",
+    "NameTextMapHash": 370151050,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Wriothesley",
+    "SideIconName": "UI_AvatarIcon_Side_Wriothesley",
+    "Base": {
+      "hpBase": 1058.1851806640625,
+      "attackBase": 24.20599937438965,
+      "defenseBase": 59.411190032958984
+    },
+    "Consts": [
+      "UI_Talent_S_Wriothesley_01",
+      "UI_Talent_S_Wriothesley_02",
+      "UI_Talent_U_Wriothesley_01",
+      "UI_Talent_S_Wriothesley_03",
+      "UI_Talent_U_Wriothesley_02",
+      "UI_Talent_S_Wriothesley_04"
+    ],
+    "SkillOrder": [
+      10861,
+      10862,
+      10865
+    ],
+    "Skills": {
+      "10861": "Skill_A_Catalyst_MD",
+      "10862": "Skill_S_Wriothesley_01",
+      "10865": "Skill_E_Wriothesley_01"
+    },
+    "ProudMap": {
+      "10861": 8631,
+      "10862": 8632,
+      "10865": 8639
+    }
+  },
+  "10000087": {
+    "Element": "Water",
+    "Name": "Neuvillette",
+    "NameCN": "那维莱特",
+    "Slogan": "谕告的潮音",
+    "NameTextMapHash": 1504902330,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Neuvillette",
+    "SideIconName": "UI_AvatarIcon_Side_Neuvillette",
+    "Base": {
+      "hpBase": 1143.9840087890625,
+      "attackBase": 16.218019485473633,
+      "defenseBase": 44.872501373291016
+    },
+    "Consts": [
+      "UI_Talent_S_Neuvillette_01",
+      "UI_Talent_S_Neuvillette_02",
+      "UI_Talent_U_Neuvillette_01",
+      "UI_Talent_S_Neuvillette_03",
+      "UI_Talent_U_Neuvillette_02",
+      "UI_Talent_S_Neuvillette_04"
+    ],
+    "SkillOrder": [
+      10871,
+      10872,
+      10875
+    ],
+    "Skills": {
+      "10871": "Skill_A_Catalyst_MD",
+      "10872": "Skill_S_Neuvillette_01",
+      "10875": "Skill_E_Neuvillette_01"
+    },
+    "ProudMap": {
+      "10871": 8731,
+      "10872": 8732,
+      "10875": 8739
+    }
   }
 }
