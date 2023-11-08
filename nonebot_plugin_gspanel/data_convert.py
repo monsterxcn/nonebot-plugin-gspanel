@@ -303,7 +303,7 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
             res["weapon"] = {
                 "id": equip["itemId"],
                 "rarity": equip["flat"]["rankLevel"],  # int
-                "name": HASH_TRANS.get(equip["flat"]["nameTextMapHash"], "缺少翻译"),
+                "name": HASH_TRANS.get(str(equip["flat"]["nameTextMapHash"]), "缺少翻译"),
                 "affix": list(equip["weapon"].get("affixMap", {"_": 0}).values())[0]
                 + 1,
                 "level": equip["weapon"]["level"],  # int
@@ -326,8 +326,10 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
             relicData = {
                 "pos": posIdx,
                 "rarity": equip["flat"]["rankLevel"],
-                "name": HASH_TRANS.get(equip["flat"]["nameTextMapHash"], "缺少翻译"),
-                "setName": HASH_TRANS.get(equip["flat"]["setNameTextMapHash"], "缺少翻译"),
+                "name": HASH_TRANS.get(str(equip["flat"]["nameTextMapHash"]), "缺少翻译"),
+                "setName": HASH_TRANS.get(
+                    str(equip["flat"]["setNameTextMapHash"]), "缺少翻译"
+                ),
                 "level": equip["reliquary"]["level"] - 1,
                 "main": {
                     "prop": PROP[mainProp["mainPropId"]],
