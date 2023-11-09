@@ -1,0 +1,79 @@
+name: Update resources
+
+on:
+    workflow_dispatch:
+
+jobs:
+  update:
+    name: Update resources
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@master
+
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Setup python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Update files
+        env:
+          GAMEDATA: ${{ secrets.GAME_DATA_REPO }}
+        run: |
+          cd .github
+          wget -q "${GAMEDATA}/ExcelBinOutput/AvatarCostumeExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/AvatarExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/AvatarSkillExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/AvatarTalentExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/EquipAffixExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/ReliquaryExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/ReliquaryAffixExcelConfigData.json"
+          wget -q "${GAMEDATA}/ExcelBinOutput/WeaponExcelConfigData.json"
+          wget -q "${GAMEDATA}/TextMap/TextMapCHS.json"
+          wget -q https://github.com/DGP-Studio/Snap.Metadata/raw/main/Genshin/CHS/Avatar.json
+          wget -q https://github.com/yoimiya-kokomi/miao-plugin/raw/master/resources/meta-gs/artifact/artis-mark.js
+          wget -q https://github.com/yoimiya-kokomi/miao-plugin/raw/master/resources/meta-gs/character/alias.js
+          sed -i 's/export const usefulAttr =/module.exports = { usefulAttr:/' artis-mark.js
+          sed -i '$s/$/ }/' artis-mark.js
+          sed -i 's/export const alias =/module.exports = { alias:/' alias.js
+          sed -i '$s/$/ }/' alias.js
+          node trans-miao-resources.js
+          python update-resources.py
+          mv -f calc-rule.json ../data/gspanel/calc-rule.json
+          mv -f char-alias.json ../data/gspanel/char-alias.json
+          mv -f char-data.json ../data/gspanel/char-data.json
+          mv -f hash-trans.json ../data/gspanel/hash-trans.json
+          mv -f relic-append.json ../data/gspanel/relic-append.json
+
+      - name: Upload files
+        uses: tvrcgo/upload-to-oss@master
+        with:
+          key-id: ${{ secrets.OSS_KEY_ID }}
+          key-secret: ${{ secrets.OSS_KEY_SECRET }}
+          region: oss-cn-shanghai
+          bucket: monsterx
+          assets: |
+            data/gspanel/calc-rule.json:/bot/gspanel/calc-rule.json
+            data/gspanel/char-alias.json:/bot/gspanel/char-alias.json
+            data/gspanel/char-data.json:/bot/gspanel/char-data.json
+            data/gspanel/hash-trans.json:/bot/gspanel/hash-trans.json
+            data/gspanel/relic-append.json:/bot/gspanel/relic-append.json
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: ':wrench: 自动更新游戏数据'
+          add: |
+            'data/gspanel/calc-rule.json'
+            'data/gspanel/char-alias.json'
+            'data/gspanel/char-data.json'
+            'data/gspanel/hash-trans.json'
+            'data/gspanel/relic-append.json'
