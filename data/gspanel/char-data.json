@@ -2920,5 +2920,81 @@
       "10892": 8932,
       "10895": 8939
     }
+  },
+  "10000090": {
+    "Element": "Fire",
+    "Name": "Chevreuse",
+    "NameCN": "夏沃蕾",
+    "Slogan": "明律决罚",
+    "NameTextMapHash": 540313842,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Chevreuse",
+    "SideIconName": "UI_AvatarIcon_Side_Chevreuse",
+    "Base": {
+      "hpBase": 1002.9700927734375,
+      "attackBase": 16.205280303955078,
+      "defenseBase": 50.701351165771484
+    },
+    "Consts": [
+      "UI_Talent_S_Chevreuse_01",
+      "UI_Talent_S_Chevreuse_02",
+      "UI_Talent_U_Chevreuse_01",
+      "UI_Talent_S_Chevreuse_03",
+      "UI_Talent_U_Chevreuse_02",
+      "UI_Talent_S_Chevreuse_04"
+    ],
+    "SkillOrder": [
+      10901,
+      10902,
+      10905
+    ],
+    "Skills": {
+      "10901": "Skill_A_03",
+      "10902": "Skill_S_Chevreuse_01",
+      "10905": "Skill_E_Chevreuse_01"
+    },
+    "ProudMap": {
+      "10901": 9031,
+      "10902": 9032,
+      "10905": 9039
+    }
+  },
+  "10000091": {
+    "Element": "Rock",
+    "Name": "Navia",
+    "NameCN": "娜维娅",
+    "Slogan": "明花蔓舵",
+    "NameTextMapHash": 2877588578,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Navia",
+    "SideIconName": "UI_AvatarIcon_Side_Navia",
+    "Base": {
+      "hpBase": 984.779541015625,
+      "attackBase": 27.371400833129883,
+      "defenseBase": 61.74456024169922
+    },
+    "Consts": [
+      "UI_Talent_S_Navia_01",
+      "UI_Talent_S_Navia_02",
+      "UI_Talent_U_Navia_01",
+      "UI_Talent_S_Navia_03",
+      "UI_Talent_U_Navia_02",
+      "UI_Talent_S_Navia_04"
+    ],
+    "SkillOrder": [
+      10911,
+      10912,
+      10915
+    ],
+    "Skills": {
+      "10911": "Skill_A_04",
+      "10912": "Skill_S_Navia_01",
+      "10915": "Skill_E_Navia_01"
+    },
+    "ProudMap": {
+      "10911": 9131,
+      "10912": 9132,
+      "10915": 9139
+    }
   }
 }
