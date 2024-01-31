@@ -186,7 +186,7 @@ def gnrtAliasJson():
                 print(f"角色「{name}」可选别名：{'、'.join(extra)}")
         elif MiaoCharAlias.get(name):
             newCharAlias = [
-                a for a in MiaoCharAlias[name] if not str(a).replace(" ", "").isalpha()
+                a for a in MiaoCharAlias[name] if not re.match(r'^[a-zA-Z\s]+$', a)
             ]
             AliasDictionary[name] = newCharAlias
             print(f"新增角色「{name}」别名：{'、'.join(newCharAlias)}")
