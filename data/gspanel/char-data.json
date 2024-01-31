@@ -515,6 +515,14 @@
       "10381": 2531,
       "10382": 2532,
       "10385": 2539
+    },
+    "Costumes": {
+      "202501": {
+        "sideIconName": "UI_AvatarIcon_Side_XingqiuCostumeBamboo",
+        "icon": "UI_AvatarIcon_XingqiuCostumeBamboo",
+        "art": "UI_Costume_XingqiuCostumeBamboo",
+        "avatarId": 10000025
+      }
     }
   },
   "10000026": {
@@ -957,6 +965,14 @@
       "10371": 3731,
       "10372": 3732,
       "10373": 3739
+    },
+    "Costumes": {
+      "203701": {
+        "sideIconName": "UI_AvatarIcon_Side_GanyuCostumeYu",
+        "icon": "UI_AvatarIcon_GanyuCostumeYu",
+        "art": "UI_Costume_GanyuCostumeYu",
+        "avatarId": 10000037
+      }
     }
   },
   "10000038": {
@@ -1931,6 +1947,14 @@
       "10631": 6331,
       "10632": 6332,
       "10635": 6339
+    },
+    "Costumes": {
+      "206301": {
+        "sideIconName": "UI_AvatarIcon_Side_ShenheCostumeDai",
+        "icon": "UI_AvatarIcon_ShenheCostumeDai",
+        "art": "UI_Costume_ShenheCostumeDai",
+        "avatarId": 10000063
+      }
     }
   },
   "10000064": {
@@ -2995,6 +3019,82 @@
       "10911": 9131,
       "10912": 9132,
       "10915": 9139
+    }
+  },
+  "10000092": {
+    "Element": "Fire",
+    "Name": "Gaming",
+    "NameCN": "嘉明",
+    "Slogan": "骏猊頕首",
+    "NameTextMapHash": 2822240322,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Gaming",
+    "SideIconName": "UI_AvatarIcon_Side_Gaming",
+    "Base": {
+      "hpBase": 957.3805541992188,
+      "attackBase": 25.2873592376709,
+      "defenseBase": 58.941749572753906
+    },
+    "Consts": [
+      "UI_Talent_S_Gaming_01",
+      "UI_Talent_S_Gaming_02",
+      "UI_Talent_U_Gaming_01",
+      "UI_Talent_S_Gaming_03",
+      "UI_Talent_U_Gaming_02",
+      "UI_Talent_S_Gaming_04"
+    ],
+    "SkillOrder": [
+      10921,
+      10922,
+      10925
+    ],
+    "Skills": {
+      "10921": "Skill_A_04",
+      "10922": "Skill_S_Gaming_01",
+      "10925": "Skill_E_Gaming_01"
+    },
+    "ProudMap": {
+      "10921": 9231,
+      "10922": 9232,
+      "10925": 9239
+    }
+  },
+  "10000093": {
+    "Element": "Wind",
+    "Name": "Liuyun",
+    "NameCN": "闲云",
+    "Slogan": "鸾音鹤信",
+    "NameTextMapHash": 3648220770,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Liuyun",
+    "SideIconName": "UI_AvatarIcon_Side_Liuyun",
+    "Base": {
+      "hpBase": 810.322021484375,
+      "attackBase": 26.06800079345703,
+      "defenseBase": 44.57334899902344
+    },
+    "Consts": [
+      "UI_Talent_S_Liuyun_01",
+      "UI_Talent_S_Liuyun_02",
+      "UI_Talent_U_Liuyun_02",
+      "UI_Talent_S_Liuyun_03",
+      "UI_Talent_U_Liuyun_01",
+      "UI_Talent_S_Liuyun_04"
+    ],
+    "SkillOrder": [
+      10931,
+      10932,
+      10935
+    ],
+    "Skills": {
+      "10931": "Skill_A_Catalyst_MD",
+      "10932": "Skill_S_Liuyun_01",
+      "10935": "Skill_E_Liuyun_01"
+    },
+    "ProudMap": {
+      "10931": 9331,
+      "10932": 9332,
+      "10935": 9339
     }
   }
 }
