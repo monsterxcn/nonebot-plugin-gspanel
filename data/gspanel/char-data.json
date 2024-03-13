@@ -3096,5 +3096,43 @@
       "10932": 9332,
       "10935": 9339
     }
+  },
+  "10000094": {
+    "Element": "Rock",
+    "Name": "Chiori",
+    "NameCN": "千织",
+    "Slogan": "鸣雷的裁锦师",
+    "NameTextMapHash": 1944606922,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Chiori",
+    "SideIconName": "UI_AvatarIcon_Side_Chiori",
+    "Base": {
+      "hpBase": 890.40087890625,
+      "attackBase": 25.136999130249023,
+      "defenseBase": 74.18920135498047
+    },
+    "Consts": [
+      "UI_Talent_S_Chiori_01",
+      "UI_Talent_S_Chiori_03",
+      "UI_Talent_U_Chiori_01",
+      "UI_Talent_S_Chiori_02",
+      "UI_Talent_U_Chiori_02",
+      "UI_Talent_S_Chiori_04"
+    ],
+    "SkillOrder": [
+      10941,
+      10942,
+      10945
+    ],
+    "Skills": {
+      "10941": "Skill_A_01",
+      "10942": "Skill_S_Chiori_01",
+      "10945": "Skill_E_Chiori_01"
+    },
+    "ProudMap": {
+      "10941": 9431,
+      "10942": 9432,
+      "10945": 9439
+    }
   }
 }
