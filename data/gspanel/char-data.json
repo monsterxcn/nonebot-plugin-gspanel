@@ -9,9 +9,9 @@
     "iconName": "UI_AvatarIcon_Ayaka",
     "SideIconName": "UI_AvatarIcon_Side_Ayaka",
     "Base": {
-      "hpBase": 1000.9860229492188,
-      "attackBase": 26.62660026550293,
-      "defenseBase": 61.0265998840332
+      "hpBase": 1000.986,
+      "attackBase": 26.6266,
+      "defenseBase": 61.0266
     },
     "Consts": [
       "UI_Talent_S_Ayaka_01",
@@ -55,9 +55,9 @@
     "iconName": "UI_AvatarIcon_Qin",
     "SideIconName": "UI_AvatarIcon_Side_Qin",
     "Base": {
-      "hpBase": 1143.9840087890625,
-      "attackBase": 18.6200008392334,
-      "defenseBase": 59.83000183105469
+      "hpBase": 1143.984,
+      "attackBase": 18.62,
+      "defenseBase": 59.83
     },
     "Consts": [
       "UI_Talent_S_Qin_01",
@@ -107,9 +107,9 @@
     "iconName": "UI_AvatarIcon_Lisa",
     "SideIconName": "UI_AvatarIcon_Side_Lisa",
     "Base": {
-      "hpBase": 802.3760986328125,
-      "attackBase": 19.410720825195312,
-      "defenseBase": 48.069000244140625
+      "hpBase": 802.3761,
+      "attackBase": 19.41072,
+      "defenseBase": 48.069
     },
     "Consts": [
       "UI_Talent_S_Lisa_01",
@@ -153,9 +153,9 @@
     "iconName": "UI_AvatarIcon_Barbara",
     "SideIconName": "UI_AvatarIcon_Side_Barbara",
     "Base": {
-      "hpBase": 820.6118774414062,
-      "attackBase": 13.355999946594238,
-      "defenseBase": 56.080501556396484
+      "hpBase": 820.6119,
+      "attackBase": 13.356,
+      "defenseBase": 56.0805
     },
     "Consts": [
       "UI_Talent_S_Barbara_01",
@@ -199,9 +199,9 @@
     "iconName": "UI_AvatarIcon_Kaeya",
     "SideIconName": "UI_AvatarIcon_Side_Kaeya",
     "Base": {
-      "hpBase": 975.6163940429688,
-      "attackBase": 18.698400497436523,
-      "defenseBase": 66.38099670410156
+      "hpBase": 975.6164,
+      "attackBase": 18.6984,
+      "defenseBase": 66.381
     },
     "Consts": [
       "UI_Talent_S_Kaeya_01",
@@ -245,9 +245,9 @@
     "iconName": "UI_AvatarIcon_Diluc",
     "SideIconName": "UI_AvatarIcon_Side_Diluc",
     "Base": {
-      "hpBase": 1010.5192260742188,
-      "attackBase": 26.06800079345703,
-      "defenseBase": 61.0265998840332
+      "hpBase": 1010.5192,
+      "attackBase": 26.068,
+      "defenseBase": 61.0266
     },
     "Consts": [
       "UI_Talent_S_Diluc_01",
@@ -291,9 +291,9 @@
     "iconName": "UI_AvatarIcon_Razor",
     "SideIconName": "UI_AvatarIcon_Side_Razor",
     "Base": {
-      "hpBase": 1002.9700927734375,
-      "attackBase": 19.58880043029785,
-      "defenseBase": 62.9474983215332
+      "hpBase": 1002.9701,
+      "attackBase": 19.5888,
+      "defenseBase": 62.9475
     },
     "Consts": [
       "UI_Talent_S_Razor_01",
@@ -329,9 +329,9 @@
     "iconName": "UI_AvatarIcon_Ambor",
     "SideIconName": "UI_AvatarIcon_Side_Ambor",
     "Base": {
-      "hpBase": 793.2581787109375,
-      "attackBase": 18.698400497436523,
-      "defenseBase": 50.358001708984375
+      "hpBase": 793.2582,
+      "attackBase": 18.6984,
+      "defenseBase": 50.358
     },
     "Consts": [
       "UI_Talent_S_Ambor_01",
@@ -375,9 +375,9 @@
     "iconName": "UI_AvatarIcon_Venti",
     "SideIconName": "UI_AvatarIcon_Side_Venti",
     "Base": {
-      "hpBase": 819.855224609375,
-      "attackBase": 20.48200035095215,
-      "defenseBase": 52.052101135253906
+      "hpBase": 819.8552,
+      "attackBase": 20.482,
+      "defenseBase": 52.0521
     },
     "Consts": [
       "UI_Talent_S_Venti_01",
@@ -413,9 +413,9 @@
     "iconName": "UI_AvatarIcon_Xiangling",
     "SideIconName": "UI_AvatarIcon_Side_Xiangling",
     "Base": {
-      "hpBase": 911.791015625,
-      "attackBase": 18.876480102539062,
-      "defenseBase": 56.080501556396484
+      "hpBase": 911.791,
+      "attackBase": 18.87648,
+      "defenseBase": 56.0805
     },
     "Consts": [
       "UI_Talent_S_Xiangling_01",
@@ -451,9 +451,9 @@
     "iconName": "UI_AvatarIcon_Beidou",
     "SideIconName": "UI_AvatarIcon_Side_Beidou",
     "Base": {
-      "hpBase": 1094.149169921875,
-      "attackBase": 18.876480102539062,
-      "defenseBase": 54.36375045776367
+      "hpBase": 1094.1492,
+      "attackBase": 18.87648,
+      "defenseBase": 54.36375
     },
     "Consts": [
       "UI_Talent_S_Beidou_02",
@@ -489,9 +489,9 @@
     "iconName": "UI_AvatarIcon_Xingqiu",
     "SideIconName": "UI_AvatarIcon_Side_Xingqiu",
     "Base": {
-      "hpBase": 857.0835571289062,
-      "attackBase": 16.917600631713867,
-      "defenseBase": 63.51974868774414
+      "hpBase": 857.08356,
+      "attackBase": 16.9176,
+      "defenseBase": 63.51975
     },
     "Consts": [
       "UI_Talent_S_Xingqiu_01",
@@ -535,9 +535,9 @@
     "iconName": "UI_AvatarIcon_Xiao",
     "SideIconName": "UI_AvatarIcon_Side_Xiao",
     "Base": {
-      "hpBase": 991.4528198242188,
-      "attackBase": 27.185199737548828,
-      "defenseBase": 62.223201751708984
+      "hpBase": 991.4528,
+      "attackBase": 27.1852,
+      "defenseBase": 62.2232
     },
     "Consts": [
       "UI_Talent_S_Xiao_01",
@@ -573,9 +573,9 @@
     "iconName": "UI_AvatarIcon_Ningguang",
     "SideIconName": "UI_AvatarIcon_Side_Ningguang",
     "Base": {
-      "hpBase": 820.6118774414062,
-      "attackBase": 17.808000564575195,
-      "defenseBase": 48.069000244140625
+      "hpBase": 820.6119,
+      "attackBase": 17.808,
+      "defenseBase": 48.069
     },
     "Consts": [
       "UI_Talent_S_Ningguang_01",
@@ -619,9 +619,9 @@
     "iconName": "UI_AvatarIcon_Klee",
     "SideIconName": "UI_AvatarIcon_Side_Klee",
     "Base": {
-      "hpBase": 800.788818359375,
-      "attackBase": 24.20599937438965,
-      "defenseBase": 47.86399841308594
+      "hpBase": 800.7888,
+      "attackBase": 24.206,
+      "defenseBase": 47.864
     },
     "Consts": [
       "UI_Talent_S_Klee_01",
@@ -665,9 +665,9 @@
     "iconName": "UI_AvatarIcon_Zhongli",
     "SideIconName": "UI_AvatarIcon_Side_Zhongli",
     "Base": {
-      "hpBase": 1143.9840087890625,
-      "attackBase": 19.551000595092773,
-      "defenseBase": 57.436798095703125
+      "hpBase": 1143.984,
+      "attackBase": 19.551,
+      "defenseBase": 57.4368
     },
     "Consts": [
       "UI_Talent_S_Zhongli_01",
@@ -703,9 +703,9 @@
     "iconName": "UI_AvatarIcon_Fischl",
     "SideIconName": "UI_AvatarIcon_Side_Fischl",
     "Base": {
-      "hpBase": 770.46337890625,
-      "attackBase": 20.47920036315918,
-      "defenseBase": 49.78575134277344
+      "hpBase": 770.4634,
+      "attackBase": 20.4792,
+      "defenseBase": 49.78575
     },
     "Consts": [
       "UI_Talent_S_Fischl_01",
@@ -749,9 +749,9 @@
     "iconName": "UI_AvatarIcon_Bennett",
     "SideIconName": "UI_AvatarIcon_Side_Bennett",
     "Base": {
-      "hpBase": 1039.4417724609375,
-      "attackBase": 16.02720069885254,
-      "defenseBase": 64.66425323486328
+      "hpBase": 1039.4418,
+      "attackBase": 16.0272,
+      "defenseBase": 64.66425
     },
     "Consts": [
       "UI_Talent_S_Bennett_01",
@@ -787,9 +787,9 @@
     "iconName": "UI_AvatarIcon_Tartaglia",
     "SideIconName": "UI_AvatarIcon_Side_Tartaglia",
     "Base": {
-      "hpBase": 1020.0524291992188,
-      "attackBase": 23.461200714111328,
-      "defenseBase": 63.4197998046875
+      "hpBase": 1020.0524,
+      "attackBase": 23.4612,
+      "defenseBase": 63.4198
     },
     "Consts": [
       "UI_Talent_S_Tartaglia_01",
@@ -825,9 +825,9 @@
     "iconName": "UI_AvatarIcon_Noel",
     "SideIconName": "UI_AvatarIcon_Side_Noel",
     "Base": {
-      "hpBase": 1012.0880126953125,
-      "attackBase": 16.02720069885254,
-      "defenseBase": 66.9532470703125
+      "hpBase": 1012.088,
+      "attackBase": 16.0272,
+      "defenseBase": 66.95325
     },
     "Consts": [
       "UI_Talent_S_Noel_01",
@@ -863,9 +863,9 @@
     "iconName": "UI_AvatarIcon_Qiqi",
     "SideIconName": "UI_AvatarIcon_Side_Qiqi",
     "Base": {
-      "hpBase": 962.8532104492188,
-      "attackBase": 22.3439998626709,
-      "defenseBase": 71.7959976196289
+      "hpBase": 962.8532,
+      "attackBase": 22.344,
+      "defenseBase": 71.796
     },
     "Consts": [
       "UI_Talent_S_Qiqi_01",
@@ -901,9 +901,9 @@
     "iconName": "UI_AvatarIcon_Chongyun",
     "SideIconName": "UI_AvatarIcon_Side_Chongyun",
     "Base": {
-      "hpBase": 920.908935546875,
-      "attackBase": 18.698400497436523,
-      "defenseBase": 54.36375045776367
+      "hpBase": 920.90894,
+      "attackBase": 18.6984,
+      "defenseBase": 54.36375
     },
     "Consts": [
       "UI_Talent_S_Chongyun_01",
@@ -939,9 +939,9 @@
     "iconName": "UI_AvatarIcon_Ganyu",
     "SideIconName": "UI_AvatarIcon_Side_Ganyu",
     "Base": {
-      "hpBase": 762.656005859375,
-      "attackBase": 26.06800079345703,
-      "defenseBase": 49.06060028076172
+      "hpBase": 762.656,
+      "attackBase": 26.068,
+      "defenseBase": 49.0606
     },
     "Consts": [
       "UI_Talent_S_Ganyu_01",
@@ -985,9 +985,9 @@
     "iconName": "UI_AvatarIcon_Albedo",
     "SideIconName": "UI_AvatarIcon_Side_Albedo",
     "Base": {
-      "hpBase": 1029.5855712890625,
-      "attackBase": 19.551000595092773,
-      "defenseBase": 68.2061996459961
+      "hpBase": 1029.5856,
+      "attackBase": 19.551,
+      "defenseBase": 68.2062
     },
     "Consts": [
       "UI_Talent_S_Albedo_01",
@@ -1023,9 +1023,9 @@
     "iconName": "UI_AvatarIcon_Diona",
     "SideIconName": "UI_AvatarIcon_Side_Diona",
     "Base": {
-      "hpBase": 802.3760986328125,
-      "attackBase": 17.808000564575195,
-      "defenseBase": 50.358001708984375
+      "hpBase": 802.3761,
+      "attackBase": 17.808,
+      "defenseBase": 50.358
     },
     "Consts": [
       "UI_Talent_S_Diona_01",
@@ -1061,9 +1061,9 @@
     "iconName": "UI_AvatarIcon_Mona",
     "SideIconName": "UI_AvatarIcon_Side_Mona",
     "Base": {
-      "hpBase": 810.322021484375,
-      "attackBase": 22.3439998626709,
-      "defenseBase": 50.855499267578125
+      "hpBase": 810.322,
+      "attackBase": 22.344,
+      "defenseBase": 50.8555
     },
     "Consts": [
       "UI_Talent_S_Mona_01",
@@ -1107,9 +1107,9 @@
     "iconName": "UI_AvatarIcon_Keqing",
     "SideIconName": "UI_AvatarIcon_Side_Keqing",
     "Base": {
-      "hpBase": 1020.0524291992188,
-      "attackBase": 25.136999130249023,
-      "defenseBase": 62.223201751708984
+      "hpBase": 1020.0524,
+      "attackBase": 25.137,
+      "defenseBase": 62.2232
     },
     "Consts": [
       "UI_Talent_S_Keqing_01",
@@ -1153,9 +1153,9 @@
     "iconName": "UI_AvatarIcon_Sucrose",
     "SideIconName": "UI_AvatarIcon_Side_Sucrose",
     "Base": {
-      "hpBase": 775.0223388671875,
-      "attackBase": 14.246399879455566,
-      "defenseBase": 58.941749572753906
+      "hpBase": 775.02234,
+      "attackBase": 14.2464,
+      "defenseBase": 58.94175
     },
     "Consts": [
       "UI_Talent_S_Sucrose_01",
@@ -1191,9 +1191,9 @@
     "iconName": "UI_AvatarIcon_Xinyan",
     "SideIconName": "UI_AvatarIcon_Side_Xinyan",
     "Base": {
-      "hpBase": 939.1447143554688,
-      "attackBase": 20.835359573364258,
-      "defenseBase": 66.9532470703125
+      "hpBase": 939.1447,
+      "attackBase": 20.83536,
+      "defenseBase": 66.95325
     },
     "Consts": [
       "UI_Talent_S_Xinyan_01",
@@ -1229,9 +1229,9 @@
     "iconName": "UI_AvatarIcon_Rosaria",
     "SideIconName": "UI_AvatarIcon_Side_Rosaria",
     "Base": {
-      "hpBase": 1030.3238525390625,
-      "attackBase": 20.12303924560547,
-      "defenseBase": 59.513999938964844
+      "hpBase": 1030.3239,
+      "attackBase": 20.12304,
+      "defenseBase": 59.514
     },
     "Consts": [
       "UI_Talent_S_Rosaria_01",
@@ -1275,9 +1275,9 @@
     "iconName": "UI_AvatarIcon_Hutao",
     "SideIconName": "UI_AvatarIcon_Side_Hutao",
     "Base": {
-      "hpBase": 1210.7164306640625,
-      "attackBase": 8.285900115966797,
-      "defenseBase": 68.2061996459961
+      "hpBase": 1210.7164,
+      "attackBase": 8.2859,
+      "defenseBase": 68.2062
     },
     "Consts": [
       "UI_Talent_S_Hutao_03",
@@ -1313,9 +1313,9 @@
     "iconName": "UI_AvatarIcon_Kazuha",
     "SideIconName": "UI_AvatarIcon_Side_Kazuha",
     "Base": {
-      "hpBase": 1039.1187744140625,
-      "attackBase": 23.08880043029785,
-      "defenseBase": 62.82149887084961
+      "hpBase": 1039.1188,
+      "attackBase": 23.0888,
+      "defenseBase": 62.8215
     },
     "Consts": [
       "UI_Talent_S_Kazuha_01",
@@ -1351,9 +1351,9 @@
     "iconName": "UI_AvatarIcon_Feiyan",
     "SideIconName": "UI_AvatarIcon_Side_Feiyan",
     "Base": {
-      "hpBase": 784.1402587890625,
-      "attackBase": 20.12303924560547,
-      "defenseBase": 49.2135009765625
+      "hpBase": 784.14026,
+      "attackBase": 20.12304,
+      "defenseBase": 49.2135
     },
     "Consts": [
       "UI_Talent_S_Feiyan_01",
@@ -1389,9 +1389,9 @@
     "iconName": "UI_AvatarIcon_Yoimiya",
     "SideIconName": "UI_AvatarIcon_Side_Yoimiya",
     "Base": {
-      "hpBase": 791.255615234375,
-      "attackBase": 25.136999130249023,
-      "defenseBase": 47.86399841308594
+      "hpBase": 791.2556,
+      "attackBase": 25.137,
+      "defenseBase": 47.864
     },
     "Consts": [
       "UI_Talent_S_Yoimiya_01",
@@ -1427,9 +1427,9 @@
     "iconName": "UI_AvatarIcon_Tohma",
     "SideIconName": "UI_AvatarIcon_Side_Tohma",
     "Base": {
-      "hpBase": 866.2014770507812,
-      "attackBase": 16.917600631713867,
-      "defenseBase": 62.9474983215332
+      "hpBase": 866.2015,
+      "attackBase": 16.9176,
+      "defenseBase": 62.9475
     },
     "Consts": [
       "UI_Talent_S_Tohma_01",
@@ -1465,9 +1465,9 @@
     "iconName": "UI_AvatarIcon_Eula",
     "SideIconName": "UI_AvatarIcon_Side_Eula",
     "Base": {
-      "hpBase": 1029.5855712890625,
-      "attackBase": 26.62660026550293,
-      "defenseBase": 58.45391082763672
+      "hpBase": 1029.5856,
+      "attackBase": 26.6266,
+      "defenseBase": 58.45391
     },
     "Consts": [
       "UI_Talent_S_Eula_02",
@@ -1503,9 +1503,9 @@
     "iconName": "UI_AvatarIcon_Shougun",
     "SideIconName": "UI_AvatarIcon_Side_Shougun",
     "Base": {
-      "hpBase": 1004.7992553710938,
-      "attackBase": 26.254199981689453,
-      "defenseBase": 61.445411682128906
+      "hpBase": 1004.79926,
+      "attackBase": 26.2542,
+      "defenseBase": 61.44541
     },
     "Consts": [
       "UI_Talent_S_Shougun_01",
@@ -1541,9 +1541,9 @@
     "iconName": "UI_AvatarIcon_Sayu",
     "SideIconName": "UI_AvatarIcon_Side_Sayu",
     "Base": {
-      "hpBase": 993.8521728515625,
-      "attackBase": 20.47920036315918,
-      "defenseBase": 62.43247604370117
+      "hpBase": 993.8522,
+      "attackBase": 20.4792,
+      "defenseBase": 62.432476
     },
     "Consts": [
       "UI_Talent_S_Sayu_01",
@@ -1579,9 +1579,9 @@
     "iconName": "UI_AvatarIcon_Kokomi",
     "SideIconName": "UI_AvatarIcon_Side_Kokomi",
     "Base": {
-      "hpBase": 1048.6519775390625,
-      "attackBase": 18.247600555419922,
-      "defenseBase": 51.1546516418457
+      "hpBase": 1048.652,
+      "attackBase": 18.2476,
+      "defenseBase": 51.15465
     },
     "Consts": [
       "UI_Talent_S_Kokomi_01",
@@ -1617,9 +1617,9 @@
     "iconName": "UI_AvatarIcon_Gorou",
     "SideIconName": "UI_AvatarIcon_Side_Gorou",
     "Base": {
-      "hpBase": 802.3760986328125,
-      "attackBase": 15.31488037109375,
-      "defenseBase": 54.36375045776367
+      "hpBase": 802.3761,
+      "attackBase": 15.31488,
+      "defenseBase": 54.36375
     },
     "Consts": [
       "UI_Talent_S_Gorou_01",
@@ -1655,9 +1655,9 @@
     "iconName": "UI_AvatarIcon_Sara",
     "SideIconName": "UI_AvatarIcon_Side_Sara",
     "Base": {
-      "hpBase": 802.3760986328125,
-      "attackBase": 16.383359909057617,
-      "defenseBase": 52.64699935913086
+      "hpBase": 802.3761,
+      "attackBase": 16.38336,
+      "defenseBase": 52.647
     },
     "Consts": [
       "UI_Talent_S_Sara_05",
@@ -1693,9 +1693,9 @@
     "iconName": "UI_AvatarIcon_Itto",
     "SideIconName": "UI_AvatarIcon_Side_Itto",
     "Base": {
-      "hpBase": 1000.9860229492188,
-      "attackBase": 17.68899917602539,
-      "defenseBase": 74.66783905029297
+      "hpBase": 1000.986,
+      "attackBase": 17.689,
+      "defenseBase": 74.66784
     },
     "Consts": [
       "UI_Talent_S_Itto_01",
@@ -1731,9 +1731,9 @@
     "iconName": "UI_AvatarIcon_Yae",
     "SideIconName": "UI_AvatarIcon_Side_Yae",
     "Base": {
-      "hpBase": 807.4620361328125,
-      "attackBase": 26.440399169921875,
-      "defenseBase": 44.274200439453125
+      "hpBase": 807.46204,
+      "attackBase": 26.4404,
+      "defenseBase": 44.2742
     },
     "Consts": [
       "UI_Talent_S_Yae_01",
@@ -1769,9 +1769,9 @@
     "iconName": "UI_AvatarIcon_Heizo",
     "SideIconName": "UI_AvatarIcon_Side_Heizo",
     "Base": {
-      "hpBase": 893.55517578125,
-      "attackBase": 18.876480102539062,
-      "defenseBase": 57.33945083618164
+      "hpBase": 893.5552,
+      "attackBase": 18.87648,
+      "defenseBase": 57.33945
     },
     "Consts": [
       "UI_Talent_S_Heizo_01",
@@ -1807,9 +1807,9 @@
     "iconName": "UI_AvatarIcon_Yelan",
     "SideIconName": "UI_AvatarIcon_Side_Yelan",
     "Base": {
-      "hpBase": 1124.9176025390625,
-      "attackBase": 18.992399215698242,
-      "defenseBase": 42.658790588378906
+      "hpBase": 1124.9176,
+      "attackBase": 18.9924,
+      "defenseBase": 42.65879
     },
     "Consts": [
       "UI_Talent_S_Yelan_01",
@@ -1845,9 +1845,9 @@
     "iconName": "UI_AvatarIcon_Momoka",
     "SideIconName": "UI_AvatarIcon_Side_Momoka",
     "Base": {
-      "hpBase": 1021.2059326171875,
-      "attackBase": 18.698400497436523,
-      "defenseBase": 45.779998779296875
+      "hpBase": 1021.20593,
+      "attackBase": 18.6984,
+      "defenseBase": 45.78
     },
     "Consts": [
       "UI_Talent_S_Momoka_01",
@@ -1883,9 +1883,9 @@
     "iconName": "UI_AvatarIcon_Aloy",
     "SideIconName": "UI_AvatarIcon_Side_Aloy",
     "Base": {
-      "hpBase": 848.4547729492188,
-      "attackBase": 18.210359573364258,
-      "defenseBase": 52.65039825439453
+      "hpBase": 848.4548,
+      "attackBase": 18.21036,
+      "defenseBase": 52.6504
     },
     "Consts": [
       "UI_Talent_S_Aloy_Lock",
@@ -1921,9 +1921,9 @@
     "iconName": "UI_AvatarIcon_Shenhe",
     "SideIconName": "UI_AvatarIcon_Side_Shenhe",
     "Base": {
-      "hpBase": 1011.4725341796875,
-      "attackBase": 23.64739990234375,
-      "defenseBase": 64.61640167236328
+      "hpBase": 1011.47253,
+      "attackBase": 23.6474,
+      "defenseBase": 64.6164
     },
     "Consts": [
       "UI_Talent_S_Shenhe_02",
@@ -1967,9 +1967,9 @@
     "iconName": "UI_AvatarIcon_Yunjin",
     "SideIconName": "UI_AvatarIcon_Side_Yunjin",
     "Base": {
-      "hpBase": 893.55517578125,
-      "attackBase": 16.02720069885254,
-      "defenseBase": 61.574100494384766
+      "hpBase": 893.5552,
+      "attackBase": 16.0272,
+      "defenseBase": 61.5741
     },
     "Consts": [
       "UI_Talent_S_Yunjin_01",
@@ -2005,9 +2005,9 @@
     "iconName": "UI_AvatarIcon_Shinobu",
     "SideIconName": "UI_AvatarIcon_Side_Shinobu",
     "Base": {
-      "hpBase": 1030.3238525390625,
-      "attackBase": 17.808000564575195,
-      "defenseBase": 62.9474983215332
+      "hpBase": 1030.3239,
+      "attackBase": 17.808,
+      "defenseBase": 62.9475
     },
     "Consts": [
       "UI_Talent_S_Shinobu_01",
@@ -2043,9 +2043,9 @@
     "iconName": "UI_AvatarIcon_Ayato",
     "SideIconName": "UI_AvatarIcon_Side_Ayato",
     "Base": {
-      "hpBase": 1067.7183837890625,
-      "attackBase": 23.274999618530273,
-      "defenseBase": 59.83000183105469
+      "hpBase": 1067.7184,
+      "attackBase": 23.275,
+      "defenseBase": 59.83
     },
     "Consts": [
       "UI_Talent_S_Ayato_01",
@@ -2081,9 +2081,9 @@
     "iconName": "UI_AvatarIcon_Collei",
     "SideIconName": "UI_AvatarIcon_Side_Collei",
     "Base": {
-      "hpBase": 820.6118774414062,
-      "attackBase": 16.739519119262695,
-      "defenseBase": 50.358001708984375
+      "hpBase": 820.6119,
+      "attackBase": 16.73952,
+      "defenseBase": 50.358
     },
     "Consts": [
       "UI_Talent_S_Collei_01",
@@ -2119,9 +2119,9 @@
     "iconName": "UI_AvatarIcon_Dori",
     "SideIconName": "UI_AvatarIcon_Side_Dori",
     "Base": {
-      "hpBase": 1039.4417724609375,
-      "attackBase": 18.698400497436523,
-      "defenseBase": 60.65850067138672
+      "hpBase": 1039.4418,
+      "attackBase": 18.6984,
+      "defenseBase": 60.6585
     },
     "Consts": [
       "UI_Talent_S_Dori_01",
@@ -2157,9 +2157,9 @@
     "iconName": "UI_AvatarIcon_Tighnari",
     "SideIconName": "UI_AvatarIcon_Side_Tighnari",
     "Base": {
-      "hpBase": 844.6415405273438,
-      "attackBase": 20.854400634765625,
-      "defenseBase": 49.06060028076172
+      "hpBase": 844.64154,
+      "attackBase": 20.8544,
+      "defenseBase": 49.0606
     },
     "Consts": [
       "UI_Talent_S_Tighnari_01",
@@ -2195,9 +2195,9 @@
     "iconName": "UI_AvatarIcon_Nilou",
     "SideIconName": "UI_AvatarIcon_Side_Nilou",
     "Base": {
-      "hpBase": 1182.1168212890625,
-      "attackBase": 17.875200271606445,
-      "defenseBase": 56.718841552734375
+      "hpBase": 1182.1168,
+      "attackBase": 17.8752,
+      "defenseBase": 56.71884
     },
     "Consts": [
       "UI_Talent_S_Nilou_01",
@@ -2233,9 +2233,9 @@
     "iconName": "UI_AvatarIcon_Cyno",
     "SideIconName": "UI_AvatarIcon_Side_Cyno",
     "Base": {
-      "hpBase": 972.3864135742188,
-      "attackBase": 24.76460075378418,
-      "defenseBase": 66.88993835449219
+      "hpBase": 972.3864,
+      "attackBase": 24.7646,
+      "defenseBase": 66.88994
     },
     "Consts": [
       "UI_Talent_S_Cyno_01",
@@ -2271,9 +2271,9 @@
     "iconName": "UI_AvatarIcon_Candace",
     "SideIconName": "UI_AvatarIcon_Side_Candace",
     "Base": {
-      "hpBase": 911.791015625,
-      "attackBase": 17.808000564575195,
-      "defenseBase": 57.224998474121094
+      "hpBase": 911.791,
+      "attackBase": 17.808,
+      "defenseBase": 57.225
     },
     "Consts": [
       "UI_Talent_S_Candace_01",
@@ -2309,9 +2309,9 @@
     "iconName": "UI_AvatarIcon_Nahida",
     "SideIconName": "UI_AvatarIcon_Side_Nahida",
     "Base": {
-      "hpBase": 806.5087280273438,
-      "attackBase": 23.274999618530273,
-      "defenseBase": 49.06060028076172
+      "hpBase": 806.5087,
+      "attackBase": 23.275,
+      "defenseBase": 49.0606
     },
     "Consts": [
       "UI_Talent_S_Nahida_01",
@@ -2347,9 +2347,9 @@
     "iconName": "UI_AvatarIcon_Layla",
     "SideIconName": "UI_AvatarIcon_Side_Layla",
     "Base": {
-      "hpBase": 930.0267944335938,
-      "attackBase": 18.164159774780273,
-      "defenseBase": 54.93600082397461
+      "hpBase": 930.0268,
+      "attackBase": 18.16416,
+      "defenseBase": 54.936
     },
     "Consts": [
       "UI_Talent_S_Layla_01",
@@ -2385,9 +2385,9 @@
     "iconName": "UI_AvatarIcon_Wanderer",
     "SideIconName": "UI_AvatarIcon_Side_Wanderer",
     "Base": {
-      "hpBase": 791.255615234375,
-      "attackBase": 25.5093994140625,
-      "defenseBase": 47.26570129394531
+      "hpBase": 791.2556,
+      "attackBase": 25.5094,
+      "defenseBase": 47.2657
     },
     "Consts": [
       "UI_Talent_S_Wanderer_01",
@@ -2423,9 +2423,9 @@
     "iconName": "UI_AvatarIcon_Faruzan",
     "SideIconName": "UI_AvatarIcon_Side_Faruzan",
     "Base": {
-      "hpBase": 802.3760986328125,
-      "attackBase": 16.472400665283203,
-      "defenseBase": 52.64699935913086
+      "hpBase": 802.3761,
+      "attackBase": 16.4724,
+      "defenseBase": 52.647
     },
     "Consts": [
       "UI_Talent_S_Faruzan_01",
@@ -2461,9 +2461,9 @@
     "iconName": "UI_AvatarIcon_Yaoyao",
     "SideIconName": "UI_AvatarIcon_Side_Yaoyao",
     "Base": {
-      "hpBase": 1030.3238525390625,
-      "attackBase": 17.808000564575195,
-      "defenseBase": 62.9474983215332
+      "hpBase": 1030.3239,
+      "attackBase": 17.808,
+      "defenseBase": 62.9475
     },
     "Consts": [
       "UI_Talent_S_Yaoyao_01",
@@ -2499,9 +2499,9 @@
     "iconName": "UI_AvatarIcon_Alhatham",
     "SideIconName": "UI_AvatarIcon_Side_Alhatham",
     "Base": {
-      "hpBase": 1039.1187744140625,
-      "attackBase": 24.392200469970703,
-      "defenseBase": 60.847110748291016
+      "hpBase": 1039.1188,
+      "attackBase": 24.3922,
+      "defenseBase": 60.84711
     },
     "Consts": [
       "UI_Talent_S_Alhatham_02",
@@ -2537,9 +2537,9 @@
     "iconName": "UI_AvatarIcon_Dehya",
     "SideIconName": "UI_AvatarIcon_Side_Dehya",
     "Base": {
-      "hpBase": 1220.2496337890625,
-      "attackBase": 20.66819953918457,
-      "defenseBase": 48.88111114501953
+      "hpBase": 1220.2496,
+      "attackBase": 20.6682,
+      "defenseBase": 48.88111
     },
     "Consts": [
       "UI_Talent_S_Dehya_01",
@@ -2575,9 +2575,9 @@
     "iconName": "UI_AvatarIcon_Mika",
     "SideIconName": "UI_AvatarIcon_Side_Mika",
     "Base": {
-      "hpBase": 1048.5596923828125,
-      "attackBase": 18.698400497436523,
-      "defenseBase": 59.80012512207031
+      "hpBase": 1048.5597,
+      "attackBase": 18.6984,
+      "defenseBase": 59.800125
     },
     "Consts": [
       "UI_Talent_S_Mika_01",
@@ -2613,9 +2613,9 @@
     "iconName": "UI_AvatarIcon_Kaveh",
     "SideIconName": "UI_AvatarIcon_Side_Kaveh",
     "Base": {
-      "hpBase": 1002.9700927734375,
-      "attackBase": 19.58880043029785,
-      "defenseBase": 62.9474983215332
+      "hpBase": 1002.9701,
+      "attackBase": 19.5888,
+      "defenseBase": 62.9475
     },
     "Consts": [
       "UI_Talent_S_Kaveh_01",
@@ -2651,9 +2651,9 @@
     "iconName": "UI_AvatarIcon_Baizhuer",
     "SideIconName": "UI_AvatarIcon_Side_Baizhuer",
     "Base": {
-      "hpBase": 1039.1187744140625,
-      "attackBase": 14.989100456237793,
-      "defenseBase": 38.88949966430664
+      "hpBase": 1039.1188,
+      "attackBase": 14.9891,
+      "defenseBase": 38.8895
     },
     "Consts": [
       "UI_Talent_S_Baizhuer_01",
@@ -2689,9 +2689,9 @@
     "iconName": "UI_AvatarIcon_Linette",
     "SideIconName": "UI_AvatarIcon_Side_Linette",
     "Base": {
-      "hpBase": 1039.4417724609375,
-      "attackBase": 19.410720825195312,
-      "defenseBase": 59.68567657470703
+      "hpBase": 1039.4418,
+      "attackBase": 19.41072,
+      "defenseBase": 59.685677
     },
     "Consts": [
       "UI_Talent_S_Linette_01",
@@ -2727,9 +2727,9 @@
     "iconName": "UI_AvatarIcon_Liney",
     "SideIconName": "UI_AvatarIcon_Side_Liney",
     "Base": {
-      "hpBase": 857.9879760742188,
-      "attackBase": 24.76460075378418,
-      "defenseBase": 41.88100051879883
+      "hpBase": 857.988,
+      "attackBase": 24.7646,
+      "defenseBase": 41.881
     },
     "Consts": [
       "UI_Talent_S_Liney_01",
@@ -2765,9 +2765,9 @@
     "iconName": "UI_AvatarIcon_Freminet",
     "SideIconName": "UI_AvatarIcon_Side_Freminet",
     "Base": {
-      "hpBase": 1012.0880126953125,
-      "attackBase": 21.369600296020508,
-      "defenseBase": 59.39955139160156
+      "hpBase": 1012.088,
+      "attackBase": 21.3696,
+      "defenseBase": 59.39955
     },
     "Consts": [
       "UI_Talent_S_Freminet_01",
@@ -2803,9 +2803,9 @@
     "iconName": "UI_AvatarIcon_Wriothesley",
     "SideIconName": "UI_AvatarIcon_Side_Wriothesley",
     "Base": {
-      "hpBase": 1058.1851806640625,
-      "attackBase": 24.20599937438965,
-      "defenseBase": 59.411190032958984
+      "hpBase": 1058.1852,
+      "attackBase": 24.206,
+      "defenseBase": 59.41119
     },
     "Consts": [
       "UI_Talent_S_Wriothesley_01",
@@ -2841,9 +2841,9 @@
     "iconName": "UI_AvatarIcon_Neuvillette",
     "SideIconName": "UI_AvatarIcon_Side_Neuvillette",
     "Base": {
-      "hpBase": 1143.9840087890625,
-      "attackBase": 16.218019485473633,
-      "defenseBase": 44.872501373291016
+      "hpBase": 1143.984,
+      "attackBase": 16.21802,
+      "defenseBase": 44.8725
     },
     "Consts": [
       "UI_Talent_S_Neuvillette_01",
@@ -2879,9 +2879,9 @@
     "iconName": "UI_AvatarIcon_Charlotte",
     "SideIconName": "UI_AvatarIcon_Side_Charlotte",
     "Base": {
-      "hpBase": 902.673095703125,
-      "attackBase": 14.513520240783691,
-      "defenseBase": 45.779998779296875
+      "hpBase": 902.6731,
+      "attackBase": 14.51352,
+      "defenseBase": 45.78
     },
     "Consts": [
       "UI_Talent_S_Charlotte_01",
@@ -2917,9 +2917,9 @@
     "iconName": "UI_AvatarIcon_Furina",
     "SideIconName": "UI_AvatarIcon_Side_Furina",
     "Base": {
-      "hpBase": 1191.6500244140625,
-      "attackBase": 18.992399215698242,
-      "defenseBase": 54.146148681640625
+      "hpBase": 1191.65,
+      "attackBase": 18.9924,
+      "defenseBase": 54.14615
     },
     "Consts": [
       "UI_Talent_S_Furina_01",
@@ -2955,9 +2955,9 @@
     "iconName": "UI_AvatarIcon_Chevreuse",
     "SideIconName": "UI_AvatarIcon_Side_Chevreuse",
     "Base": {
-      "hpBase": 1002.9700927734375,
-      "attackBase": 16.205280303955078,
-      "defenseBase": 50.701351165771484
+      "hpBase": 1002.9701,
+      "attackBase": 16.20528,
+      "defenseBase": 50.70135
     },
     "Consts": [
       "UI_Talent_S_Chevreuse_01",
@@ -2993,9 +2993,9 @@
     "iconName": "UI_AvatarIcon_Navia",
     "SideIconName": "UI_AvatarIcon_Side_Navia",
     "Base": {
-      "hpBase": 984.779541015625,
-      "attackBase": 27.371400833129883,
-      "defenseBase": 61.74456024169922
+      "hpBase": 984.77954,
+      "attackBase": 27.3714,
+      "defenseBase": 61.74456
     },
     "Consts": [
       "UI_Talent_S_Navia_01",
@@ -3031,9 +3031,9 @@
     "iconName": "UI_AvatarIcon_Gaming",
     "SideIconName": "UI_AvatarIcon_Side_Gaming",
     "Base": {
-      "hpBase": 957.3805541992188,
-      "attackBase": 25.2873592376709,
-      "defenseBase": 58.941749572753906
+      "hpBase": 957.38055,
+      "attackBase": 25.28736,
+      "defenseBase": 58.94175
     },
     "Consts": [
       "UI_Talent_S_Gaming_01",
@@ -3069,9 +3069,9 @@
     "iconName": "UI_AvatarIcon_Liuyun",
     "SideIconName": "UI_AvatarIcon_Side_Liuyun",
     "Base": {
-      "hpBase": 810.322021484375,
-      "attackBase": 26.06800079345703,
-      "defenseBase": 44.57334899902344
+      "hpBase": 810.322,
+      "attackBase": 26.068,
+      "defenseBase": 44.57335
     },
     "Consts": [
       "UI_Talent_S_Liuyun_01",
@@ -3107,9 +3107,9 @@
     "iconName": "UI_AvatarIcon_Chiori",
     "SideIconName": "UI_AvatarIcon_Side_Chiori",
     "Base": {
-      "hpBase": 890.40087890625,
-      "attackBase": 25.136999130249023,
-      "defenseBase": 74.18920135498047
+      "hpBase": 890.4009,
+      "attackBase": 25.137,
+      "defenseBase": 74.1892
     },
     "Consts": [
       "UI_Talent_S_Chiori_01",
@@ -3133,6 +3133,44 @@
       "10941": 9431,
       "10942": 9432,
       "10945": 9439
+    }
+  },
+  "10000096": {
+    "Element": "Fire",
+    "Name": "Arlecchino",
+    "NameCN": "阿蕾奇诺",
+    "Slogan": "孤暝厄月",
+    "NameTextMapHash": 167199474,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Arlecchino",
+    "SideIconName": "UI_AvatarIcon_Side_Arlecchino",
+    "Base": {
+      "hpBase": 1020.0524,
+      "attackBase": 26.6266,
+      "defenseBase": 59.53085
+    },
+    "Consts": [
+      "UI_Talent_S_Arlecchino_01",
+      "UI_Talent_S_Arlecchino_02",
+      "UI_Talent_U_Arlecchino_01",
+      "UI_Talent_S_Arlecchino_03",
+      "UI_Talent_U_Arlecchino_02",
+      "UI_Talent_S_Arlecchino_04"
+    ],
+    "SkillOrder": [
+      10961,
+      10962,
+      10965
+    ],
+    "Skills": {
+      "10961": "Skill_A_03",
+      "10962": "Skill_S_Arlecchino_01",
+      "10965": "Skill_E_Arlecchino_01"
+    },
+    "ProudMap": {
+      "10961": 9631,
+      "10962": 9632,
+      "10965": 9639
     }
   }
 }
