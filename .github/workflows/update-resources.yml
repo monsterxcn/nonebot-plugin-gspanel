@@ -23,7 +23,7 @@ jobs:
 
       - name: Update files
         env:
-          GAMEDATA: ${{ secrets.GAME_DATA_REPO }}
+          GAMEDATA: "https://gitlab.com/Dimbreath/AnimeGameData/-/raw/master/"
         run: |
           cd .github
           wget -q "${GAMEDATA}/ExcelBinOutput/AvatarCostumeExcelConfigData.json"
