@@ -3135,6 +3135,44 @@
       "10945": 9439
     }
   },
+  "10000095": {
+    "Element": "Water",
+    "Name": "Sigewinne",
+    "NameCN": "希格雯",
+    "Slogan": "龙女妙变",
+    "NameTextMapHash": 781488962,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Sigewinne",
+    "SideIconName": "UI_AvatarIcon_Side_Sigewinne",
+    "Base": {
+      "hpBase": 1039.1188,
+      "attackBase": 14.9891,
+      "defenseBase": 38.8895
+    },
+    "Consts": [
+      "UI_Talent_S_Sigewinne_01",
+      "UI_Talent_S_Sigewinne_02",
+      "UI_Talent_U_Sigewinne_01",
+      "UI_Talent_S_Sigewinne_03",
+      "UI_Talent_U_Sigewinne_02",
+      "UI_Talent_S_Sigewinne_04"
+    ],
+    "SkillOrder": [
+      10951,
+      10952,
+      10955
+    ],
+    "Skills": {
+      "10951": "Skill_A_02",
+      "10952": "Skill_S_Sigewinne_01",
+      "10955": "Skill_E_Sigewinne_01"
+    },
+    "ProudMap": {
+      "10951": 9531,
+      "10952": 9532,
+      "10955": 9539
+    }
+  },
   "10000096": {
     "Element": "Fire",
     "Name": "Arlecchino",
@@ -3171,6 +3209,82 @@
       "10961": 9631,
       "10962": 9632,
       "10965": 9639
+    }
+  },
+  "10000097": {
+    "Element": "Electric",
+    "Name": "Sethos",
+    "NameCN": "赛索斯",
+    "Slogan": "衡明知度",
+    "NameTextMapHash": 1431322346,
+    "QualityType": "QUALITY_PURPLE",
+    "iconName": "UI_AvatarIcon_Sethos",
+    "SideIconName": "UI_AvatarIcon_Side_Sethos",
+    "Base": {
+      "hpBase": 820.6119,
+      "attackBase": 19.05456,
+      "defenseBase": 46.9245
+    },
+    "Consts": [
+      "UI_Talent_S_Sethos_01",
+      "UI_Talent_S_Sethos_02",
+      "UI_Talent_U_Sethos_01",
+      "UI_Talent_S_Sethos_03",
+      "UI_Talent_U_Sethos_02",
+      "UI_Talent_S_Sethos_04"
+    ],
+    "SkillOrder": [
+      10971,
+      10972,
+      10975
+    ],
+    "Skills": {
+      "10971": "Skill_A_02",
+      "10972": "Skill_S_Sethos_01",
+      "10975": "Skill_E_Sethos_01"
+    },
+    "ProudMap": {
+      "10971": 9731,
+      "10972": 9732,
+      "10975": 9739
+    }
+  },
+  "10000098": {
+    "Element": "Electric",
+    "Name": "Clorinde",
+    "NameCN": "克洛琳德",
+    "Slogan": "秉烛狝影",
+    "NameTextMapHash": 2745369298,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Clorinde",
+    "SideIconName": "UI_AvatarIcon_Side_Clorinde",
+    "Base": {
+      "hpBase": 1008.61255,
+      "attackBase": 26.2542,
+      "defenseBase": 61.0266
+    },
+    "Consts": [
+      "UI_Talent_S_Clorinde_01",
+      "UI_Talent_S_Clorinde_02",
+      "UI_Talent_U_Clorinde_02",
+      "UI_Talent_S_Clorinde_03",
+      "UI_Talent_U_Clorinde_01",
+      "UI_Talent_S_Clorinde_04"
+    ],
+    "SkillOrder": [
+      10981,
+      10982,
+      10985
+    ],
+    "Skills": {
+      "10981": "Skill_A_01",
+      "10982": "Skill_S_Clorinde_01",
+      "10985": "Skill_E_Clorinde_01"
+    },
+    "ProudMap": {
+      "10981": 9831,
+      "10982": 9832,
+      "10985": 9839
     }
   }
 }
