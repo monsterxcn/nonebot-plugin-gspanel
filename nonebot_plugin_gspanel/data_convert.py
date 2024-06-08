@@ -5,21 +5,21 @@ from typing import Dict, List, Tuple
 from nonebot.log import logger
 
 from .__utils__ import (
-    POS,
-    ELEM,
-    PROP,
-    SKILL,
-    RANK_MAP,
-    CHAR_DATA,
     CALC_RULES,
+    CHAR_DATA,
+    ELEM,
     GROW_VALUE,
     HASH_TRANS,
-    SUB_AFFIXS,
     MAIN_AFFIXS,
+    POS,
+    PROP,
+    RANK_MAP,
     RELIC_APPEND,
+    SKILL,
+    SUB_AFFIXS,
+    getServer,
     kStr,
     vStr,
-    getServer,
 )
 
 
@@ -31,7 +31,9 @@ async def getRelicConfig(char: str, base: Dict = {}) -> Tuple[Dict, Dict, Dict]:
     * ``param base: Dict = {}`` 角色的基础数值，可由 Enka 返回获得，格式为 ``{"生命值": 1, "攻击力": 1, "防御力": 1}``
     - ``return: Tuple[Dict, Dict, Dict]`` 词条评分权重、词条数值原始权重、各位置圣遗物最高得分
     """  # noqa: E501
-    affixWeight = CALC_RULES.get(char, {"攻击力百分比": 75, "暴击率": 100, "暴击伤害": 100})
+    affixWeight = CALC_RULES.get(
+        char, {"攻击力百分比": 75, "暴击率": 100, "暴击伤害": 100}
+    )
     # 词条评分权重的 key 排序影响最优主词条选择
     # 通过特定排序使同等权重时生命攻击防御固定值词条优先级最低
     # key 的原始排序为 生命值攻击力防御力百分比、暴击率、暴击伤害、元素精通、元素伤害加成、物理伤害加成、元素充能效率
@@ -159,7 +161,11 @@ async def calcRelicMark(
         _subPointMark: float = pointMark.get(s["prop"], 0)
         calcSub: float = _subPointMark * s["value"] * 46.6 / 6 / 100
         # 副词条 CSS 样式
-        _awKey = f"{s['prop']}百分比" if s["prop"] in ["生命值", "攻击力", "防御力"] else s["prop"]
+        _awKey = (
+            f"{s['prop']}百分比"
+            if s["prop"] in ["生命值", "攻击力", "防御力"]
+            else s["prop"]
+        )
         _subAffixWeight: int = affixWeight.get(_awKey, 0)
         subStyleClass = (
             ("great" if _subAffixWeight > 79 else "use") if calcSub else "unuse"
@@ -303,7 +309,9 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
             res["weapon"] = {
                 "id": equip["itemId"],
                 "rarity": equip["flat"]["rankLevel"],  # int
-                "name": HASH_TRANS.get(str(equip["flat"]["nameTextMapHash"]), "缺少翻译"),
+                "name": HASH_TRANS.get(
+                    str(equip["flat"]["nameTextMapHash"]), "缺少翻译"
+                ),
                 "affix": list(equip["weapon"].get("affixMap", {"_": 0}).values())[0]
                 + 1,
                 "level": equip["weapon"]["level"],  # int
@@ -326,7 +334,9 @@ async def transFromEnka(avatarInfo: Dict, ts: int = 0) -> Dict:
             relicData = {
                 "pos": posIdx,
                 "rarity": equip["flat"]["rankLevel"],
-                "name": HASH_TRANS.get(str(equip["flat"]["nameTextMapHash"]), "缺少翻译"),
+                "name": HASH_TRANS.get(
+                    str(equip["flat"]["nameTextMapHash"]), "缺少翻译"
+                ),
                 "setName": HASH_TRANS.get(
                     str(equip["flat"]["setNameTextMapHash"]), "缺少翻译"
                 ),
@@ -495,6 +505,8 @@ async def simplDamageRes(damage: Dict) -> Dict:
     res = {"level": damage["zdl_result"] or "NaN", "data": [], "buff": []}
     for key in ["damage_result_arr", "damage_result_arr2"]:
         for dmgDetail in damage[key]:
+            if not isinstance(dmgDetail, dict):
+                continue
             dmgTitle = "{}{}".format(
                 f"[{damage['zdl_result2']}]<br>" if key == "damage_result_arr2" else "",
                 dmgDetail["title"],
@@ -528,11 +540,15 @@ async def simplFightProp(
     * ``param element: str`` 角色元素属性
     - ``return: Dict[str, Dict]`` HTML 模板需求格式面板数据
     """
-    affixWeight = CALC_RULES.get(char, {"攻击力百分比": 75, "暴击率": 100, "暴击伤害": 100})
+    affixWeight = CALC_RULES.get(
+        char, {"攻击力百分比": 75, "暴击率": 100, "暴击伤害": 100}
+    )
 
     # 排列伤害加成
     prefer = (
-        element if affixWeight.get("元素伤害加成", 0) > affixWeight.get("物理伤害加成", 0) else "物"
+        element
+        if affixWeight.get("元素伤害加成", 0) > affixWeight.get("物理伤害加成", 0)
+        else "物"
     )
     damages = sorted(
         [{"k": k, "v": v} for k, v in fightProp.items() if str(k).endswith("伤害加成")],
@@ -553,7 +569,9 @@ async def simplFightProp(
             "value": f"{round(propValue, 1)}%"
             if propTitle not in ["生命值", "攻击力", "防御力", "元素精通"]
             else round(propValue),
-            "weight": max(affixWeight.get("元素伤害加成", 0), affixWeight.get("物理伤害加成", 0))
+            "weight": max(
+                affixWeight.get("元素伤害加成", 0), affixWeight.get("物理伤害加成", 0)
+            )
             if propTitle.endswith("伤害加成")
             else affixWeight.get(propTitle) or affixWeight.get(f"{propTitle}百分比", 0),
         }
