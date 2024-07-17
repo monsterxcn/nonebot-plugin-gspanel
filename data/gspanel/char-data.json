@@ -1871,6 +1871,14 @@
       "10611": 6131,
       "10612": 6132,
       "10615": 6139
+    },
+    "Costumes": {
+      "206101": {
+        "sideIconName": "UI_AvatarIcon_Side_MomokaCostumeErrantry",
+        "icon": "UI_AvatarIcon_MomokaCostumeErrantry",
+        "art": "UI_Costume_MomokaCostumeErrantry",
+        "avatarId": 10000061
+      }
     }
   },
   "10000062": {
@@ -2221,6 +2229,14 @@
       "10701": 7031,
       "10702": 7032,
       "10705": 7039
+    },
+    "Costumes": {
+      "207001": {
+        "sideIconName": "UI_AvatarIcon_Side_NilouCostumeFairy",
+        "icon": "UI_AvatarIcon_NilouCostumeFairy",
+        "art": "UI_Costume_NilouCostumeFairy",
+        "avatarId": 10000070
+      }
     }
   },
   "10000071": {
@@ -3285,6 +3301,44 @@
       "10981": 9831,
       "10982": 9832,
       "10985": 9839
+    }
+  },
+  "10000099": {
+    "Element": "Grass",
+    "Name": "Emilie",
+    "NameCN": "艾梅莉埃",
+    "Slogan": "千缕之踪",
+    "NameTextMapHash": 1705786122,
+    "QualityType": "QUALITY_ORANGE",
+    "iconName": "UI_AvatarIcon_Emilie",
+    "SideIconName": "UI_AvatarIcon_Side_Emilie",
+    "Base": {
+      "hpBase": 1056.2786,
+      "attackBase": 26.068,
+      "defenseBase": 56.8385
+    },
+    "Consts": [
+      "UI_Talent_S_Emilie_01",
+      "UI_Talent_S_Emilie_02",
+      "UI_Talent_U_Emilie_01",
+      "UI_Talent_S_Emilie_03",
+      "UI_Talent_U_Emilie_02",
+      "UI_Talent_S_Emilie_04"
+    ],
+    "SkillOrder": [
+      10991,
+      10992,
+      10995
+    ],
+    "Skills": {
+      "10991": "Skill_A_03",
+      "10992": "Skill_S_Emilie_01",
+      "10995": "Skill_E_Emilie_01"
+    },
+    "ProudMap": {
+      "10991": 9931,
+      "10992": 9932,
+      "10995": 9939
     }
   }
 }
